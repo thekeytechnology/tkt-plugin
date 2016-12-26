@@ -99,3 +99,19 @@ function print_a($item)
 {
     print "<pre>" . print_r($item, true) . "</pre>";
 }
+
+function tkAddQueryParams($url, $newParams)
+{
+    $url_parts = parse_url($url);
+    if (isset($url_parts["query"])) {
+        parse_str($url_parts['query'], $params);
+    } else {
+        $params = array();
+    }
+
+    $mergedParams = array_merge($params, $newParams);
+
+    $url_parts['query'] = http_build_query($mergedParams);
+
+    return $url_parts['scheme'] . '://' . $url_parts['host'] . $url_parts['path'] . '?' . $url_parts['query'];
+}
