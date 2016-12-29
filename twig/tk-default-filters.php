@@ -23,6 +23,13 @@ $tkTwig->addFilter("wpurl", function ($item) {
     return tkWpUrl($item);
 });
 
+$tkTwig->addFilter("wpcount", function ($item) {
+    if ($item instanceof WP_Term) {
+        return $item->count;
+    }
+    return 0;
+});
+
 $tkTwig->addFilter("taxonomyList", function ($item) {
     return tkWpTaxonomyList($item);
 });
