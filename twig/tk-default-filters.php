@@ -98,7 +98,7 @@ $tkTwig->addFilter("toOptions", function ($items, $selected = NULL, $placeholder
 
     if (!empty($placeholder)) {
         $defaultSelected = $optionWasSelected ? "" : "selected";
-        $options = "<option disabled $defaultSelected value>$placeholder</option>" . $options;
+        $options = "<option $defaultSelected value>$placeholder</option>" . $options;
     }
 
     return $options;

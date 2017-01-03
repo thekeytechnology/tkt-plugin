@@ -40,7 +40,7 @@ class TkTemplate
             return $this->twig->render($templateName, $args);
         } catch (Exception $e) {
             error_log("Template Exception: " . $e->getMessage() . " - " . $e->getTraceAsString());
-            return "<div class='tk-error'>TEMPLATE ERROR CHECK LOGS!!!</div>";
+            return "<marquee class='tk-error'>TEMPLATE ERROR CHECK LOGS!!!</marquee>";
         }
     }
 
