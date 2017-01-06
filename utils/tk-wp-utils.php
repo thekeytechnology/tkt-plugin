@@ -36,6 +36,32 @@ function tkWpName($item)
     throw new Exception("This type is not supported!");
 }
 
+function tkWpContent($item) {
+    $content = tkWpRawContent($item);
+    $content = apply_filters('the_content', $content);
+    $content = str_replace(']]>', ']]&gt;', $content);
+    return $content;
+}
+
+function tkWpRawContent($item)
+{
+    if (empty($item)) {
+        return "";
+    } else if ($item instanceof WP_Term) {
+        return $item->description;
+    } else if ($item instanceof WP_Post) {
+        return $item->post_content;
+    } else if (is_array($item)) {
+        if (isset($item["description"])) {
+            return $item["description"];
+        } else if (isset($item["post_content"])) {
+            return $item["post_content"];
+        }
+    }
+    throw new Exception("This type is not supported!");
+}
+
+
 function tkWpTaxonomyList($items)
 {
     if (is_array($items) && !isset($items["ID"]) && !isset($items["term_id"])) {
@@ -62,8 +88,8 @@ function tkWpUrl($item)
 {
     return tkWpApplyWithId($item, function ($postId) use ($item) {
         return get_permalink($postId);
-    }, function ($termId) use ($item) {
-        return get_term_link($termId);
+    }, function ($termId, $taxonomy) use ($item) {
+        return get_term_link($termId, $taxonomy);
     });
 }
 
@@ -88,9 +114,9 @@ function tkWpApplyWithId($item, $toPost, $toTerm)
         return $toPost($item->ID);
     } else if (is_array($item)) {
         if (isset($item["term_id"])) {
-            return $toTerm($item["term_id"], $item["taxonomy"]);
+            return $toTerm(intval($item["term_id"]), $item["taxonomy"]);
         } else if (isset($item["ID"])) {
-            return $toPost($item["ID"], $item["post_type"]);
+            return $toPost(intval($item["ID"]), $item["post_type"]);
         }
     }
     throw new Exception("This type is not supported!");

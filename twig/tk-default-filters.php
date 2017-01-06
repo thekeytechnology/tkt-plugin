@@ -30,6 +30,10 @@ $tkTwig->addFilter("wpcount", function ($item) {
     return 0;
 });
 
+$tkTwig->addFilter("wpcontent", function ($item) {
+    return tkWpContent($item);
+});
+
 $tkTwig->addFilter("taxonomyList", function ($item) {
     return tkWpTaxonomyList($item);
 });
@@ -45,6 +49,10 @@ $tkTwig->addFilter("shorten", function ($item, $maxLetters = 28) {
     return $item;
 });
 
+$tkTwig->addFilter("wpshortcode", function ($code) {
+    return do_shortcode($code);
+});
+
 $tkTwig->addFilter("wpthumbnail", function ($item, $size = "post-thumbnail") {
     if ($item instanceof WP_Post) {
         return get_the_post_thumbnail($item, $size);
@@ -52,6 +60,14 @@ $tkTwig->addFilter("wpthumbnail", function ($item, $size = "post-thumbnail") {
         return tkGetImageForProduct($size, $item->post);
     }
     return "";
+});
+
+$tkTwig->addFilter("wpattachmenturl", function ($item, $size = "post-thumbnail") {
+    return wp_get_attachment_image_src($item["ID"], $size)[0];
+});
+
+$tkTwig->addFilter("printa", function ($item) {
+    print_a($item);
 });
 
 function tkGetImageForProduct($size, $postForImage)

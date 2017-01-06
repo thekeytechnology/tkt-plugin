@@ -115,3 +115,26 @@ function tkAddQueryParams($url, $newParams)
 
     return $url_parts['scheme'] . '://' . $url_parts['host'] . $url_parts['path'] . '?' . $url_parts['query'];
 }
+
+function tkBreadcrumbs($items)
+{
+    return '<span xmlns:v="http://rdf.data-vocabulary.org/#">' . tkBreadcrumbItems($items, 0) . '</span>';
+}
+
+function tkBreadcrumbItems($items, $index)
+{
+    if ($index >= sizeof($items)) {
+        return "";
+    }
+    $type = $index == 0 ? "typeof='v:Breadcrumb'" : "rel='v:child' typeof='v:Breadcrumb'";
+
+    $entry = $items[$index];
+    $name = $entry["name"];
+    $url = $entry["url"];
+
+    $link = $index == sizeof($items) - 1 ? $name : "<a href='$url' rel='v:url' property='v:title'>$name</a>";
+
+    $separator = $index == 0 ? "" : " &gt; ";
+
+    return "$separator<span $type>$link" . tkBreadcrumbItems($items, ++$index) . "</span>";
+}

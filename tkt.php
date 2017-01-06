@@ -15,3 +15,4 @@ require_once("twig/tk-default-filters.php");
 require_once("twig/tk-wc-filters.php");
 require_once("utils/tk-utils.php");
 require_once("utils/tk-wp-utils.php");
+require_once("shortcodes/tk-shortcodes.php");
