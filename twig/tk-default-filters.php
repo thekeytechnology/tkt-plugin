@@ -62,8 +62,19 @@ $tkTwig->addFilter("wpthumbnail", function ($item, $size = "post-thumbnail") {
     return "";
 });
 
-$tkTwig->addFilter("wpattachmenturl", function ($item, $size = "post-thumbnail") {
-    return wp_get_attachment_image_src($item["ID"], $size)[0];
+$tkTwig->addFilter("wpattachmenturl", function ($item) {
+    return tkWpApplyWithId($item, function ($id) {
+        return wp_get_attachment_url($id);
+    }, function () {
+    });
+});
+
+$tkTwig->addFilter("wpattachmentimageurl", function ($item, $size = "post-thumbnail") {
+    return tkWpApplyWithId($item, function ($id) use ($size) {
+        return wp_get_attachment_image_src($id, $size)[0];
+    }, function ($id) use ($size) {
+        return wp_get_attachment_image_src($id, $size)[0];
+    });
 });
 
 $tkTwig->addFilter("printa", function ($item) {

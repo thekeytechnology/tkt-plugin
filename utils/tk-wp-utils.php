@@ -2,6 +2,10 @@
 
 function tkWpTitle($item)
 {
+    if (is_numeric($item)) {
+        $item = get_post($item);
+    }
+
     if (empty($item)) {
         return "";
     } else if ($item instanceof WP_Term) {
@@ -106,6 +110,9 @@ function tkWpId($item)
 
 function tkWpApplyWithId($item, $toPost, $toTerm)
 {
+    if (is_numeric($item)) {
+        $item = get_post($item);
+    }
     if (empty($item)) {
         return "";
     } else if ($item instanceof WP_Term) {
