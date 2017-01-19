@@ -9,33 +9,44 @@ class TkTemplate
     {
         $templateDir = get_stylesheet_directory() . "/assets/twig/";
 
-        $dirs = $this->getTemplateFolders($templateDir);
+        if (file_exists($templateDir)) {
+            $dirs = $this->getTemplateFolders($templateDir);
 
-        $loader = new Twig_Loader_Filesystem($dirs);
+            $loader = new Twig_Loader_Filesystem($dirs);
 
-        $parameters = array("autoescape" => false);
+            $parameters = array("autoescape" => false);
 
-        if (TK_TEMPLATE_CACHE) {
-            $parameters["cache"] = get_home_path() . "/wp-content/cache/twig";
+            if (TK_TEMPLATE_CACHE) {
+                $parameters["cache"] = tkGetWPRootPath() . "/wp-content/cache/twig";
+            }
+
+            $this->twig = new Twig_Environment($loader, $parameters);
         }
-
-        $this->twig = new Twig_Environment($loader, $parameters);
     }
 
 
     function addFilter($name, $filterFunction)
     {
-        $this->twig->addFilter(new Twig_SimpleFilter($name, $filterFunction));
+        if (isset($this->twig)) {
+            $this->twig->addFilter(new Twig_SimpleFilter($name, $filterFunction));
+        }
     }
 
     function addFunction($name, $function)
     {
-        $this->twig->addFunction(new Twig_SimpleFunction($name, $function));
+        if (isset($this->twig)) {
+
+            $this->twig->addFunction(new Twig_SimpleFunction($name, $function));
+        }
     }
 
 
     public function renderTemplate($templateName, $args = [])
     {
+        if (!isset($this->twig)) {
+            return "<marquee class='tk-error'>TEMPLATE SYSTEM NOT INITIALIZED - DID YOU CREATE assets/twig FOLDER IN THEME?!!!</marquee>";
+        }
+
         try {
             return $this->twig->render($templateName, $args);
         } catch (Exception $e) {
