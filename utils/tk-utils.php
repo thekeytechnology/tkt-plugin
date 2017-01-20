@@ -44,6 +44,13 @@ function endsWith($haystack, $needle)
     return $needle === "" || (($temp = strlen($haystack) - strlen($needle)) >= 0 && strpos($haystack, $needle, $temp) !== false);
 }
 
+function endsWithIgnoreCase($haystack, $needle)
+{
+    $haystack = strtolower($haystack);
+    $needle = strtolower($needle);
+    return endsWith($haystack, $needle);
+}
+
 function removeFromArray(&$haystack, $needle)
 {
     $key = array_search($needle, $haystack);
