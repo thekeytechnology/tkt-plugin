@@ -22,6 +22,22 @@ function tkWpTitle($item)
     throw new Exception("This type is not supported!");
 }
 
+function tkGetImageForProduct($size, $postForImage)
+{
+    $image_size = apply_filters('single_product_archive_thumbnail_size', $size);
+    if (has_post_thumbnail($postForImage)) {
+        $props = wc_get_product_attachment_props(get_post_thumbnail_id(), $postForImage);
+        return get_the_post_thumbnail($postForImage->ID, $image_size, array(
+            'title' => $props['title'],
+            'alt' => $props['alt'],
+        ));
+    } elseif (wc_placeholder_img_src()) {
+        return wc_placeholder_img($image_size);
+    } else {
+        return "";
+    }
+}
+
 function tkWpName($item)
 {
     if (empty($item)) {
@@ -40,7 +56,8 @@ function tkWpName($item)
     throw new Exception("This type is not supported!");
 }
 
-function tkWpContent($item) {
+function tkWpContent($item)
+{
     $content = tkWpRawContent($item);
     $content = apply_filters('the_content', $content);
     $content = str_replace(']]>', ']]&gt;', $content);
@@ -108,7 +125,7 @@ function tkWpId($item)
     );
 }
 
-function tkWpApplyWithId($item, $toPost, $toTerm)
+function tkWpApplyWithId($item, Callable $toPost, Callable $toTerm = NULL)
 {
     if (is_numeric($item)) {
         $item = get_post($item);
@@ -116,7 +133,11 @@ function tkWpApplyWithId($item, $toPost, $toTerm)
     if (empty($item)) {
         return "";
     } else if ($item instanceof WP_Term) {
-        return $toTerm($item->term_id);
+        if (isset($toTerm)) {
+            return $toTerm($item->term_id);
+        } else {
+            throw new Exception("No function provided for this type!");
+        }
     } else if ($item instanceof WP_Post) {
         return $toPost($item->ID);
     } else if (is_array($item)) {
@@ -127,4 +148,21 @@ function tkWpApplyWithId($item, $toPost, $toTerm)
         }
     }
     throw new Exception("This type is not supported!");
+}
+
+function tkWpGetSubterms(WP_Term $term, $orderField = NULL)
+{
+    $args = array(
+        "taxonomy" => "tk-media-category",
+        "parent" => $term->term_id,
+        "hide_empty" => false
+    );
+
+    if (isset($orderField)) {
+        $data['meta_key'] = $orderField;
+        $data["orderby"] = "meta_value_num";
+        $data["order"] = "ASC";
+    }
+
+    return get_terms($args);
 }

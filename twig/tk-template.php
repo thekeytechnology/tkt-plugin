@@ -1,5 +1,10 @@
 <?php
 
+require_once("filters/tk-wc-filters.php");
+require_once("filters/tk-wp-display.php");
+require_once("filters/tk-wp-fields.php");
+require_once("filters/tk-wp-terms.php");
+require_once("functions/tk-wp-functions.php");
 
 class TkTemplate
 {
@@ -35,8 +40,14 @@ class TkTemplate
     function addFunction($name, $function)
     {
         if (isset($this->twig)) {
-
             $this->twig->addFunction(new Twig_SimpleFunction($name, $function));
+        }
+    }
+
+    function addGlobal($key, $value)
+    {
+        if (isset($this->twig)) {
+            $this->twig->addGlobal($key, $value);
         }
     }
 
