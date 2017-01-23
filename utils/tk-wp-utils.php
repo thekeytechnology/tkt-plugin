@@ -150,18 +150,23 @@ function tkWpApplyWithId($item, Callable $toPost, Callable $toTerm = NULL)
     throw new Exception("This type is not supported!");
 }
 
-function tkWpGetSubterms(WP_Term $term, $orderField = NULL)
+function tkWpGetSubterms($taxonomy, WP_Term $parentTerm = NULL, $orderField = NULL)
 {
     $args = array(
-        "taxonomy" => "tk-media-category",
-        "parent" => $term->term_id,
+        "taxonomy" => $taxonomy,
         "hide_empty" => false
     );
 
-    if (isset($orderField)) {
-        $data['meta_key'] = $orderField;
-        $data["orderby"] = "meta_value_num";
-        $data["order"] = "ASC";
+    if ($parentTerm != NULL) {
+        $args["parent"] = $parentTerm->term_id;
+    } else {
+        $args["parent"] = NULL;
+    }
+
+    if ($orderField != NULL) {
+        $args['meta_key'] = $orderField;
+        $args["orderby"] = "meta_value_num";
+        $args["order"] = "ASC";
     }
 
     return get_terms($args);

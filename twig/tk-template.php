@@ -1,11 +1,5 @@
 <?php
 
-require_once("filters/tk-wc-filters.php");
-require_once("filters/tk-wp-display.php");
-require_once("filters/tk-wp-fields.php");
-require_once("filters/tk-wp-terms.php");
-require_once("functions/tk-wp-functions.php");
-
 class TkTemplate
 {
     private $twig;
@@ -25,7 +19,11 @@ class TkTemplate
                 $parameters["cache"] = tkGetWPRootPath() . "/wp-content/cache/twig";
             }
 
-            $this->twig = new Twig_Environment($loader, $parameters);
+            try {
+                $this->twig = new Twig_Environment($loader, $parameters);
+            } catch(Exception $ex) {
+                print_a($ex);
+            }
         }
     }
 
@@ -60,7 +58,7 @@ class TkTemplate
 
         try {
             return $this->twig->render($templateName, $args);
-        } catch (Exception $e) {
+        } catch (Throwable $e) {
             error_log("Template Exception: " . $e->getMessage() . " - " . $e->getTraceAsString());
             return "<marquee class='tk-error'>TEMPLATE ERROR CHECK LOGS!!!</marquee>";
         }

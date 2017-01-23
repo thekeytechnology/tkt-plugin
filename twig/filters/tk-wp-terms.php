@@ -17,16 +17,14 @@ $tkTwig->addFilter("wphasposts", function ($item) {
 });
 
 
-
 $tkTwig->addFilter("taxonomyList", function ($item) {
     return tkWpTaxonomyList($item);
 });
 
 
 $tkTwig->addFilter("wpsubterms", function (WP_Term $term, $orderField = NULL) {
-   return tkWpGetSubterms($term, $orderField);
+    return tkWpGetSubterms($term->taxonomy, $term, $orderField);
 });
-
 
 
 $tkTwig->addFilter("wpHasSubterms", function (WP_Term $term, $orderField = NULL) {
@@ -44,7 +42,6 @@ $tkTwig->addFilter("wpHasSubterms", function (WP_Term $term, $orderField = NULL)
 
     return get_terms($args);
 });
-
 
 
 $tkTwig->addFilter("wptermposts", function ($item, $postType, $taxonomyName, $order = NULL) {

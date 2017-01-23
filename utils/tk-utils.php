@@ -91,7 +91,7 @@ function tkRandomPassword($len = 8)
 }
 
 
-if (!function_exists('write_log')) {
+if (!function_exists('tkWriteLog')) {
     function write_log($log)
     {
         if (is_array($log) || is_object($log)) {
@@ -160,4 +160,22 @@ function tkGetWPRootPath()
     }
 
     return str_replace('\\', '/', $home_path);
+}
+
+
+function tkWriteLog($log)
+{
+    if (is_array($log) || is_object($log)) {
+        error_log(print_r($log, true));
+    } else {
+        error_log($log);
+    }
+}
+
+function tkHasValidCaptcha($secret)
+{
+    //get verify response data
+    $verifyResponse = file_get_contents('https://www.google.com/recaptcha/api/siteverify?secret=' . $secret . '&response=' . $_POST['g-recaptcha-response']);
+    $responseData = json_decode($verifyResponse);
+    return $responseData->success;
 }

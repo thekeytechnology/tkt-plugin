@@ -19,6 +19,6 @@ if (!defined("TK_RECAPTCHA")) {
 
 require_once "vendor/autoload.php";
 require_once("utils/tk-wp-utils.php");
-require_once("twig/tk-template.php");
 require_once("utils/tk-utils.php");
 require_once("shortcodes/tk-shortcodes.php");
+require_once("twig/tk-twig.php");
