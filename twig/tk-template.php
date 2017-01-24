@@ -58,7 +58,7 @@ class TkTemplate
 
         try {
             return $this->twig->render($templateName, $args);
-        } catch (Throwable $e) {
+        } catch (Exception $e) {
             error_log("Template Exception: " . $e->getMessage() . " - " . $e->getTraceAsString());
             return "<marquee class='tk-error'>TEMPLATE ERROR CHECK LOGS!!!</marquee>";
         }
@@ -90,6 +90,7 @@ $tkTwig = new TkTemplate();
 function tkTemplate($atts)
 {
     global $tkTwig;
+    $atts["queriedObject"] = get_queried_object();
     return $tkTwig->renderTemplate($atts["name"], $atts);
 }
 
