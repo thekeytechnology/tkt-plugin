@@ -62,3 +62,7 @@ $tkTwig->addFilter('wpcommentsenabled', function ($item) {
 $tkTwig->addFilter("wpnonce", function ($param) {
     return wp_nonce_field('ajax-login-nonce', $param, true, false);
 });
+
+$tkTwig->addFilter("wpVimeoThumbnail", function($videoCode) {
+    return tkGetVimeoThumbnailPathFromVideoCode($videoCode);
+});

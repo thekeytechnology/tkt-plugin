@@ -15,3 +15,7 @@ $tkTwig->addFunction('wpcomments', function () {
     comments_template('', true);
 });
 
+
+$tkTwig->addFunction("wpcurrentuser", function() {
+   return wp_get_current_user();
+});

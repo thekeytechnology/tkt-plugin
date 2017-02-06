@@ -22,11 +22,13 @@ function get_the_excerpt_max_charlength($charlength)
     return $output;
 }
 
+/* Returns an item from array. If key is not set, returns default. */
 function s($key, $array, $default = NULL)
 {
     return isset($array[$key]) ? $array[$key] : $default;
 }
 
+/* Returns an item[0] from array. If key is not set, returns default. */
 function s0($key, $array, $default = NULL)
 {
     return isset($array[$key]) && isset($array[$key][0]) ? $array[$key][0] : $default;
@@ -178,4 +180,10 @@ function tkHasValidCaptcha($secret)
     $verifyResponse = file_get_contents('https://www.google.com/recaptcha/api/siteverify?secret=' . $secret . '&response=' . $_POST['g-recaptcha-response']);
     $responseData = json_decode($verifyResponse);
     return $responseData->success;
+}
+
+function tkGetVimeoThumbnailPathFromVideoCode($videocode) {
+    $vimeoMeta="http://vimeo.com/api/v2/video/$videocode.php";
+    $hash = unserialize(file_get_contents($vimeoMeta));
+    return $hash[0]['thumbnail_large'];
 }
