@@ -102,6 +102,8 @@ function tkWpMeta($item, $metaKey, $single = true)
         return get_post_meta($postId, $metaKey, $single);
     }, function ($termId) use ($metaKey, $single) {
         return get_term_meta($termId, $metaKey, $single);
+    }, function ($userId) use ($metaKey, $single) {
+        return get_user_meta($userId, $metaKey, $single);
     });
 }
 
@@ -125,7 +127,7 @@ function tkWpId($item)
     );
 }
 
-function tkWpApplyWithId($item, Callable $toPost, Callable $toTerm = NULL)
+function tkWpApplyWithId($item, Callable $toPost, Callable $toTerm = NULL, Callable $toUser = NULL)
 {
     if (is_numeric($item)) {
         $item = get_post($item);
@@ -140,6 +142,12 @@ function tkWpApplyWithId($item, Callable $toPost, Callable $toTerm = NULL)
         }
     } else if ($item instanceof WP_Post) {
         return $toPost($item->ID);
+    } else if ($item instanceof WP_User) {
+        if (isset($toUser)) {
+            return $toUser($item->ID);
+        } else {
+            throw new Exception("No function provided for this type!");
+        }
     } else if (is_array($item)) {
         if (isset($item["term_id"])) {
             return $toTerm(intval($item["term_id"]), $item["taxonomy"]);
@@ -170,4 +178,12 @@ function tkWpGetSubterms($taxonomy, WP_Term $parentTerm = NULL, $orderField = NU
     }
 
     return get_terms($args);
+}
+
+function tkSortArrayByMetaField($array,$meta,$order="ASC") {
+    foreach($array as $item) {
+
+    }
+
+
 }

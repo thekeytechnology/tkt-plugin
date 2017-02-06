@@ -45,7 +45,8 @@ $tkTwig->addFilter("wpHasSubterms", function (WP_Term $term, $orderField = NULL)
 
 
 $tkTwig->addFilter("wptermposts", function ($item, $postType, $taxonomyName, $order = NULL) {
-    if ($item instanceof WP_Term) {
+    return tkWpApplyWithId($item, function () {
+    }, function ($termId) use ($postType, $taxonomyName, $order) {
         $args = array(
             'posts_per_page' => 50,
             'post_type' => $postType,
@@ -55,7 +56,7 @@ $tkTwig->addFilter("wptermposts", function ($item, $postType, $taxonomyName, $or
                     'taxonomy' => $taxonomyName,
                     'field' => 'term_id',
                     'include_children' => false,
-                    'terms' => $item->term_id
+                    'terms' => $termId
                 )
             )
         );
@@ -66,6 +67,5 @@ $tkTwig->addFilter("wptermposts", function ($item, $postType, $taxonomyName, $or
         }
 
         return get_posts($args);
-    }
-    return [];
+    });
 });

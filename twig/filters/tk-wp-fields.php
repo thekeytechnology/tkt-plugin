@@ -70,3 +70,8 @@ $tkTwig->addFilter("wpnonce", function ($param) {
 $tkTwig->addFilter("wpnickname", function (WP_User $item) {
     return $item->nickname;
 });
+
+
+$tkTwig->addFilter("wpVimeoThumbnail", function ($videoCode) {
+    return tkGetVimeoThumbnailPathFromVideoCode($videoCode);
+});
