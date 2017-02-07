@@ -23,6 +23,10 @@ $tkTwig->addFilter("wpcontent", function ($item) {
     return tkWpContent($item);
 });
 
+$tkTwig->addFilter("wprawcontent", function ($item) {
+    return tkWpRawContent($item);
+});
+
 $tkTwig->addFilter("wpid", function ($item) {
     return tkWpId($item);
 });
@@ -63,6 +67,11 @@ $tkTwig->addFilter("wpnonce", function ($param) {
     return wp_nonce_field('ajax-login-nonce', $param, true, false);
 });
 
-$tkTwig->addFilter("wpVimeoThumbnail", function($videoCode) {
+$tkTwig->addFilter("wpnickname", function (WP_User $item) {
+    return $item->nickname;
+});
+
+
+$tkTwig->addFilter("wpVimeoThumbnail", function ($videoCode) {
     return tkGetVimeoThumbnailPathFromVideoCode($videoCode);
 });

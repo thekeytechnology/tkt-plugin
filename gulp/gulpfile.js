@@ -5,7 +5,8 @@ var watch = require('gulp-watch');
 var plumber = require('gulp-plumber');
 var gutil = require('gulp-util');
 
-const themeFolder = "../../../themes/betheme_child/";
+const themeFolder = "../../../themes/tkt/";
+
 const assetsFolder = themeFolder + "assets/";
 
 const lessInput = assetsFolder + "less/tk.less";
