@@ -19,3 +19,4 @@ $tkTwig->addFunction('wpcomments', function () {
 $tkTwig->addFunction("wpcurrentuser", function() {
    return wp_get_current_user();
 });
+

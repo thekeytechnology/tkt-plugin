@@ -37,3 +37,8 @@ $tkTwig->addFilter("wcprice", function ($item, $regular = false) {
 $tkTwig->addFilter("isvariable", function($item) {
    return $item instanceof WC_Product_Variable;
 });
+
+$tkTwig->addFilter("sortByMeta", function($item, $meta, $order = "DESC") {
+    $order == 'ASC' ? $order = SORT_ASC : $order = SORT_DESC;
+    return tkSortArrayByMetaField($item,$meta,$order);
+});

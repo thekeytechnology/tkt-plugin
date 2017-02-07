@@ -180,10 +180,16 @@ function tkWpGetSubterms($taxonomy, WP_Term $parentTerm = NULL, $orderField = NU
     return get_terms($args);
 }
 
-function tkSortArrayByMetaField($array,$meta,$order="ASC") {
-    foreach($array as $item) {
+function tkSortArrayByMetaField($array,$sortBy ,$order=SORT_DESC) {
 
+    $tempArray = array();
+
+    foreach($array as $key => $item) {
+        if (!isset($item[$sortBy])) {
+           $item[$sortBy] = tkWpMeta($item,$sortBy);
+        }
+        $tempArray[$key] = $item[$sortBy];
     }
-
-
+    array_multisort($tempArray, $order, $array);
+    return $array;
 }
