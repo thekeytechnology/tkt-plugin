@@ -9,10 +9,16 @@ License:     proprietary
 Text Domain: tkt
 */
 
+if (!defined("TK_TEMPLATE_CACHE")) {
+    define("TK_TEMPLATE_CACHE", false);
+}
+
+if (!defined("TK_RECAPTCHA")) {
+    define("TK_RECAPTCHA", false);
+}
+
 require_once "vendor/autoload.php";
-require_once("twig/tk-template.php");
-require_once("twig/tk-default-filters.php");
-require_once("twig/tk-wc-filters.php");
-require_once("utils/tk-utils.php");
 require_once("utils/tk-wp-utils.php");
+require_once("utils/tk-utils.php");
 require_once("shortcodes/tk-shortcodes.php");
+require_once("twig/tk-twig.php");

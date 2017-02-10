@@ -22,11 +22,13 @@ function get_the_excerpt_max_charlength($charlength)
     return $output;
 }
 
+/* Returns an item from array. If key is not set, returns default. */
 function s($key, $array, $default = NULL)
 {
     return isset($array[$key]) ? $array[$key] : $default;
 }
 
+/* Returns an item[0] from array. If key is not set, returns default. */
 function s0($key, $array, $default = NULL)
 {
     return isset($array[$key]) && isset($array[$key][0]) ? $array[$key][0] : $default;
@@ -42,6 +44,13 @@ function endsWith($haystack, $needle)
 {
     // search forward starting from end minus needle length characters
     return $needle === "" || (($temp = strlen($haystack) - strlen($needle)) >= 0 && strpos($haystack, $needle, $temp) !== false);
+}
+
+function endsWithIgnoreCase($haystack, $needle)
+{
+    $haystack = strtolower($haystack);
+    $needle = strtolower($needle);
+    return endsWith($haystack, $needle);
 }
 
 function removeFromArray(&$haystack, $needle)
@@ -84,7 +93,7 @@ function tkRandomPassword($len = 8)
 }
 
 
-if (!function_exists('write_log')) {
+if (!function_exists('tkWriteLog')) {
     function write_log($log)
     {
         if (is_array($log) || is_object($log)) {
@@ -137,4 +146,44 @@ function tkBreadcrumbItems($items, $index)
     $separator = $index == 0 ? "" : " &gt; ";
 
     return "$separator<span $type>$link" . tkBreadcrumbItems($items, ++$index) . "</span>";
+}
+
+function tkGetWPRootPath()
+{
+    $home = set_url_scheme(get_option('home'), 'http');
+    $siteurl = set_url_scheme(get_option('siteurl'), 'http');
+    if (!empty($home) && 0 !== strcasecmp($home, $siteurl)) {
+        $wp_path_rel_to_home = str_ireplace($home, '', $siteurl); /* $siteurl - $home */
+        $pos = strripos(str_replace('\\', '/', $_SERVER['SCRIPT_FILENAME']), trailingslashit($wp_path_rel_to_home));
+        $home_path = substr($_SERVER['SCRIPT_FILENAME'], 0, $pos);
+        $home_path = trailingslashit($home_path);
+    } else {
+        $home_path = ABSPATH;
+    }
+
+    return str_replace('\\', '/', $home_path);
+}
+
+
+function tkWriteLog($log)
+{
+    if (is_array($log) || is_object($log)) {
+        error_log(print_r($log, true));
+    } else {
+        error_log($log);
+    }
+}
+
+function tkHasValidCaptcha($secret)
+{
+    //get verify response data
+    $verifyResponse = file_get_contents('https://www.google.com/recaptcha/api/siteverify?secret=' . $secret . '&response=' . $_POST['g-recaptcha-response']);
+    $responseData = json_decode($verifyResponse);
+    return $responseData->success;
+}
+
+function tkGetVimeoThumbnailPathFromVideoCode($videocode) {
+    $vimeoMeta="http://vimeo.com/api/v2/video/$videocode.php";
+    $hash = unserialize(file_get_contents($vimeoMeta));
+    return $hash[0]['thumbnail_large'];
 }

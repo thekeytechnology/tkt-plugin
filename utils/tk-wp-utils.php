@@ -22,6 +22,22 @@ function tkWpTitle($item)
     throw new Exception("This type is not supported!");
 }
 
+function tkGetImageForProduct($size, $postForImage)
+{
+    $image_size = apply_filters('single_product_archive_thumbnail_size', $size);
+    if (has_post_thumbnail($postForImage)) {
+        $props = wc_get_product_attachment_props(get_post_thumbnail_id(), $postForImage);
+        return get_the_post_thumbnail($postForImage->ID, $image_size, array(
+            'title' => $props['title'],
+            'alt' => $props['alt'],
+        ));
+    } elseif (wc_placeholder_img_src()) {
+        return wc_placeholder_img($image_size);
+    } else {
+        return "";
+    }
+}
+
 function tkWpName($item)
 {
     if (empty($item)) {
@@ -40,7 +56,8 @@ function tkWpName($item)
     throw new Exception("This type is not supported!");
 }
 
-function tkWpContent($item) {
+function tkWpContent($item)
+{
     $content = tkWpRawContent($item);
     $content = apply_filters('the_content', $content);
     $content = str_replace(']]>', ']]&gt;', $content);
@@ -85,6 +102,8 @@ function tkWpMeta($item, $metaKey, $single = true)
         return get_post_meta($postId, $metaKey, $single);
     }, function ($termId) use ($metaKey, $single) {
         return get_term_meta($termId, $metaKey, $single);
+    }, function ($userId) use ($metaKey, $single) {
+        return get_user_meta($userId, $metaKey, $single);
     });
 }
 
@@ -108,7 +127,7 @@ function tkWpId($item)
     );
 }
 
-function tkWpApplyWithId($item, $toPost, $toTerm)
+function tkWpApplyWithId($item, Callable $toPost, Callable $toTerm = NULL, Callable $toUser = NULL)
 {
     if (is_numeric($item)) {
         $item = get_post($item);
@@ -116,9 +135,19 @@ function tkWpApplyWithId($item, $toPost, $toTerm)
     if (empty($item)) {
         return "";
     } else if ($item instanceof WP_Term) {
-        return $toTerm($item->term_id);
+        if (isset($toTerm)) {
+            return $toTerm($item->term_id);
+        } else {
+            throw new Exception("No function provided for this type!");
+        }
     } else if ($item instanceof WP_Post) {
         return $toPost($item->ID);
+    } else if ($item instanceof WP_User) {
+        if (isset($toUser)) {
+            return $toUser($item->ID);
+        } else {
+            throw new Exception("No function provided for this type!");
+        }
     } else if (is_array($item)) {
         if (isset($item["term_id"])) {
             return $toTerm(intval($item["term_id"]), $item["taxonomy"]);
@@ -127,4 +156,40 @@ function tkWpApplyWithId($item, $toPost, $toTerm)
         }
     }
     throw new Exception("This type is not supported!");
+}
+
+function tkWpGetSubterms($taxonomy, WP_Term $parentTerm = NULL, $orderField = NULL)
+{
+    $args = array(
+        "taxonomy" => $taxonomy,
+        "hide_empty" => false
+    );
+
+    if ($parentTerm != NULL) {
+        $args["parent"] = $parentTerm->term_id;
+    } else {
+        $args["parent"] = NULL;
+    }
+
+    if ($orderField != NULL) {
+        $args['meta_key'] = $orderField;
+        $args["orderby"] = "meta_value_num";
+        $args["order"] = "ASC";
+    }
+
+    return get_terms($args);
+}
+
+function tkSortArrayByMetaField($array,$sortBy ,$order=SORT_DESC) {
+
+    $tempArray = array();
+
+    foreach($array as $key => $item) {
+        if (!isset($item[$sortBy])) {
+           $item[$sortBy] = tkWpMeta($item,$sortBy);
+        }
+        $tempArray[$key] = $item[$sortBy];
+    }
+    array_multisort($tempArray, $order, $array);
+    return $array;
 }
