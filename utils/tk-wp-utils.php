@@ -19,6 +19,7 @@ function tkWpTitle($item)
             return $item["post_title"];
         }
     }
+    print_a($item);
     throw new Exception("This type is not supported!");
 }
 
@@ -53,6 +54,7 @@ function tkWpName($item)
             return $item["post_name"];
         }
     }
+    print_a($item);
     throw new Exception("This type is not supported!");
 }
 
@@ -79,6 +81,7 @@ function tkWpRawContent($item)
             return $item["post_content"];
         }
     }
+    print_a($item);
     throw new Exception("This type is not supported!");
 }
 
@@ -155,6 +158,7 @@ function tkWpApplyWithId($item, Callable $toPost, Callable $toTerm = NULL, Calla
             return $toPost(intval($item["ID"]), $item["post_type"]);
         }
     }
+    print_a($item);
     throw new Exception("This type is not supported!");
 }
 
