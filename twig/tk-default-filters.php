@@ -53,13 +53,20 @@ $tkTwig->addFilter("wpshortcode", function ($code) {
     return do_shortcode($code);
 });
 
-$tkTwig->addFilter("wpthumbnail", function ($item, $size = "post-thumbnail") {
+$tkTwig->addFilter("wpthumbnail", function ($item, $size = "post-thumbnail", $link = false) {
+    $thumbnailHtml = "";
     if ($item instanceof WP_Post) {
-        return get_the_post_thumbnail($item, $size);
+        $thumbnailHtml = get_the_post_thumbnail($item, $size);
     } else if ($item instanceof WC_Product_Variable) {
-        return tkGetImageForProduct($size, $item->post);
+        $thumbnailHtml = tkGetImageForProduct($size, $item->post);
     }
-    return "";
+
+    if ($link) {
+        $url = tkWpUrl($item);
+        $thumbnailHtml = "<a href='$url'>$thumbnailHtml</a>";
+    }
+
+    return $thumbnailHtml;
 });
 
 $tkTwig->addFilter("wpattachmenturl", function ($item) {
