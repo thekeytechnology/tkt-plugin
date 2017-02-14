@@ -19,6 +19,7 @@ function tkWpTitle($item)
             return $item["post_title"];
         }
     }
+    print_a($item);
     throw new Exception("This type is not supported!");
 }
 
@@ -53,7 +54,7 @@ function tkWpName($item)
             return $item["post_name"];
         }
     }
-    throw new Exception("This type is not supported!");
+    throw new Exception("This type is not supported! ".print_r($item, true));
 }
 
 function tkWpContent($item)
@@ -79,7 +80,7 @@ function tkWpRawContent($item)
             return $item["post_content"];
         }
     }
-    throw new Exception("This type is not supported!");
+    throw new Exception("This type is not supported! ".print_r($item, true));
 }
 
 
@@ -155,7 +156,7 @@ function tkWpApplyWithId($item, Callable $toPost, Callable $toTerm = NULL, Calla
             return $toPost(intval($item["ID"]), $item["post_type"]);
         }
     }
-    throw new Exception("This type is not supported!");
+    throw new Exception("This type is not supported! ".print_r($item, true));
 }
 
 function tkWpGetSubterms($taxonomy, WP_Term $parentTerm = NULL, $orderField = NULL)

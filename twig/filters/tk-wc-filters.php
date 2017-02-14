@@ -6,6 +6,7 @@ $tkTwig->addFilter("wcthumbnail", function ($item, $size = "post-thumbnail") {
     if ($item instanceof WC_Product) {
         return tkGetImageForProduct($size, $item->post);
     }
+    print_a($item);
     throw new Exception("Type not supported!");
 });
 
@@ -14,6 +15,8 @@ $tkTwig->addFilter("wctitle", function ($item) {
     if ($item instanceof WC_Product) {
         return $item->get_title();
     }
+    print_a($item);
+
     throw new Exception("Type not supported!");
 });
 
@@ -22,6 +25,7 @@ $tkTwig->addFilter("wcurl", function ($item) {
     if ($item instanceof WC_Product) {
         return get_permalink($item->post);
     }
+    print_a($item);
     throw new Exception("Type not supported!");
 });
 

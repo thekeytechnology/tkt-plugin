@@ -19,3 +19,7 @@ $tkTwig->addFunction("wpcurrentuser", function () {
     return wp_get_current_user();
 });
 
+$tkTwig->addFunction("wpcalluserfunc", function ($name, $parameter = null, $_ = null) {
+
+    return call_user_func($name, $parameter, $_);
+});
