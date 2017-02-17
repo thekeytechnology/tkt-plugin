@@ -182,8 +182,14 @@ function tkHasValidCaptcha($secret)
     return $responseData->success;
 }
 
-function tkGetVimeoThumbnailPathFromVideoCode($videocode) {
-    $vimeoMeta="http://vimeo.com/api/v2/video/$videocode.php";
-    $hash = unserialize(file_get_contents($vimeoMeta));
-    return $hash[0]['thumbnail_large'];
+function tkGetVideoThumbnailPathFromVideoCode($videocode) {
+
+    if (is_numeric($videocode)) {
+        $vimeoMeta="http://vimeo.com/api/v2/video/" . $videocode . ".php";
+        $hash = unserialize(file_get_contents($vimeoMeta));
+        return $hash[0]['thumbnail_large'];
+    } else {
+        return 'https://img.youtube.com/vi/' . $videocode . '/hqdefault.jpg';
+    }
+
 }

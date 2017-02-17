@@ -72,6 +72,6 @@ $tkTwig->addFilter("wpnickname", function (WP_User $item) {
 });
 
 
-$tkTwig->addFilter("wpVimeoThumbnail", function ($videoCode) {
-    return tkGetVimeoThumbnailPathFromVideoCode($videoCode);
+$tkTwig->addFilter("wpVideoThumbnail", function ($videoCode) {
+    return tkGetVideoThumbnailPathFromVideoCode($videoCode);
 });
