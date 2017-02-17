@@ -8,6 +8,11 @@ $tkTwig->addFilter("linebreaks", function ($item) {
     return preg_replace("/\r|\n/", "<br/>", $item);
 });
 
+$tkTwig->addFilter("commas", function ($item) {
+    $item = str_replace("\r\n", ", ", $item);
+    return preg_replace("/\r|\n/", ", ", $item);
+});
+
 $tkTwig->addFilter("shorten", function ($item, $maxLetters = 28) {
     if (mb_strlen($item) > $maxLetters) {
         return mb_substr($item, 0, $maxLetters) . '...'; // change 50 to the number of characters you want to show
