@@ -15,13 +15,12 @@ $tkTwig->addFilter("shorten", function ($item, $maxLetters = 28) {
     return $item;
 });
 
-$tkTwig->addFilter("toOptions", function ($items, $selected = NULL, $placeholder = NULL) {
+$tkTwig->addFilter("toOptions", function ($items, $selected = NULL, $placeholder = NULL, $useId = false) {
     $options = "";
-    print_a($selected);
 
     $optionWasSelected = false;
     foreach ($items as $item) {
-        $itemName = tkWpName($item);
+        $itemName = $useId ? tkWpId($item) : tkWpName($item);
         $itemTitle = tkWpTitle($item);
 
         $isSelected = $selected == $itemName;
