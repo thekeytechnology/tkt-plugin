@@ -31,10 +31,16 @@ $tkTwig->addFilter("wpid", function ($item) {
     return tkWpId($item);
 });
 
+$tkTwig->addFilter("wppostdate", function($item) {
+    if ($item instanceof WP_Post) {
+        return $item->post_date;
+    }
+});
+
 
 $tkTwig->addFilter("wpthumbnail", function ($item, $size = "post-thumbnail") {
-    if ($item instanceof WP_Post) {
-        return get_the_post_thumbnail($item, $size);
+    if ($item instanceof WP_Post or is_array($item)) {
+        return get_the_post_thumbnail(tkWpId($item), $size);
     } else if ($item instanceof WC_Product_Variable) {
         return tkGetImageForProduct($size, $item->post);
     }
