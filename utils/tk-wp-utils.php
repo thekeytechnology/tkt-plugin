@@ -99,6 +99,7 @@ function tkWpTaxonomyList($items)
 
 function tkWpMeta($item, $metaKey, $single = true)
 {
+
     return tkWpApplyWithId($item, function ($postId) use ($metaKey, $single) {
         return get_post_meta($postId, $metaKey, $single);
     }, function ($termId) use ($metaKey, $single) {
