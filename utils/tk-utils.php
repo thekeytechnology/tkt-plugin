@@ -34,16 +34,20 @@ function s0($key, $array, $default = NULL)
     return isset($array[$key]) && isset($array[$key][0]) ? $array[$key][0] : $default;
 }
 
-function startsWith($haystack, $needle)
-{
-    // search backwards starting from haystack length characters from the end
-    return $needle === "" || strrpos($haystack, $needle, -strlen($haystack)) !== false;
-}
+if (!function_exists("startsWith")) {
+    function startsWith($haystack, $needle)
+    {
+        // search backwards starting from haystack length characters from the end
+        return $needle === "" || strrpos($haystack, $needle, -strlen($haystack)) !== false;
+    }
 
-function endsWith($haystack, $needle)
-{
-    // search forward starting from end minus needle length characters
-    return $needle === "" || (($temp = strlen($haystack) - strlen($needle)) >= 0 && strpos($haystack, $needle, $temp) !== false);
+}
+if (!function_exists("endsWith")) {
+    function endsWith($haystack, $needle)
+    {
+        // search forward starting from end minus needle length characters
+        return $needle === "" || (($temp = strlen($haystack) - strlen($needle)) >= 0 && strpos($haystack, $needle, $temp) !== false);
+    }
 }
 
 function endsWithIgnoreCase($haystack, $needle)
@@ -182,10 +186,11 @@ function tkHasValidCaptcha($secret)
     return $responseData->success;
 }
 
-function tkGetVideoThumbnailPathFromVideoCode($videocode) {
+function tkGetVideoThumbnailPathFromVideoCode($videocode)
+{
 
     if (is_numeric($videocode)) {
-        $vimeoMeta="http://vimeo.com/api/v2/video/" . $videocode . ".php";
+        $vimeoMeta = "http://vimeo.com/api/v2/video/" . $videocode . ".php";
         $hash = unserialize(file_get_contents($vimeoMeta));
         return $hash[0]['thumbnail_large'];
     } else {

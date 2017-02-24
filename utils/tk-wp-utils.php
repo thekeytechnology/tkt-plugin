@@ -12,6 +12,8 @@ function tkWpTitle($item)
         return $item->name;
     } else if ($item instanceof WP_Post) {
         return $item->post_title;
+    } else if ($item instanceof WP_User) {
+        return $item->display_name;
     } else if (is_array($item)) {
         if (isset($item["name"])) {
             return $item["name"];
@@ -47,6 +49,8 @@ function tkWpName($item)
         return $item->slug;
     } else if ($item instanceof WP_Post) {
         return $item->post_name;
+    } else if ($item instanceof WP_User) {
+        return $item->user_login;
     } else if (is_array($item)) {
         if (isset($item["name"])) {
             return $item["name"];
@@ -125,6 +129,8 @@ function tkWpId($item)
             return $postId;
         }, function ($termId) {
             return $termId;
+        }, function ($userId) {
+            return $userId;
         }
     );
 }
