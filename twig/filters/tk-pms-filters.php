@@ -41,5 +41,5 @@ $tkTwig->addFilter("pmsGetSubscriptionParents", function($subscriptionId) {
 });
 
 $tkTwig->addFilter("pmsIsFreeSubscription", function($subscription) {
-    return pms_get_subscription_plan($subscription)->price == 0;
+    return pms_get_subscription_plan($subscription['ID'])->price == 0;
 });
