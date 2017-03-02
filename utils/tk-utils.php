@@ -131,7 +131,7 @@ function tkAddQueryParams($url, $newParams)
 
 function tkBreadcrumbs($items)
 {
-    return '<span xmlns:v="http://rdf.data-vocabulary.org/#">' . tkBreadcrumbItems($items, 0) . '</span>';
+    return '<span class="tk-breadcrumbs" xmlns:v="http://rdf.data-vocabulary.org/#">' . tkBreadcrumbItems($items, 0) . '</span>';
 }
 
 function tkBreadcrumbItems($items, $index)
@@ -145,11 +145,13 @@ function tkBreadcrumbItems($items, $index)
     $name = $entry["name"];
     $url = $entry["url"];
 
-    $link = $index == sizeof($items) - 1 ? $name : "<a href='$url' rel='v:url' property='v:title'>$name</a>";
+    $isLastItem = $index == sizeof($items) - 1;
+    $link = $isLastItem ? $name : "<a href='$url' rel='v:url' property='v:title'>$name</a>";
 
-    $separator = $index == 0 ? "" : " &gt; ";
+    $separator = $index == 0 ? "" : "<span class='tk-separator'>&gt;</span>";
+    $lastItemClass = $isLastItem ? " tk-last" : "";
 
-    return "$separator<span $type>$link" . tkBreadcrumbItems($items, ++$index) . "</span>";
+    return "$separator<span class='tk-breadcrumb$lastItemClass' $type>$link" . tkBreadcrumbItems($items, ++$index) . "</span>";
 }
 
 function tkGetWPRootPath()
