@@ -4,9 +4,11 @@ class TkTemplate
 {
     private $twig;
 
-    function __construct()
+    function __construct($templateDir = NULL)
     {
-        $templateDir = get_stylesheet_directory() . "/assets/twig/";
+        if (!$templateDir) {
+            $templateDir = get_stylesheet_directory() . "/assets/twig/";
+        }
 
         if (file_exists($templateDir)) {
             $dirs = $this->getTemplateFolders($templateDir);
@@ -21,12 +23,11 @@ class TkTemplate
 
             try {
                 $this->twig = new Twig_Environment($loader, $parameters);
-            } catch(Exception $ex) {
+            } catch (Exception $ex) {
                 print_a($ex);
             }
         }
     }
-
 
     function addFilter($name, $filterFunction)
     {

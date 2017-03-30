@@ -1,54 +1,55 @@
 <?php
 
-global $tkTwig;
+function tkAddDisplayFilters(TkTemplate $templateEngine) {
+    $templateEngine->addFilter("linebreaks", function ($item) {
+        $item = str_replace("\r\n", "<br/>", $item);
+        return preg_replace("/\r|\n/", "<br/>", $item);
+    });
 
+    $templateEngine->addFilter("commas", function ($item) {
+        $item = str_replace("\r\n", ", ", $item);
+        return preg_replace("/\r|\n/", ", ", $item);
+    });
 
-$tkTwig->addFilter("linebreaks", function ($item) {
-    $item = str_replace("\r\n", "<br/>", $item);
-    return preg_replace("/\r|\n/", "<br/>", $item);
-});
-
-$tkTwig->addFilter("commas", function ($item) {
-    $item = str_replace("\r\n", ", ", $item);
-    return preg_replace("/\r|\n/", ", ", $item);
-});
-
-$tkTwig->addFilter("shorten", function ($item, $maxLetters = 28) {
-    if (mb_strlen($item) > $maxLetters) {
-        return mb_substr($item, 0, $maxLetters) . '...'; // change 50 to the number of characters you want to show
-    }
-    return $item;
-});
-
-$tkTwig->addFilter("toOptions", function ($items, $selected = NULL, $placeholder = NULL, $useId = false) {
-    $options = "";
-
-    $optionWasSelected = false;
-    foreach ($items as $item) {
-        $itemName = $useId ? tkWpId($item) : tkWpName($item);
-        $itemTitle = tkWpTitle($item);
-
-        $isSelected = $selected == $itemName;
-        if ($isSelected) {
-            $optionWasSelected = true;
+    $templateEngine->addFilter("shorten", function ($item, $maxLetters = 28) {
+        if (mb_strlen($item) > $maxLetters) {
+            return mb_substr($item, 0, $maxLetters) . '...'; // change 50 to the number of characters you want to show
         }
-        $selectedAttribute = $isSelected ? "selected" : "";
-        $options .= "<option value='$itemName' $selectedAttribute>$itemTitle</option>";
-    }
+        return $item;
+    });
 
-    if (!empty($placeholder)) {
-        $defaultSelected = $optionWasSelected ? "" : "selected";
-        $options = "<option $defaultSelected value>$placeholder</option>" . $options;
-    }
+    $templateEngine->addFilter("toOptions", function ($items, $selected = NULL, $placeholder = NULL, $useId = false) {
+        $options = "";
 
-    return $options;
-});
+        $optionWasSelected = false;
+        foreach ($items as $item) {
+            $itemName = $useId ? tkWpId($item) : tkWpName($item);
+            $itemTitle = tkWpTitle($item);
 
-$tkTwig->addFilter("printa", function ($item) {
-    print_a($item);
-});
+            $isSelected = $selected == $itemName;
+            if ($isSelected) {
+                $optionWasSelected = true;
+            }
+            $selectedAttribute = $isSelected ? "selected" : "";
+            $options .= "<option value='$itemName' $selectedAttribute>$itemTitle</option>";
+        }
 
-$tkTwig->addFilter("wpshortcode", function ($code) {
-    return do_shortcode($code);
-});
+        if (!empty($placeholder)) {
+            $defaultSelected = $optionWasSelected ? "" : "selected";
+            $options = "<option $defaultSelected value>$placeholder</option>" . $options;
+        }
 
+        return $options;
+    });
+
+    $templateEngine->addFilter("printa", function ($item) {
+        print_a($item);
+    });
+
+    $templateEngine->addFilter("wpshortcode", function ($code) {
+        return do_shortcode($code);
+    });
+}
+
+global $tkTwig;
+tkAddDisplayFilters($tkTwig);
