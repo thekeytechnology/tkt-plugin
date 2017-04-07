@@ -159,8 +159,10 @@ function tkWpApplyWithId($item, Callable $toPost, Callable $toTerm = NULL, Calla
     } else if (is_array($item)) {
         if (isset($item["term_id"])) {
             return $toTerm(intval($item["term_id"]), $item["taxonomy"]);
-        } else if (isset($item["ID"])) {
+        } else if (isset($item["ID"]) && isset($item["post_type"])) {
             return $toPost(intval($item["ID"]), $item["post_type"]);
+        } else {
+            return $toUser(intval($item["ID"]));
         }
     }
     throw new Exception("This type is not supported! ".print_r($item, true));

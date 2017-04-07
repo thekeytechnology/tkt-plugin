@@ -59,8 +59,8 @@ class TkTemplate
 
         try {
             return $this->twig->render($templateName, $args);
-        } catch (Exception $e) {
-            error_log("Template Exception: " . $e->getMessage() . " - " . $e->getTraceAsString());
+        } catch (Twig_Error_Runtime $e) {
+            error_log("Template Exception: " . $e->getMessage() . " on line (" . $e->getLine() . ") - " . $e->getTraceAsString());
             return "<marquee class='tk-error'>TEMPLATE ERROR CHECK LOGS!!!</marquee>";
         }
     }
