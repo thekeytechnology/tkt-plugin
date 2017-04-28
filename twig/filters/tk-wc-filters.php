@@ -6,36 +6,10 @@ $tkTwig->addFilter("wcthumbnail", function ($item, $size = "post-thumbnail") {
     if ($item instanceof WC_Product) {
         return tkGetImageForProduct($size, $item->post);
     }
+    print_a($item);
     throw new Exception("Type not supported!");
 });
 
-$tkTwig->addFilter("wcisinbasket", function ($item) {
-    if ($item instanceof WC_Product) {
-        foreach (WC()->cart->get_cart() as $cart_item_key => $values) {
-            $_product = $values['data'];
-
-            if ($item->id == $_product->id) {
-                return true;
-            }
-        }
-        return false;
-    }
-    throw new Exception("Type not supported!");
-});
-
-$tkTwig->addFilter("wcid", function ($item) {
-    if ($item instanceof WC_Product) {
-        return $item->id;
-    }
-    throw new Exception("Type not supported!");
-});
-
-$tkTwig->addFilter("wccontent", function ($item) {
-    if ($item instanceof WC_Product) {
-        return $item->post->post_content;
-    }
-    throw new Exception("Type not supported!");
-});
 
 $tkTwig->addFilter("wctitle", function ($item) {
     if ($item instanceof WC_Product) {
@@ -64,11 +38,11 @@ $tkTwig->addFilter("wcprice", function ($item, $regular = false) {
     }
 });
 
-$tkTwig->addFilter("isvariable", function ($item) {
-    return $item instanceof WC_Product_Variable;
+$tkTwig->addFilter("isvariable", function($item) {
+   return $item instanceof WC_Product_Variable;
 });
 
-$tkTwig->addFilter("sortByMeta", function ($item, $meta, $order = "DESC") {
+$tkTwig->addFilter("sortByMeta", function($item, $meta, $order = "DESC") {
     $order == 'ASC' ? $order = SORT_ASC : $order = SORT_DESC;
-    return tkSortArrayByMetaField($item, $meta, $order);
+    return tkSortArrayByMetaField($item,$meta,$order);
 });

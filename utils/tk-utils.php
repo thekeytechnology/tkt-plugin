@@ -34,20 +34,16 @@ function s0($key, $array, $default = NULL)
     return isset($array[$key]) && isset($array[$key][0]) ? $array[$key][0] : $default;
 }
 
-if (!function_exists("startsWith")) {
-    function startsWith($haystack, $needle)
-    {
-        // search backwards starting from haystack length characters from the end
-        return $needle === "" || strrpos($haystack, $needle, -strlen($haystack)) !== false;
-    }
-
+function startsWith($haystack, $needle)
+{
+    // search backwards starting from haystack length characters from the end
+    return $needle === "" || strrpos($haystack, $needle, -strlen($haystack)) !== false;
 }
-if (!function_exists("endsWith")) {
-    function endsWith($haystack, $needle)
-    {
-        // search forward starting from end minus needle length characters
-        return $needle === "" || (($temp = strlen($haystack) - strlen($needle)) >= 0 && strpos($haystack, $needle, $temp) !== false);
-    }
+
+function endsWith($haystack, $needle)
+{
+    // search forward starting from end minus needle length characters
+    return $needle === "" || (($temp = strlen($haystack) - strlen($needle)) >= 0 && strpos($haystack, $needle, $temp) !== false);
 }
 
 function endsWithIgnoreCase($haystack, $needle)
@@ -129,13 +125,12 @@ function tkAddQueryParams($url, $newParams)
     return $url_parts['scheme'] . '://' . $url_parts['host'] . $url_parts['path'] . '?' . $url_parts['query'];
 }
 
-function tkBreadcrumbs($items, $args = array())
+function tkBreadcrumbs($items)
 {
-    $containerClass = s("container_class", $args, "");
-    return '<div class="tk-breadcrumbs ' . $containerClass . '" xmlns:v="http://rdf.data-vocabulary.org/#">' . tkBreadcrumbItems($items, $args, 0) . '</div>';
+    return '<span xmlns:v="http://rdf.data-vocabulary.org/#">' . tkBreadcrumbItems($items, 0) . '</span>';
 }
 
-function tkBreadcrumbItems($items, $args = array(), $index = 0)
+function tkBreadcrumbItems($items, $index)
 {
     if ($index >= sizeof($items)) {
         return "";
@@ -146,23 +141,11 @@ function tkBreadcrumbItems($items, $args = array(), $index = 0)
     $name = $entry["name"];
     $url = $entry["url"];
 
-    $isLastItem = $index == sizeof($items) - 1;
+    $link = $index == sizeof($items) - 1 ? $name : "<a href='$url' rel='v:url' property='v:title'>$name</a>";
 
-    $linkClass = s("link_class", $args, "");
+    $separator = $index == 0 ? "" : " &gt; ";
 
-    $link = $isLastItem ? "<span class='$linkClass'>$name</span>" : "<a href='$url' class='$linkClass' rel='v:url' property='v:title'>$name</a>";
-
-    $separatorIcon = s("separator", $args, "&gt;");
-
-    $separator = $index == 0 ? "" : "<span class='tk-separator'>$separatorIcon</span>";
-    $itemClass = $isLastItem ? " tk-last" : "";
-    $itemClass = $index == 0 ? " tk-first $itemClass" : $itemClass;
-
-    $breadcrumbClass = s("item_class", $args, "tk-breadcrumb");
-
-    $beforeFirstItem = $index == 0 ? s("before_first_item", $args, "") : "";
-
-    return "$beforeFirstItem$separator<span class='$breadcrumbClass$itemClass' $type>$link" . tkBreadcrumbItems($items, $args, ++$index) . "</span>";
+    return "$separator<span $type>$link" . tkBreadcrumbItems($items, ++$index) . "</span>";
 }
 
 function tkGetWPRootPath()
@@ -199,11 +182,10 @@ function tkHasValidCaptcha($secret)
     return $responseData->success;
 }
 
-function tkGetVideoThumbnailPathFromVideoCode($videocode)
-{
+function tkGetVideoThumbnailPathFromVideoCode($videocode) {
 
     if (is_numeric($videocode)) {
-        $vimeoMeta = "http://vimeo.com/api/v2/video/" . $videocode . ".php";
+        $vimeoMeta="http://vimeo.com/api/v2/video/" . $videocode . ".php";
         $hash = unserialize(file_get_contents($vimeoMeta));
         return $hash[0]['thumbnail_large'];
     } else {

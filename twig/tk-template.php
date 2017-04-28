@@ -4,11 +4,9 @@ class TkTemplate
 {
     private $twig;
 
-    function __construct($templateDir = NULL)
+    function __construct()
     {
-        if (!$templateDir) {
-            $templateDir = get_stylesheet_directory() . "/assets/twig/";
-        }
+        $templateDir = get_stylesheet_directory() . "/assets/twig/";
 
         if (file_exists($templateDir)) {
             $dirs = $this->getTemplateFolders($templateDir);
@@ -23,11 +21,12 @@ class TkTemplate
 
             try {
                 $this->twig = new Twig_Environment($loader, $parameters);
-            } catch (Exception $ex) {
+            } catch(Exception $ex) {
                 print_a($ex);
             }
         }
     }
+
 
     function addFilter($name, $filterFunction)
     {
@@ -59,8 +58,8 @@ class TkTemplate
 
         try {
             return $this->twig->render($templateName, $args);
-        } catch (Twig_Error_Runtime $e) {
-            error_log("Template Exception: " . $e->getMessage() . " on line (" . $e->getLine() . ") - " . $e->getTraceAsString());
+        } catch (Exception $e) {
+            error_log("Template Exception: " . $e->getMessage() . " - " . $e->getTraceAsString());
             return "<marquee class='tk-error'>TEMPLATE ERROR CHECK LOGS!!!</marquee>";
         }
     }

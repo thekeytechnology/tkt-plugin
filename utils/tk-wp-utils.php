@@ -12,8 +12,6 @@ function tkWpTitle($item)
         return $item->name;
     } else if ($item instanceof WP_Post) {
         return $item->post_title;
-    } else if ($item instanceof WP_User) {
-        return $item->display_name;
     } else if (is_array($item)) {
         if (isset($item["name"])) {
             return $item["name"];
@@ -49,8 +47,6 @@ function tkWpName($item)
         return $item->slug;
     } else if ($item instanceof WP_Post) {
         return $item->post_name;
-    } else if ($item instanceof WP_User) {
-        return $item->user_login;
     } else if (is_array($item)) {
         if (isset($item["name"])) {
             return $item["name"];
@@ -58,7 +54,7 @@ function tkWpName($item)
             return $item["post_name"];
         }
     }
-    throw new Exception("This type is not supported! ".print_r($item, true));
+    throw new Exception("This type is not supported! " . print_r($item, true));
 }
 
 function tkWpContent($item)
@@ -84,7 +80,7 @@ function tkWpRawContent($item)
             return $item["post_content"];
         }
     }
-    throw new Exception("This type is not supported! ".print_r($item, true));
+    throw new Exception("This type is not supported! " . print_r($item, true));
 }
 
 
@@ -103,7 +99,6 @@ function tkWpTaxonomyList($items)
 
 function tkWpMeta($item, $metaKey, $single = true)
 {
-
     return tkWpApplyWithId($item, function ($postId) use ($metaKey, $single) {
         return get_post_meta($postId, $metaKey, $single);
     }, function ($termId) use ($metaKey, $single) {
@@ -129,10 +124,27 @@ function tkWpId($item)
             return $postId;
         }, function ($termId) {
             return $termId;
-        }, function ($userId) {
-            return $userId;
         }
     );
+}
+
+function tkWpType($item)
+{
+    if ($item instanceof WP_Post) {
+        return $item->post_type;
+    }
+    if ($item instanceof WP_Term) {
+        return $item->taxonomy;
+    }
+    if (is_array($item)) {
+        if (isset($item["post_type"])) {
+            return $item["post_type"];
+        }
+        if (isset($item["taxonomy"])) {
+            return $item["taxonomy"];
+        }
+    }
+    return false;
 }
 
 function tkWpApplyWithId($item, Callable $toPost, Callable $toTerm = NULL, Callable $toUser = NULL)
@@ -159,13 +171,11 @@ function tkWpApplyWithId($item, Callable $toPost, Callable $toTerm = NULL, Calla
     } else if (is_array($item)) {
         if (isset($item["term_id"])) {
             return $toTerm(intval($item["term_id"]), $item["taxonomy"]);
-        } else if (isset($item["ID"]) && isset($item["post_type"])) {
+        } else if (isset($item["ID"])) {
             return $toPost(intval($item["ID"]), $item["post_type"]);
-        } else {
-            return $toUser(intval($item["ID"]));
         }
     }
-    throw new Exception("This type is not supported! ".print_r($item, true));
+    throw new Exception("This type is not supported! " . print_r($item, true));
 }
 
 function tkWpGetSubterms($taxonomy, WP_Term $parentTerm = NULL, $orderField = NULL)
@@ -190,13 +200,14 @@ function tkWpGetSubterms($taxonomy, WP_Term $parentTerm = NULL, $orderField = NU
     return get_terms($args);
 }
 
-function tkSortArrayByMetaField($array,$sortBy ,$order=SORT_DESC) {
+function tkSortArrayByMetaField($array, $sortBy, $order = SORT_DESC)
+{
 
     $tempArray = array();
 
-    foreach($array as $key => $item) {
+    foreach ($array as $key => $item) {
         if (!isset($item[$sortBy])) {
-           $item[$sortBy] = tkWpMeta($item,$sortBy);
+            $item[$sortBy] = tkWpMeta($item, $sortBy);
         }
         $tempArray[$key] = $item[$sortBy];
     }
