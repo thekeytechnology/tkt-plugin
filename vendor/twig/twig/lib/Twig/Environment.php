@@ -446,12 +446,14 @@ class Twig_Environment
 
                 $content = $this->compileSource($source);
 
+                /*
                 if ($this->bcWriteCacheFile) {
                     $this->writeCacheFile($key, $content);
                 } else {
                     $this->cache->write($key, $content);
                     $this->cache->load($key);
                 }
+                */
 
                 if (!class_exists($mainCls, false)) {
                     /* Last line of defense if either $this->bcWriteCacheFile was used,
