@@ -1,7 +1,11 @@
 <?php
 
-global $tkTwig;
+function tkAddUtilFilters(TkTemplate $tkTwig)
+{
+    $tkTwig->addFilter("isNumeric", function ($item) {
+        return is_numeric($item);
+    });
+}
 
-$tkTwig->addFilter("isNumeric", function ($item) {
-    return is_numeric($item);
-});
+global $tkTwig;
+tkAddUtilFilters($tkTwig);
