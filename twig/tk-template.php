@@ -1,15 +1,13 @@
 <?php
-if ( ! function_exists( 'is_ajax' ) ) {
 
-    /**
-     * is_ajax - Returns true when the page is loaded via ajax.
-     * @return bool
-     */
-    function is_ajax() {
-        return defined( 'DOING_AJAX' );
-    }
-}
-
+require_once("filters/tk-pms-filters.php");
+require_once("filters/tk-tec-filters.php");
+require_once("filters/tk-wc-filters.php");
+require_once("filters/tk-wp-display.php");
+require_once("filters/tk-wp-fields.php");
+require_once("filters/tk-wp-terms.php");
+require_once("filters/tk-util-filters.php");
+require_once("functions/tk-wp-functions.php");
 
 class TkTemplate
 {
@@ -34,27 +32,10 @@ class TkTemplate
 
             try {
                 $this->twig = new Twig_Environment($loader, $parameters);
-            } catch(Exception $ex) {
+            } catch (Exception $ex) {
                 print_a($ex);
             }
         }
-
-        tkAddPmsFilters($this);
-        tkAddUtilFilters($this);
-        tkAddWcFilters($this);
-        tkAddWpDisplayFilter($this);
-        tkAddWpFieldFilters($this);
-        tkAddWpTermFilters($this);
-        tkAddWpFunctions($this);
-
-        add_action('init', function ()
-        {
-            $this->addGlobal("wpuserloggedin", is_user_logged_in());
-            $this->addGlobal("wplogouturl", wp_logout_url("/"));
-            $this->addGlobal("wpisajax", is_ajax());
-            $this->addGlobal("wpcurrentpath", add_query_arg(NULL, NULL));
-            $this->addGlobal("wpshoulddisplayrecaptcha", TK_RECAPTCHA);
-        });
     }
 
 
@@ -113,9 +94,30 @@ class TkTemplate
     }
 }
 
+function tkAddDefaultTwigFunctionality(TkTemplate $tkTwig)
+{
+    tkAddPmsFilters($tkTwig);
+    tkAddUtilFilters($tkTwig);
+    tkAddWcFilters($tkTwig);
+    tkAddWpDisplayFilter($tkTwig);
+    tkAddWpFieldFilters($tkTwig);
+    tkAddWpTermFilters($tkTwig);
+    tkAddWpFunctions($tkTwig);
+    tkAddTecFilters($tkTwig);
+
+    add_action('init', function () use ($tkTwig) {
+        $tkTwig->addGlobal("wpuserloggedin", is_user_logged_in());
+        $tkTwig->addGlobal("wplogouturl", wp_logout_url("/"));
+        $tkTwig->addGlobal("wpisajax", is_ajax());
+        $tkTwig->addGlobal("wpcurrentpath", add_query_arg(NULL, NULL));
+        $tkTwig->addGlobal("wpshoulddisplayrecaptcha", TK_RECAPTCHA);
+    });
+}
+
+
 global $tkTwig;
 $tkTwig = new TkTemplate();
-
+tkAddDefaultTwigFunctionality($tkTwig);
 
 function tkTemplate($atts)
 {
@@ -123,5 +125,6 @@ function tkTemplate($atts)
     $atts["queriedObject"] = get_queried_object();
     return $tkTwig->renderTemplate($atts["name"], $atts);
 }
+
 
 add_shortcode("tkTemplate", "tkTemplate");
