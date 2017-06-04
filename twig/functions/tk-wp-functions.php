@@ -1,6 +1,11 @@
 <?php
 
-function tkAddWpFunctions(TkTemplate $tkTwig) {
+function tkAddWpFunctions(TkTemplate $tkTwig)
+{
+    $tkTwig->addFunction("wppost", function ($postId) {
+        return get_post($postId);
+    });
+
     $tkTwig->addFunction("wpterms", function ($taxonomyName) {
         return get_terms(array(
             "taxonomy" => $taxonomyName,
