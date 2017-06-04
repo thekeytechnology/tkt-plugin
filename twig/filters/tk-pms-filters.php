@@ -49,6 +49,3 @@ function tkAddPmsFilters(TkTemplate $tkTwig)
     });
 
 }
-
-global $tkTwig;
-tkAddPmsFilters($tkTwig);

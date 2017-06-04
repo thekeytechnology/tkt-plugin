@@ -55,6 +55,3 @@ function tkAddWpDisplayFilter(TkTemplate $tkTwig)
     });
 
 }
-
-global $tkTwig;
-tkAddWpDisplayFilter($tkTwig);

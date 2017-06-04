@@ -1,4 +1,15 @@
 <?php
+if ( ! function_exists( 'is_ajax' ) ) {
+
+    /**
+     * is_ajax - Returns true when the page is loaded via ajax.
+     * @return bool
+     */
+    function is_ajax() {
+        return defined( 'DOING_AJAX' );
+    }
+}
+
 
 class TkTemplate
 {
@@ -27,6 +38,23 @@ class TkTemplate
                 print_a($ex);
             }
         }
+
+        tkAddPmsFilters($this);
+        tkAddUtilFilters($this);
+        tkAddWcFilters($this);
+        tkAddWpDisplayFilter($this);
+        tkAddWpFieldFilters($this);
+        tkAddWpTermFilters($this);
+        tkAddWpFunctions($this);
+
+        add_action('init', function ()
+        {
+            $this->addGlobal("wpuserloggedin", is_user_logged_in());
+            $this->addGlobal("wplogouturl", wp_logout_url("/"));
+            $this->addGlobal("wpisajax", is_ajax());
+            $this->addGlobal("wpcurrentpath", add_query_arg(NULL, NULL));
+            $this->addGlobal("wpshoulddisplayrecaptcha", TK_RECAPTCHA);
+        });
     }
 
 

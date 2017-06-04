@@ -75,6 +75,3 @@ function tkAddWpFieldFilters(TkTemplate $tkTwig)
         return tkGetVideoThumbnailPathFromVideoCode($videoCode);
     });
 }
-
-global $tkTwig;
-tkAddWpFieldFilters($tkTwig);

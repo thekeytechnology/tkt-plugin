@@ -7,5 +7,3 @@ function tkAddUtilFilters(TkTemplate $tkTwig)
     });
 }
 
-global $tkTwig;
-tkAddUtilFilters($tkTwig);

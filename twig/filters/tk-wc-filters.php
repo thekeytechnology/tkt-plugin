@@ -48,6 +48,3 @@ function tkAddWcFilters(TkTemplate $tkTwig)
     });
 
 }
-
-global $tkTwig;
-tkAddWcFilters($tkTwig);

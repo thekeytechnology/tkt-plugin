@@ -28,6 +28,3 @@ function tkAddWpFunctions(TkTemplate $tkTwig)
         return call_user_func($name, $parameter, $_);
     });
 }
-
-global $tkTwig;
-tkAddWpFunctions($tkTwig);

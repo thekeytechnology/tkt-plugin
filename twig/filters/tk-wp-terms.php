@@ -70,6 +70,3 @@ function tkAddWpTermFilters(TkTemplate $tkTwig)
         });
     });
 }
-
-global $tkTwig;
-tkAddWpTermFilters($tkTwig);
