@@ -4,9 +4,11 @@ class TkTemplate
 {
     private $twig;
 
-    function __construct()
+    function __construct($templateDir = NULL)
     {
-        $templateDir = get_stylesheet_directory() . "/assets/twig/";
+        if (!$templateDir) {
+            $templateDir = get_stylesheet_directory() . "/assets/twig/";
+        }
 
         if (file_exists($templateDir)) {
             $dirs = $this->getTemplateFolders($templateDir);
