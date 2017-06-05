@@ -70,6 +70,13 @@ function tkAddWpFieldFilters(TkTemplate $tkTwig)
         return $item->nickname;
     });
 
+    $tkTwig->addFilter("wpemail", function (WP_User $item) {
+        return $item->user_email;
+    });
+
+    $tkTwig->addFilter("wpdisplayname", function (WP_User $item) {
+        return $item->display_name;
+    });
 
     $tkTwig->addFilter("wpVideoThumbnail", function ($videoCode) {
         return tkGetVideoThumbnailPathFromVideoCode($videoCode);
