@@ -10,6 +10,11 @@ function tkAddWpFieldFilters(TkTemplate $tkTwig)
         return tkWpTitle($item);
     });
 
+    $tkTwig->addFilter("wpauthor", function (WP_Post $item) {
+        $authorId = $item->post_author;
+        return get_user_by("ID", $authorId);
+    });
+
     $tkTwig->addFilter("wpmeta", function ($item, $metaKey, $single = true) {
         return tkWpMeta($item, $metaKey, $single);
     });
@@ -77,6 +82,7 @@ function tkAddWpFieldFilters(TkTemplate $tkTwig)
     $tkTwig->addFilter("wpdisplayname", function (WP_User $item) {
         return $item->display_name;
     });
+
 
     $tkTwig->addFilter("wpVideoThumbnail", function ($videoCode) {
         return tkGetVideoThumbnailPathFromVideoCode($videoCode);
