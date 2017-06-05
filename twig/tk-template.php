@@ -11,9 +11,32 @@ require_once("functions/tk-wp-functions.php");
 
 class TkTemplate
 {
+    static function create($templateDir = NULL)
+    {
+        $tkTwig = new TkTemplate($templateDir);
+
+        tkAddPmsFilters($tkTwig);
+        tkAddUtilFilters($tkTwig);
+        tkAddWcFilters($tkTwig);
+        tkAddWpDisplayFilter($tkTwig);
+        tkAddWpFieldFilters($tkTwig);
+        tkAddWpTermFilters($tkTwig);
+        tkAddWpFunctions($tkTwig);
+        tkAddTecFilters($tkTwig);
+
+        add_action('init', function () use ($tkTwig) {
+            $tkTwig->addGlobal("wpuserloggedin", is_user_logged_in());
+            $tkTwig->addGlobal("wplogouturl", wp_logout_url("/"));
+            $tkTwig->addGlobal("wpisajax", is_ajax());
+            $tkTwig->addGlobal("wpcurrentpath", add_query_arg(NULL, NULL));
+            $tkTwig->addGlobal("wpshoulddisplayrecaptcha", TK_RECAPTCHA);
+        });
+        return $tkTwig;
+    }
+
     private $twig;
 
-    function __construct($templateDir = NULL)
+    public function __construct($templateDir = NULL)
     {
         if (!$templateDir) {
             $templateDir = get_stylesheet_directory() . "/assets/twig/";
@@ -94,30 +117,9 @@ class TkTemplate
     }
 }
 
-function tkAddDefaultTwigFunctionality(TkTemplate $tkTwig)
-{
-    tkAddPmsFilters($tkTwig);
-    tkAddUtilFilters($tkTwig);
-    tkAddWcFilters($tkTwig);
-    tkAddWpDisplayFilter($tkTwig);
-    tkAddWpFieldFilters($tkTwig);
-    tkAddWpTermFilters($tkTwig);
-    tkAddWpFunctions($tkTwig);
-    tkAddTecFilters($tkTwig);
-
-    add_action('init', function () use ($tkTwig) {
-        $tkTwig->addGlobal("wpuserloggedin", is_user_logged_in());
-        $tkTwig->addGlobal("wplogouturl", wp_logout_url("/"));
-        $tkTwig->addGlobal("wpisajax", is_ajax());
-        $tkTwig->addGlobal("wpcurrentpath", add_query_arg(NULL, NULL));
-        $tkTwig->addGlobal("wpshoulddisplayrecaptcha", TK_RECAPTCHA);
-    });
-}
-
 
 global $tkTwig;
-$tkTwig = new TkTemplate();
-tkAddDefaultTwigFunctionality($tkTwig);
+$tkTwig = TkTemplate::create();
 
 function tkTemplate($atts)
 {
@@ -125,6 +127,5 @@ function tkTemplate($atts)
     $atts["queriedObject"] = get_queried_object();
     return $tkTwig->renderTemplate($atts["name"], $atts);
 }
-
 
 add_shortcode("tkTemplate", "tkTemplate");
