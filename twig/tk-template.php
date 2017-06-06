@@ -1,12 +1,46 @@
 <?php
 
+require_once("filters/tk-pms-filters.php");
+require_once("filters/tk-tec-filters.php");
+require_once("filters/tk-wc-filters.php");
+require_once("filters/tk-wp-display.php");
+require_once("filters/tk-wp-fields.php");
+require_once("filters/tk-wp-terms.php");
+require_once("filters/tk-util-filters.php");
+require_once("functions/tk-wp-functions.php");
+
 class TkTemplate
 {
+    static function create($templateDir = NULL)
+    {
+        $tkTwig = new TkTemplate($templateDir);
+
+        tkAddPmsFilters($tkTwig);
+        tkAddUtilFilters($tkTwig);
+        tkAddWcFilters($tkTwig);
+        tkAddWpDisplayFilter($tkTwig);
+        tkAddWpFieldFilters($tkTwig);
+        tkAddWpTermFilters($tkTwig);
+        tkAddWpFunctions($tkTwig);
+        tkAddTecFilters($tkTwig);
+
+        add_action('init', function () use ($tkTwig) {
+            $tkTwig->addGlobal("wpuserloggedin", is_user_logged_in());
+            $tkTwig->addGlobal("wplogouturl", wp_logout_url("/"));
+            $tkTwig->addGlobal("wpisajax", is_ajax());
+            $tkTwig->addGlobal("wpcurrentpath", add_query_arg(NULL, NULL));
+            $tkTwig->addGlobal("wpshoulddisplayrecaptcha", TK_RECAPTCHA);
+        });
+        return $tkTwig;
+    }
+
     private $twig;
 
-    function __construct()
+    public function __construct($templateDir = NULL)
     {
-        $templateDir = get_stylesheet_directory() . "/assets/twig/";
+        if (!$templateDir) {
+            $templateDir = get_stylesheet_directory() . "/assets/twig/";
+        }
 
         if (file_exists($templateDir)) {
             $dirs = $this->getTemplateFolders($templateDir);
@@ -21,7 +55,7 @@ class TkTemplate
 
             try {
                 $this->twig = new Twig_Environment($loader, $parameters);
-            } catch(Exception $ex) {
+            } catch (Exception $ex) {
                 print_a($ex);
             }
         }
@@ -83,9 +117,9 @@ class TkTemplate
     }
 }
 
-global $tkTwig;
-$tkTwig = new TkTemplate();
 
+global $tkTwig;
+$tkTwig = TkTemplate::create();
 
 function tkTemplate($atts)
 {
