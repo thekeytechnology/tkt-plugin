@@ -15,6 +15,9 @@ function add_ids_to_header_tags($content)
             if (strlen($match['tag_extra']) && false !== stripos($match['tag_extra'], 'id=')) {
                 continue;
             }
+            if ($match["tag_name"] != "h2") {
+                continue;
+            }
             $find[] = $match['full_tag'];
             $id = sanitize_title($match['tag_contents']);
             $id_attr = sprintf(' id="%s"', $id);
