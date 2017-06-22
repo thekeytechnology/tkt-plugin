@@ -8,4 +8,7 @@ function tkSendMail($email, $subject, $content)
 function wpse27856_set_content_type(){
     return "text/html";
 }
-add_filter( 'wp_mail_content_type','wpse27856_set_content_type' );
+
+if(TK_MAIL_HTML){
+    add_filter( 'wp_mail_content_type','wpse27856_set_content_type' );
+}

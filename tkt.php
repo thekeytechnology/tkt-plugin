@@ -17,6 +17,10 @@ if (!defined("TK_RECAPTCHA")) {
     define("TK_RECAPTCHA", false);
 }
 
+if (!defined("TK_MAIL_HTML")){
+    define("TK_MAIL_HTML", false);
+}
+
 require_once "vendor/autoload.php";
 require_once("utils/tk-wp-utils.php");
 require_once("utils/tk-utils.php");
