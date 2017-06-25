@@ -1,6 +1,6 @@
 <?php
 
-function tk_cf7_conversion_tracking()
+function tkCF7ConversionTracking()
 {
     ?>
     <script type="text/javascript">
@@ -19,7 +19,7 @@ function tk_cf7_conversion_tracking()
     <?php
 }
 
-function tkInstallCF7ConversionTracking($forms)
+function tkInstallCF7ConversionTracking()
 {
-    add_action('wp_head', 'tk_cf7_conversion_tracking');
+    add_action('wp_head', 'tkCF7ConversionTracking');
 }
