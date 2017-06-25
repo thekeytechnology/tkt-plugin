@@ -10,6 +10,7 @@ function tk_cf7_conversion_tracking()
             for (var i = 0; i < inputs.length; i++) {
                 if ('tk-conversion-action' === inputs[i].name) {
                     __gaTracker && __gaTracker('send', 'event', 'Conversion', input[i].value);
+                    ga && ga('send', 'event', 'Conversion', input[i].value);
                 }
 
             }
