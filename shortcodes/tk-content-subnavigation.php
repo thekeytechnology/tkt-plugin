@@ -1,6 +1,6 @@
 <?php
 
-add_filter('the_content', 'add_ids_to_header_tags');
+//add_filter('the_content', 'add_ids_to_header_tags');
 function add_ids_to_header_tags($content)
 {
 

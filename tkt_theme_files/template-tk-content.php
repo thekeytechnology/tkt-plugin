@@ -50,7 +50,9 @@ get_header();
 
             </div>
 
-            <?php $output = ob_get_clean( ); ?>
+            <?php $output = ob_get_clean( );
+
+            $output = add_ids_to_header_tags($output); ?>
 
 
             <!-- .four-columns - sidebar -->
