@@ -1,5 +1,5 @@
 jQuery(document).ready(function ($) {
-    var sticky = $('.page-template-template-content .sidebar .widget_text');
+    var sticky = $('.page-template-template-tk-content .sidebar .widget_text');
 
     var adminBar = $("#wpadminbar");
     var topBar = $("#Top_bar");
