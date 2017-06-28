@@ -1,43 +1,54 @@
 jQuery(document).ready(function ($) {
-    var sticky = $('.page-template-template-tk-content .sidebar .widget_text');
+    var sidebar = $('.page-template-template-tk-content .sidebar .widget_text');
 
     var adminBar = $("#wpadminbar");
-    var topBar = $("#Top_bar");
-    var footer = $("#Footer");
+    var headerWrapper = $("#Header_wrapper");
 
-    if (sticky.length) {
-        var originalPosition = sticky.offset().top;
-        var footerTop = footer.offset().top;
+    var topBar = $("#Top_bar");
+    var actionBar = $("#Action_bar");
+    var footer = $("#Footer");
+    var hasStickyHeader = false;
+
+    var dynamicBarHeights = adminBar.height();
+    if ($(".header-fixed").length){ //if a different theme header style with different stickiness classes/etc is ever used, adjust this
+        dynamicBarHeights += (topBar.height()+actionBar.height());
+        hasStickyHeader = true;
+    }
+
+    var marginToTopBars = 20;
+    var marginToFooter = 20;
+
+    if (sidebar.length) {
+
+        var originalPosition = sidebar.offset().top;
 
         $(window).scroll(function () {
             var viewportWidth = $(window).width();
-            var dynamicBarHeights = adminBar.height() + topBar.height();
-            var marginToTopBars = 20;
-            var scrollPosition = $(window).scrollTop() + dynamicBarHeights + marginToTopBars;
+            var scrollPosition = $(window).scrollTop();
 
             var screenBigEnough = viewportWidth > 800;
-            var scrolledToPosition = scrollPosition >= originalPosition;
+            var scrolledToPosition = hasStickyHeader ? ((scrollPosition + dynamicBarHeights + marginToTopBars) >= originalPosition) : ( (scrollPosition >= headerWrapper.height()) );
 
             if (scrolledToPosition && screenBigEnough) {
 
-                if (scrollPosition + marginToTopBars + sticky.height() > footerTop) {
-                    sticky.css('position', 'absolute');
-                    sticky.css('min-width', '382.250px');
-                    sticky.css('top', 'inherit');
-                    sticky.css('bottom', '20px');
+                if ( scrollPosition + sidebar.height() + dynamicBarHeights + marginToTopBars + marginToFooter > footer.offset().top ) {
+                    sidebar.css('position', 'absolute');
+                    sidebar.css('min-width', '382.250px');
+                    sidebar.css('top', 'inherit');
+                    sidebar.css('bottom', marginToFooter + 'px');
                 } else {
-                    sticky.css('position', 'fixed');
-                    sticky.css('min-width', '382.250px');
-                    sticky.css('top', (dynamicBarHeights + marginToTopBars) + 'px');
-                    sticky.css('bottom', 'inherit');
+                    sidebar.css('position', 'fixed');
+                    sidebar.css('min-width', '382.250px');
+                    sidebar.css('top', (dynamicBarHeights + marginToTopBars) + 'px');
+                    sidebar.css('bottom', 'inherit');
                 }
 
             } else {
-                sticky.css('position', 'relative');
+                sidebar.css('position', 'relative');
                 if (!screenBigEnough) {
-                    sticky.css('min-width', 'inherit');
+                    sidebar.css('min-width', 'inherit');
                 }
-                sticky.css('top', 0);
+                sidebar.css('top', 0);
             }
         });
     }
@@ -77,14 +88,22 @@ jQuery(document).ready(function ($) {
     };
 
     var onlyMainNavigationButtons = $("ol.tk-content-subnavigation li a");
+
+    var offset = (dynamicBarHeights + marginToTopBars);
+
     onlyMainNavigationButtons.each(function () {
         var hashTarget = $(this).attr("href").split("#")[1];
         $("#" + hashTarget).each(function () {
             new Waypoint({
                 element: this,
                 handler: waypointHandler,
-                offset: '75px'
+                offset: 0//offset//'75px'
             })
         })
     });
+
+
+    //add offsets to link targets so the headings don't get overlapped by sticky header elements
+    this.styleSheets[this.styleSheets.length-1].insertRule('h2:before {content: ""; display: block; visibility: hidden; padding-top: '+offset+'px; margin-top: -'+offset+'px }',0);
+
 });

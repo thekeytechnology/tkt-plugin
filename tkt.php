@@ -1,6 +1,6 @@
 <?php
 /*
-Plugin Name: TKT Less / Grunt / Twig
+Plugin Name: TKT Less / Gulp / Twig
 Plugin URI:  https://www.thekey.technology
 Version:     1
 Author:      the key technology
