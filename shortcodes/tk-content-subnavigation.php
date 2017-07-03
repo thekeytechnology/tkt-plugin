@@ -34,7 +34,9 @@ function tkContentSubnavigation()
 {
     global $tkHeadings;
 
-    $output = "<ol class='tk-content-subnavigation'>";
+    $output = "<h2 class='tk-sidebar-h2'>Inhalt</h2>";
+    $output .= "<hr class='tk-hr-2'>";
+    $output .= "<ol class='tk-content-subnavigation'>";
 
     foreach ($tkHeadings as $heading) {
         $title = $heading[0];
