@@ -45,6 +45,13 @@ function tkAddWpFieldFilters(TkTemplate $tkTwig)
         return "";
     });
 
+    $tkTwig->addFilter("wpthumbnailurl", function ($item, $size = "post-thumbnail") {
+        if ($item instanceof WP_Post) {
+            return get_the_post_thumbnail_url($item, $size);
+        }
+        return "";
+    });
+
     $tkTwig->addFilter("wpattachmenturl", function ($item) {
         return tkWpApplyWithId($item, function ($id) {
             return wp_get_attachment_url($id);
