@@ -67,6 +67,16 @@ function tkAddWpFieldFilters(TkTemplate $tkTwig)
         });
     });
 
+
+    $tkTwig->addFilter("wpattachmentimage", function ($item, $size = "post-thumbnail") {
+        return tkWpApplyWithId($item, function ($id) use ($size) {
+            return wp_get_attachment_image($id, $size);
+        }, function ($id) use ($size) {
+            return wp_get_attachment_image($id, $size);
+        });
+    });
+
+
     $tkTwig->addFilter('wpcommentsenabled', function ($item) {
         if ($item instanceof WP_Post) {
             return comments_open($item);
