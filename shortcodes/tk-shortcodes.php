@@ -1,5 +1,7 @@
 <?php
 
+require_once("tk-breadcrumbs.php");
+
 function tkAttribute($atts)
 {
     return get_post_meta(get_queried_object_id(), $atts["field"], true);
