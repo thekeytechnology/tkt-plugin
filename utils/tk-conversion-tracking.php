@@ -13,9 +13,9 @@ function tkCF7ConversionTracking()
 
             for (var i = 0; i < inputs.length; i++) {
                 if ('tk-conversion-action' === inputs[i].name) {
-                    __gaTracker && __gaTracker('send', 'event', 'Conversion', input[i].value);
-                    ga && ga('send', 'event', 'Conversion', input[i].value);
-                    fbq && fbq('trackCustom', 'Conversion', {type: input[i].value});
+                    __gaTracker && __gaTracker('send', 'event', 'Conversion', inputs[i].value);
+                    ga && ga('send', 'event', 'Conversion', inputs[i].value);
+                    fbq && fbq('trackCustom', 'Conversion', {type: inputs[i].value});
                 }
 
             }
