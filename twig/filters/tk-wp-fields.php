@@ -15,6 +15,10 @@ function tkAddWpFieldFilters(TkTemplate $tkTwig)
         return get_user_by("ID", $authorId);
     });
 
+    $tkTwig->addFilter("wpexcerpt", function (WP_Post $item) {
+        return $item->post_excerpt;
+    });
+
     $tkTwig->addFilter("wpmeta", function ($item, $metaKey, $single = true) {
         return tkWpMeta($item, $metaKey, $single);
     });
