@@ -156,7 +156,7 @@ function tkWpApplyWithId($item, Callable $toPost, Callable $toTerm = NULL, Calla
         return "";
     } else if ($item instanceof WP_Term) {
         if (isset($toTerm)) {
-            return $toTerm($item->term_id);
+            return $toTerm($item->term_id, $item->taxonomy);
         } else {
             throw new Exception("No function provided for this type!");
         }
