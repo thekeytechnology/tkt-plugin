@@ -15,6 +15,14 @@ function tkAddWpFieldFilters(TkTemplate $tkTwig)
         return get_user_by("ID", $authorId);
     });
 
+    $tkTwig->addFilter("wpexcerpt", function (WP_Post $item) {
+        return $item->post_excerpt;
+    });
+
+    $tkTwig->addFilter("wppostdate", function (WP_Post $item) {
+        return $item->post_date;
+    });
+
     $tkTwig->addFilter("wpmeta", function ($item, $metaKey, $single = true) {
         return tkWpMeta($item, $metaKey, $single);
     });
@@ -35,7 +43,6 @@ function tkAddWpFieldFilters(TkTemplate $tkTwig)
         return tkWpId($item);
     });
 
-
     $tkTwig->addFilter("wpthumbnail", function ($item, $size = "post-thumbnail") {
         if ($item instanceof WP_Post) {
             return get_the_post_thumbnail($item, $size);
@@ -50,6 +57,13 @@ function tkAddWpFieldFilters(TkTemplate $tkTwig)
             return get_the_post_thumbnail_url($item, $size);
         }
         return "";
+    });
+
+    $tkTwig->addFilter("wphasthumbnail", function ($item, $size = "post-thumbnail") {
+        if ($item instanceof WP_Post) {
+            return has_post_thumbnail($item);
+        }
+        return false;
     });
 
     $tkTwig->addFilter("wpattachmenturl", function ($item) {
