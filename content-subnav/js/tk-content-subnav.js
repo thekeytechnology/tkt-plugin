@@ -5,9 +5,6 @@ jQuery(document).ready(function ($) {
     var actionBar = $("#Action_bar");
     var footer = $("#Footer");
 
-    var bodyElement = $("body");
-    var isStickyHeader = bodyElement.hasClass("sticky-header") || bodyElement.hasClass("header-fixed");
-
     var marginToTopBars = 20;
     var marginToFooter = 20;
 
@@ -15,21 +12,13 @@ jQuery(document).ready(function ($) {
         var originalPosition = sidebar.offset().top;
 
         $(window).scroll(function () {
-
             var viewportWidth = $(window).width();
             var scrollPosition = $(window).scrollTop();
 
             var screenBigEnough = viewportWidth > 800;
 
-            var dynamicBarHeights = 0;
-            var scrolledToPosition = 0;
-            if (isStickyHeader) {
-                dynamicBarHeights = topBar.height() + actionBar.height() + marginToTopBars;
-                scrolledToPosition = scrollPosition + dynamicBarHeights > originalPosition;
-            } else {
-                dynamicBarHeights = 35;
-                scrolledToPosition = scrollPosition - 35 > originalPosition;
-            }
+            var dynamicBarHeights = topBar.height() + actionBar.height() + marginToTopBars;
+            var scrolledToPosition = scrollPosition + dynamicBarHeights > originalPosition;
 
             if (scrolledToPosition && screenBigEnough) {
 

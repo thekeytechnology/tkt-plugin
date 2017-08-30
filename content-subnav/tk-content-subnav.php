@@ -5,7 +5,7 @@ function tkEnableSubnavigation()
     function tkSubnavFiles()
     {
         wp_enqueue_script('jquery-waypoints', plugins_url() . '/tkt-plugin/content-subnav/js/jquery.waypoints.min.js', array("jquery"));
-        wp_enqueue_script('tk-content-subnav', plugins_url() . '/tkt-plugin/content-subnav/js/tk-content-subnav.js', array("jquery", "jquery-waypoints"));
+        wp_enqueue_script('tk-child-script', plugins_url() . '/tkt-plugin/content-subnav/js/tk-content-subnav.js', array("jquery", "jquery-waypoints"));
     }
 
     add_action('wp_enqueue_scripts', 'tkSubnavFiles', 11);
