@@ -35,6 +35,10 @@ function tkAddWpFieldFilters(TkTemplate $tkTwig)
         return tkWpId($item);
     });
 
+    $tkTwig->addFIlter("wpattachmentalt", function($attachmentOrId) {
+        $attachment = wp_prepare_attachment_for_js($attachmentOrId);
+        return $attachment["alt"];
+    });
 
     $tkTwig->addFilter("wpthumbnail", function ($item, $size = "post-thumbnail") {
         if ($item instanceof WP_Post) {
