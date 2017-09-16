@@ -28,3 +28,24 @@ function tkInstallCF7ConversionTracking()
 {
     add_action('wp_head', 'tkCF7ConversionTracking');
 }
+
+
+//experimental
+function tkCallConversionTracking()
+{
+    ?>
+    <script type="text/javascript">
+        jQuery( document ).ready( function() {
+            jQuery('a[href^="tel:"]').click(function() {
+                __gaTracker && __gaTracker('send', 'event', 'Conversion', 'Anruf');
+                ga && ga('send', 'event', 'Conversion', 'Anruf');
+            });
+        });
+    </script>
+    <?php
+}
+
+function tkInstallCallConversionTracking()
+{
+    add_action('wp_head', 'tkCallConversionTracking');
+}

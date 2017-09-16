@@ -1,5 +1,6 @@
 <?php
 
+//TODO check whether the non-page ones also need fixing
 
 function tkDefaultBreadcrumbs($rootName, $queriedObject)
 {
@@ -8,22 +9,29 @@ function tkDefaultBreadcrumbs($rootName, $queriedObject)
         array("name" => $rootName, "url" => "/")
     );
 
+    $breadcrumbsPart = array(); //non-root part; seperate so it can be reversed easily
+
     if ($queriedObject instanceof WP_Post and $queriedObject->post_type == "page") {
         $parent = $queriedObject->post_parent;
         while ($parent) {
             $parentPost = get_post($parent);
 
-            $breadcrumbs[] = array(
+            $breadcrumbsPart[] = array(
                 "name" => $parentPost->post_title,
-                "url" => "/" . $parentPost->post_name . "/"
+                "url" => get_permalink($parentPost->ID)
             );
             $parent = $parentPost->post_parent;
         }
 
+        $breadcrumbsPart = array_reverse($breadcrumbsPart);
+
+        $breadcrumbs = array_merge($breadcrumbs, $breadcrumbsPart);
+
         $breadcrumbs[] = array(
             "name" => $queriedObject->post_title,
-            "url" => "/" . $queriedObject->post_name . "/"
+            "url" => get_permalink(get_queried_object_id())
         );
+
     } else if ($queriedObject instanceof WP_Post and $queriedObject->post_type == "product") {
         $breadcrumbs[] = array(
             "name" => "Shop",

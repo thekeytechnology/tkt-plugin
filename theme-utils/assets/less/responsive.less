@@ -1,68 +1,102 @@
-.tkDesktop(@rules) {
-  @media only screen and (min-width: 769px) {
+// Extra small devices (portrait phones, less than 576px)
+// No media query since this is the default in Bootstrap
+
+// Small devices (landscape phones, 576px and up)
+.tk-breakpoint-up-sm(@rules){
+  @media only screen and (min-width: 576px) {
     @rules();
   }
 }
 
-.tkTablet(@rules) {
-  @media only screen and (min-width: 469px) and (max-width: 768px) {
+// Medium devices (tablets, 768px and up)
+.tk-breakpoint-up-md(@rules){
+  @media only screen and (min-width: 768px) {
     @rules();
   }
 }
 
-.tkPhone(@rules) {
-  @media only screen and (max-width: 468px) {
+// Large devices (desktops, 992px and up)
+.tk-breakpoint-up-lg(@rules){
+  @media only screen and (min-width: 992px) {
     @rules();
   }
 }
 
-.tkLargerThanPhone(@rules) {
-  @media only screen and (min-width: 469px) {
+// Extra large devices (large desktops, 1200px and up)
+.tk-breakpoint-up-xl(@rules){
+  @media only screen and (min-width: 1200px) {
     @rules();
   }
 }
 
-.tkTabletAndLower(@rules) {
-  @media only screen and (max-width: 768px) {
+
+// Extra small devices (portrait phones, less than 576px)
+.tk-breakpoint-down-xs(@rules){
+  @media only screen and (max-width: 575px) {
     @rules();
   }
 }
 
-.tkDesktopAndLower(@rules) {
-  @media only screen and (max-width: 1240px) {
+// Small devices (landscape phones, less than 768px)
+.tk-breakpoint-down-sm(@rules){
+  @media only screen and (max-width: 767px) {
     @rules();
   }
 }
 
-.tkBetweenTabletAndPhone(@rules) {
-  @media only screen and (min-width: 469px) and (max-width: 767px) {
+// Medium devices (tablets, less than 992px)
+.tk-breakpoint-down-md(@rules){
+  @media only screen and (max-width: 991px) {
     @rules();
   }
 }
 
-//-------
-
-.tk-desktop-only {
-  .tkTabletAndLower({display: none !important});
+// Large devices (desktops, less than 1200px)
+.tk-breakpoint-down-lg(@rules){
+  @media only screen and (max-width: 1199px) {
+    @rules();
+  }
 }
 
-.tk-tablet-only {
-  .tkDesktop({display: none !important});
-  .tkPhone({display: none !important});
+// Extra large devices (large desktops)
+// No media query since the extra-large breakpoint has no upper bound on its width
+
+
+// Extra small devices (portrait phones, less than 576px)
+.tk-breakpoint-only-xs(@rules){
+  @media only screen and (max-width: 575px) {
+    @rules();
+  }
 }
 
-.tk-phone-only {
-  .tkLargerThanPhone({display: none !important});
+// Small devices (landscape phones, 576px and up)
+.tk-breakpoint-only-sm(@rules){
+  @media only screen and (min-width: 576px) and (max-width: 767px) {
+    @rules();
+  }
 }
 
-.tk-hide-on-desktop {
- .tkDesktop({display: none !important});
+// Medium devices (tablets, 768px and up)
+.tk-breakpoint-only-md(@rules){
+  @media only screen and (min-width: 768px) and (max-width: 991px) {
+    @rules();
+  }
 }
 
-.tk-hide-on-tablet {
-  .tkTablet({display: none !important});
+// Large devices (desktops, 992px and up)
+.tk-breakpoint-only-lg(@rules){
+  @media only screen and (min-width: 992px) and (max-width: 1199px) {
+    @rules();
+  }
 }
 
-.tk-hide-on-phone {
-  .tkPhone({display: none !important});
+// Extra large devices (large desktops, 1200px and up)
+.tk-breakpoint-only-xl(@rules){
+  @media only screen and (min-width: 1200px) {
+    @rules();
+  }
 }
+
+
+
+
