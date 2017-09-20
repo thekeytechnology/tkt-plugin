@@ -123,4 +123,8 @@ function tkAddWpFieldFilters(TkTemplate $tkTwig)
     $tkTwig->addFilter("wpVideoThumbnail", function ($videoCode) {
         return tkGetVideoThumbnailPathFromVideoCode($videoCode);
     });
+
+    $tkTwig->addFilter("wppostterms", function($item, $taxonomy){
+        return wp_get_post_terms(tkWpId($item), $taxonomy);
+    });
 }
