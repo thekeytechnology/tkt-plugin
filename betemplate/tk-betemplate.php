@@ -2,8 +2,6 @@
 
 //In BeTheme's Theme Options under Global -> Advanced -> Theme Functions -> Post Type | Disable: Make sure "Templates" is NOT disabled.
 
-require_once("tinymce/tk-tinymce-button-betemplate.php");
-require_once("tk-betemplate-shortcode.php");
 
 // make betheme template not publicly queryable
 function tkBeTemplateCPTArgsOverride($args, $post_type)
@@ -16,6 +14,9 @@ function tkBeTemplateCPTArgsOverride($args, $post_type)
 
 function tkInstallBeTemplate()
 {
+    require_once("tinymce/tk-tinymce-button-betemplate.php");
+    require_once("tk-betemplate-shortcode.php");
+
     //enable visual editor for betheme template post type
     // (required for proper functionality of visual editor builder element)
     //but hide it because outputting the_content from it is currently unsupported
