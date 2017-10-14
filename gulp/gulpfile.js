@@ -50,7 +50,7 @@ gulp.task("js", function () {
 });
 
 gulp.task('start-watching', function () {
-    gulp.watch(assetsFolder + "**/*.*", ['less', 'js']);
+    gulp.watch(assetsFolder + "**/*.*", ['less', 'less-wpadmin', 'js']);
 });
 
 gulp.task('default', ['less', 'less-wpadmin', 'js']);
