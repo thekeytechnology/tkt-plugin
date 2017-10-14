@@ -10,6 +10,7 @@ const themeFolder = "../../../themes/tkt/";
 const assetsFolder = themeFolder + "assets/";
 
 const lessInput = assetsFolder + "less/tk.less";
+const lessWPAdminInput = assetsFolder + "less/tk-wpadmin.less";
 const cssOutput = themeFolder + "css/";
 
 var jsFolder = assetsFolder + "js/";
@@ -20,6 +21,16 @@ const jsOutput = themeFolder + "/js/";
 
 gulp.task("less", function () {
     return gulp.src(lessInput)
+        .pipe(plumber(function (error) {
+            gutil.log(error.message);
+            this.emit('end');
+        }))
+        .pipe(less())
+        .pipe(gulp.dest(cssOutput))
+});
+
+gulp.task("less-wpadmin", function () {
+    return gulp.src(lessWPAdminInput)
         .pipe(plumber(function (error) {
             gutil.log(error.message);
             this.emit('end');
@@ -42,6 +53,6 @@ gulp.task('start-watching', function () {
     gulp.watch(assetsFolder + "**/*.*", ['less', 'js']);
 });
 
-gulp.task('default', ['less', 'js']);
+gulp.task('default', ['less', 'less-wpadmin', 'js']);
 
 gulp.task('watch', ['default', 'start-watching']);
