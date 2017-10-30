@@ -4,9 +4,10 @@ function tkGetBeThemeTemplate($atts){
     $args = shortcode_atts(array(
         "id" => "",
         "stripdown" => "",
-        "enable_nesting" => false
+        "enable_nesting" => false,
+        "setup_global_post_var" => false
     ), $atts, "tk-betemplate");
-    
+
 
     //prevent nesting this shortcode unless explicitly enabled
     //WARNING: do not enable nesting if the shortcode is used in the_content
@@ -16,10 +17,24 @@ function tkGetBeThemeTemplate($atts){
         remove_shortcode("tk-betemplate");
     }
 
+    //WP's template tags are only usable if the global post var is set
+    //in some cases, this shortcode needs to work even when it isn't
+    //e.g. ajax, 404 template
+    if($args["setup_global_post_var"]){
+        global $post;
+        $post = get_post($args["id"], OBJECT);
+        setup_postdata($post);
+    }
+
     //capture muffin builder output
     ob_start();
     mfn_builder_print($args["id"]);
     $output = ob_get_clean();
+
+    //if the global post var was set up, it needs to be reset
+    if($args["setup_global_post_var"]){
+        wp_reset_postdata();
+    }
 
     //re-enable the shortcode if it was disabled earlier
     if(!$args["enable_nesting"]){
