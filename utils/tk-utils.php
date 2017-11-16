@@ -1,27 +1,5 @@
 <?php
 
-function get_the_excerpt_max_charlength($charlength)
-{
-    $excerpt = get_the_excerpt();
-    $charlength++;
-
-    $output = "";
-    if (mb_strlen($excerpt) > $charlength) {
-        $subex = mb_substr($excerpt, 0, $charlength - 5);
-        $exwords = explode(' ', $subex);
-        $excut = -(mb_strlen($exwords[count($exwords) - 1]));
-        if ($excut < 0) {
-            $output .= mb_substr($subex, 0, $excut);
-        } else {
-            $output .= $subex;
-        }
-        $output .= '[...]';
-    } else {
-        return $excerpt;
-    }
-    return $output;
-}
-
 /* Returns an item from array. If key is not set, returns default. */
 function s($key, $array, $default = NULL)
 {
@@ -32,25 +10,6 @@ function s($key, $array, $default = NULL)
 function s0($key, $array, $default = NULL)
 {
     return isset($array[$key]) && isset($array[$key][0]) ? $array[$key][0] : $default;
-}
-
-function startsWith($haystack, $needle)
-{
-    // search backwards starting from haystack length characters from the end
-    return $needle === "" || strrpos($haystack, $needle, -strlen($haystack)) !== false;
-}
-
-function endsWith($haystack, $needle)
-{
-    // search forward starting from end minus needle length characters
-    return $needle === "" || (($temp = strlen($haystack) - strlen($needle)) >= 0 && strpos($haystack, $needle, $temp) !== false);
-}
-
-function endsWithIgnoreCase($haystack, $needle)
-{
-    $haystack = strtolower($haystack);
-    $needle = strtolower($needle);
-    return endsWith($haystack, $needle);
 }
 
 function removeFromArray(&$haystack, $needle)

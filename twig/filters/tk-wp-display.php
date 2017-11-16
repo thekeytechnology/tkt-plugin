@@ -3,22 +3,16 @@
 function tkAddWpDisplayFilter(TkTemplate $tkTwig)
 {
 
-
     $tkTwig->addFilter("linebreaks", function ($item) {
-        $item = str_replace("\r\n", "<br/>", $item);
-        return preg_replace("/\r|\n/", "<br/>", $item);
+        return tkReplaceLinebreaks($item);
     });
 
     $tkTwig->addFilter("commas", function ($item) {
-        $item = str_replace("\r\n", ", ", $item);
-        return preg_replace("/\r|\n/", ", ", $item);
+        return tkReplaceLinebreaks($item, ", ");
     });
 
-    $tkTwig->addFilter("shorten", function ($item, $maxLetters = 28) {
-        if (mb_strlen($item) > $maxLetters) {
-            return mb_substr($item, 0, $maxLetters) . '...'; // change 50 to the number of characters you want to show
-        }
-        return $item;
+    $tkTwig->addFilter("shorten", function ($item, $maxLetters = 28, $suffix="...") {
+        return tkShorten($item, $maxLetters, $suffix);
     });
 
     $tkTwig->addFilter("toOptions", function ($items, $selected = NULL, $placeholder = NULL) {
