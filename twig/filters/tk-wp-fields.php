@@ -16,7 +16,10 @@ function tkAddWpFieldFilters(TkTemplate $tkTwig)
     });
 
     $tkTwig->addFilter("wpexcerpt", function (WP_Post $item) {
-        return $item->post_excerpt;
+        setup_postdata($item);
+        $output = get_the_excerpt($item);
+        wp_reset_postdata();
+        return $output;
     });
 
     $tkTwig->addFilter("wppostdate", function (WP_Post $item) {
