@@ -1,9 +1,5 @@
 <?php
 
-/*
- * Put <input type="hidden" name="tk-conversion-action" value="name_of_conversion"/> into forms where conversion tracking is supposed to occur.
- * */
-
 function tkInstallCF7ConversionTracking()
 {
     add_action("wp_enqueue_scripts", function(){
