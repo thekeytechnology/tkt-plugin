@@ -1,5 +1,5 @@
 
---- CONVERSION TRACKING ---
+--- Conversion Tracking ---
 
 #Description:
 
@@ -45,7 +45,9 @@ to functions.php
 
 
 
---- ATTACHMENT IMAGE TITLES ---
+--- Attachment Image Titles ---
+
+TODO: If Image Fixes works correctly, obsolete this
 
 #Description:
 
@@ -63,7 +65,27 @@ to functions.php
 
 
 
---- EMPTY ELEMENT REMOVAL ---
+--- (BETA) Image Fixes ---
+
+TODO: Test whether this functions correctly with CDN
+
+#Description:
+
+Makes images uploaded via the media library responsive.
+Adds title and alt attributes to images uploaded via the media library if the attributes are missing/empty and the values are set in the media library.
+(Without this, images in mfn builder elements are not responsive and need to have their title/alt set manually in the builder element/visual editor.)
+
+#Setup:
+
+Add
+
+tkInstallImageFixes();
+
+to functions.php
+
+
+
+--- Empty Element Removal ---
 
 #Description:
 
