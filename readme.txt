@@ -177,3 +177,33 @@ to functions.php
 Add the page template and sidebar style to the theme.
 
 In BeTheme's theme options, add a sidebar area named "Inhalt". In that sidebar area, add a html widget containing the shortcode [tkContentSubnav]
+
+
+
+--- BODY CLASS ---
+
+#Description:
+
+Enables adding classes to the body of a specific single page/post without the need for a custom template.
+
+#Setup:
+
+Create a custom field named "tk-bodyclass" on the page/post (using WP's built-in functionality or Pods' page/post type extension) and input the class/classes to be added as its value. (No dots, space as seperator.)
+
+
+
+--- REMOVE SLUG ---
+
+#Description:
+
+Remove the custom post type slug from the URL (e.g. ~/lager/lagerhalle-münchen/ becomes ~/lagerhalle-münchen/).
+
+#Setup:
+
+Add
+
+tkInstallRemoveSlug(CUSTOM_POST_TYPE_NAME, SLUG);
+
+to functions.php
+
+(e.g. tkInstallRemoveSlug("tk-storage", "lager"); )

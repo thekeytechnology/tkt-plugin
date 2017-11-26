@@ -17,7 +17,8 @@ function mfn_get_attachment_id_url($url)
     }
 
     $dir = wp_upload_dir();
-    if (false !== strpos($url, $dir['baseurl'] . '/')) { // Is URL in uploads directory?
+    $urlInUploadDirectory =  strpos($url, $dir['baseurl'] . '/');
+    if (false !== $urlInUploadDirectory) {
         $file = basename($url);
         $query_args = array(
             'post_type' => 'attachment',
