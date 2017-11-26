@@ -23,7 +23,7 @@
         "suggest": {
             "symfony/console": "For validating YAML files using the lint command"
         },
-        "time": "2016-11-18 21:17:59",
+        "time": "2016-11-18T21:17:59+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -74,7 +74,7 @@
         "require": {
             "php": ">=5.6"
         },
-        "time": "2016-10-03 07:35:21",
+        "time": "2016-10-03T07:35:21+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -119,7 +119,7 @@
         "require": {
             "php": ">=5.6.0"
         },
-        "time": "2015-07-28 20:34:47",
+        "time": "2015-07-28T20:34:47+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -166,7 +166,7 @@
         "require-dev": {
             "phpunit/phpunit": "~4.4"
         },
-        "time": "2015-11-11 19:50:13",
+        "time": "2015-11-11T19:50:13+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -222,7 +222,7 @@
         "require-dev": {
             "phpunit/phpunit": "~5"
         },
-        "time": "2016-01-28 13:25:10",
+        "time": "2016-01-28T13:25:10+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -272,7 +272,7 @@
         "suggest": {
             "ext-uopz": "*"
         },
-        "time": "2015-10-12 03:26:01",
+        "time": "2015-10-12T03:26:01+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -324,7 +324,7 @@
             "ext-mbstring": "*",
             "phpunit/phpunit": "~4.4"
         },
-        "time": "2016-06-17 09:04:28",
+        "time": "2016-06-17T09:04:28+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -391,7 +391,7 @@
         "require-dev": {
             "phpunit/phpunit": "^5.0"
         },
-        "time": "2016-11-26 07:53:53",
+        "time": "2016-11-26T07:53:53+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -443,7 +443,7 @@
         "require-dev": {
             "phpunit/phpunit": "~4.8"
         },
-        "time": "2015-12-08 07:14:41",
+        "time": "2015-12-08T07:14:41+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -499,7 +499,7 @@
         "require-dev": {
             "phpunit/phpunit": "~4.4"
         },
-        "time": "2016-11-19 09:18:40",
+        "time": "2016-11-19T09:18:40+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -567,7 +567,7 @@
             "phpunit/phpunit": "~4.0",
             "squizlabs/php_codesniffer": "~2.0"
         },
-        "time": "2015-06-14 21:17:01",
+        "time": "2015-06-14T21:17:01+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -616,7 +616,7 @@
         "require": {
             "php": ">=5.3.3"
         },
-        "time": "2015-06-21 13:50:34",
+        "time": "2015-06-21T13:50:34+00:00",
         "type": "library",
         "installation-source": "dist",
         "autoload": {
@@ -671,7 +671,7 @@
         "suggest": {
             "ext-soap": "*"
         },
-        "time": "2016-11-27 07:52:03",
+        "time": "2016-11-27T07:52:03+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -723,7 +723,7 @@
         "require-dev": {
             "phpunit/phpunit": "~4|~5"
         },
-        "time": "2016-05-12 18:03:57",
+        "time": "2016-05-12T18:03:57+00:00",
         "type": "library",
         "installation-source": "dist",
         "autoload": {
@@ -766,7 +766,7 @@
         "require": {
             "php": ">=5.3.3"
         },
-        "time": "2016-10-03 07:40:28",
+        "time": "2016-10-03T07:40:28+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -818,7 +818,7 @@
         "require-dev": {
             "phpunit/phpunit": "~5"
         },
-        "time": "2016-02-13 06:45:14",
+        "time": "2016-02-13T06:45:14+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -866,7 +866,7 @@
         "require-dev": {
             "phpunit/phpunit": "~4.2"
         },
-        "time": "2016-11-15 14:06:22",
+        "time": "2016-11-15T14:06:22+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -928,7 +928,7 @@
             "ext-xdebug": ">=2.4.0",
             "ext-xmlwriter": "*"
         },
-        "time": "2016-11-28 16:00:31",
+        "time": "2016-11-28T16:00:31+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -982,7 +982,7 @@
             "phpunit/phpunit": "^4.6",
             "sebastian/version": "^1.0.1"
         },
-        "time": "2016-11-23 20:04:58",
+        "time": "2016-11-23T20:04:58+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -1033,7 +1033,7 @@
         "require-dev": {
             "phpunit/phpunit": "^4.6"
         },
-        "time": "2015-12-27 11:43:31",
+        "time": "2015-12-27T11:43:31+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -1091,7 +1091,7 @@
             "mockery/mockery": "^0.9.4",
             "phpunit/phpunit": "^5.2||^4.8.24"
         },
-        "time": "2016-11-25 06:54:22",
+        "time": "2016-11-25T06:54:22+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -1142,7 +1142,7 @@
             "mockery/mockery": "^0.9.4",
             "phpunit/phpunit": "^4.4"
         },
-        "time": "2016-09-30 07:12:33",
+        "time": "2016-09-30T07:12:33+00:00",
         "type": "library",
         "installation-source": "dist",
         "autoload": {
@@ -1190,7 +1190,7 @@
             "phpspec/phpspec": "^2.0",
             "phpunit/phpunit": "^4.8 || ^5.6.5"
         },
-        "time": "2016-11-21 14:58:47",
+        "time": "2016-11-21T14:58:47+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -1251,7 +1251,7 @@
             "doctrine/collections": "1.*",
             "phpunit/phpunit": "~4.1"
         },
-        "time": "2016-10-31 17:19:45",
+        "time": "2016-10-31T17:19:45+00:00",
         "type": "library",
         "installation-source": "dist",
         "autoload": {
@@ -1323,7 +1323,7 @@
             "ext-xdebug": "*",
             "phpunit/php-invoker": "~1.1"
         },
-        "time": "2016-10-03 13:04:15",
+        "time": "2016-10-03T13:04:15+00:00",
         "bin": [
             "phpunit"
         ],
@@ -1380,7 +1380,7 @@
             "symfony/debug": "~2.7",
             "symfony/phpunit-bridge": "~3.2"
         },
-        "time": "2017-01-11 19:36:15",
+        "time": "2017-01-11T19:36:15+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -1419,6 +1419,55 @@
         "homepage": "http://twig.sensiolabs.org",
         "keywords": [
             "templating"
+        ]
+    },
+    {
+        "name": "twig/extensions",
+        "version": "v1.0.1",
+        "version_normalized": "1.0.1.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/twigphp/Twig-extensions.git",
+            "reference": "f91a82ec225e5bb108e01a0f93c9be04f84dcfa0"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/twigphp/Twig-extensions/zipball/f91a82ec225e5bb108e01a0f93c9be04f84dcfa0",
+            "reference": "f91a82ec225e5bb108e01a0f93c9be04f84dcfa0",
+            "shasum": ""
+        },
+        "require": {
+            "twig/twig": "~1.0"
+        },
+        "time": "2013-10-18T19:37:15+00:00",
+        "type": "library",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "1.0.x-dev"
+            }
+        },
+        "installation-source": "dist",
+        "autoload": {
+            "psr-0": {
+                "Twig_Extensions_": "lib/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Fabien Potencier",
+                "email": "fabien@symfony.com"
+            }
+        ],
+        "description": "Common additional features for Twig that do not directly belong in core",
+        "homepage": "https://github.com/fabpot/Twig-extensions",
+        "keywords": [
+            "debug",
+            "i18n",
+            "text"
         ]
     }
 ]
