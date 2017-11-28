@@ -32,6 +32,7 @@ require_once("conversion-tracking/tk-conversion-tracking.php");
 require_once("prettyphoto/tk-prettyphoto.php");
 
 require_once("shortcodes/tk-shortcodes.php");
+require_once("shortcodes/tk-variable-parameter.php");
 
 require_once("twig/tk-twig.php");
 
