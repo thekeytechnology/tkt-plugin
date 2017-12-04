@@ -2,7 +2,7 @@
 /*
 Plugin Name: TKT Less / Gulp / Twig / WP Utilities
 Plugin URI:  https://www.thekey.technology
-Version:     18.1
+Version:     18.2
 Author:      the key technology
 Author URI:  https://www.thekey.technology
 License:     proprietary
@@ -53,7 +53,10 @@ add_action("wp_enqueue_scripts", function(){
 
 add_action("body_class", function( $classes ) {
     if(get_post_meta(get_queried_object_id(), "tk-bodyclass", true)){
-        return array_merge( $classes, array(get_post_meta(get_queried_object_id(), "tk-bodyclass", true)) );
+
+        $classesToBeAdded = explode(" ", get_post_meta(get_queried_object_id(), "tk-bodyclass", true));
+
+        return array_merge( $classes, $classesToBeAdded );
     }else{
         return $classes;
     }
