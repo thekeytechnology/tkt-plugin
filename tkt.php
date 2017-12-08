@@ -2,7 +2,7 @@
 /*
 Plugin Name: TKT Less / Gulp / Twig / WP Utilities
 Plugin URI:  https://www.thekey.technology
-Version:     18.2
+Version:     19
 Author:      the key technology
 Author URI:  https://www.thekey.technology
 License:     proprietary
@@ -15,10 +15,6 @@ if (!defined("TK_TEMPLATE_CACHE")) {
 
 if (!defined("TK_RECAPTCHA")) {
     define("TK_RECAPTCHA", false);
-}
-
-if (!defined("TK_MAIL_HTML")){
-    define("TK_MAIL_HTML", false);
 }
 
 require_once "vendor/autoload.php";

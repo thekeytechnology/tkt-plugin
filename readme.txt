@@ -106,7 +106,7 @@ to functions.php
 #Description:
 
 Insert mfn builder content anywhere via [tk-betemplate] shortcode. This utilizes BeTheme's "Template" custom post type.
-Caution: the Content WP builder element outputs the current page's the_content.
+Caution: The Content WP builder element outputs the current page's the_content.
 
 Attributes:
 
@@ -180,7 +180,7 @@ In BeTheme's theme options, add a sidebar area named "Inhalt". In that sidebar a
 
 
 
---- BODY CLASS ---
+--- Body Class ---
 
 #Description:
 
@@ -192,11 +192,12 @@ Create a custom field named "tk-bodyclass" on the page/post (using WP's built-in
 
 
 
---- REMOVE SLUG ---
+--- Remove Slug ---
 
 #Description:
 
-Remove the custom post type slug from the URL (e.g. ~/lager/lagerhalle-münchen/ becomes ~/lagerhalle-münchen/).
+Removes the custom post type slug from the URL (e.g. ~/lager/lagerhalle-münchen/ becomes ~/lagerhalle-münchen/).
+Currently only works for posts, not terms.
 
 #Setup:
 
@@ -207,3 +208,19 @@ tkInstallRemoveSlug(CUSTOM_POST_TYPE_NAME, SLUG);
 to functions.php
 
 (e.g. tkInstallRemoveSlug("tk-storage", "lager"); )
+
+
+
+--- Mail HTML ---
+
+#Description:
+
+Sets the content-type of sent mails to text/html.
+
+#Setup:
+
+Add
+
+tkInstallMailHTML();
+
+to functions.php

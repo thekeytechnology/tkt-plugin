@@ -10,8 +10,7 @@ function wpse27856_set_content_type()
     return "text/html";
 }
 
-
-if(TK_MAIL_HTML) {
+function tkInstallMailHTML(){
     add_filter('wp_mail_content_type', 'wpse27856_set_content_type');
 }
 
