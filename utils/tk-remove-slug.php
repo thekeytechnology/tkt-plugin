@@ -3,19 +3,28 @@
 class TKSlugRemover{
 
     private $tkPostTypeSlugList = array();
+    private $tkTaxonomySlugList = array();
 
     static function create(){
         return new TKSlugRemover();
     }
 
     function __construct(){
-        add_filter( 'post_type_link', array($this, 'na_remove_slug'), 10, 3 );
-        add_action( 'pre_get_posts', array($this, 'na_parse_request') );
-        add_action( 'template_redirect', array($this, 'wpse101952_redirect') );
+        add_filter('post_type_link', array($this, 'na_remove_slug'), 10, 3 );
+        add_action('pre_get_posts', array($this, 'na_parse_request') );
+
+        add_filter('term_link', array($this, 'na_remove_term_slug'), 10, 3 );
+        add_filter('request', array($this, 'rudr_change_term_request'), 1, 1 );
+
+        add_action('template_redirect', array($this, 'wpse101952_redirect') );
     }
 
     function tkAddCPT($postType, $slug){
         $this->tkPostTypeSlugList[$postType] = $slug;
+    }
+
+    function tkAddTaxonomy($taxonomy, $slug){
+        $this->tkTaxonomySlugList[$taxonomy] = $slug;
     }
 
     function na_remove_slug( $post_link, $post, $leavename ) {
@@ -29,6 +38,17 @@ class TKSlugRemover{
         return $post_link;
     }
 
+    function na_remove_term_slug( $url, $term, $taxonomy ) {
+
+        if (!array_key_exists($taxonomy, $this->tkTaxonomySlugList)) {
+            return $url;
+        }
+
+        $url = str_replace( '/'.$this->tkTaxonomySlugList[$taxonomy].'/', '/', $url );
+
+        return $url;
+    }
+
     function na_parse_request( $query ) {
 
         if ( ! $query->is_main_query() || 2 != count( $query->query ) || ! isset( $query->query['page'] ) ) {
@@ -40,10 +60,64 @@ class TKSlugRemover{
         }
     }
 
+    function rudr_change_term_request($query){
+
+        // Request for child terms differs, we should make an additional check
+        if( isset($query['attachment']) && $query['attachment'] ){
+            $include_children = true;
+            $name = $query['attachment'];
+        }else{
+            $include_children = false;
+            if(isset($query['name'])){
+                $name = $query['name'];
+            }else{
+                $name = null;
+            }
+        }
+
+        foreach(array_keys($this->tkTaxonomySlugList) as $tax_name){
+
+            $term = get_term_by('slug', $name, $tax_name); // get the current term to make sure it exists
+
+            if (isset($name) && $term && !is_wp_error($term)){
+
+                if( $include_children ) {
+                    unset($query['attachment']);
+                    $parent = $term->parent;
+                    while( $parent ) {
+                        $parent_term = get_term( $parent, $tax_name);
+                        $name = $parent_term->slug . '/' . $name;
+                        $parent = $parent_term->parent;
+                    }
+                } else {
+                    unset($query['name']);
+                }
+
+                switch( $tax_name ){
+                    case 'category':
+                        $query['category_name'] = $name;
+                        break;
+                    case 'post_tag':
+                        $query['tag'] = $name;
+                        break;
+                    default:
+                        $query[$tax_name] = $name;
+                        break;
+                }
+            }
+
+            return $query;
+        }
+
+        return $query;
+    }
+
     function wpse101952_redirect() {
         $uri = $_SERVER["REQUEST_URI"];
 
-        foreach($this->tkPostTypeSlugList as $slug){
+        $slugs = array_merge($this->tkPostTypeSlugList, $this->tkTaxonomySlugList);
+
+        foreach($slugs as $slug){
             if (strpos($uri, "/".$slug."/") !== false) {
                 wp_redirect(str_replace("/".$slug."/","/", $uri), 301);
                 exit();
@@ -55,7 +129,11 @@ class TKSlugRemover{
 global $tkSlugRemover;
 $tkSlugRemover = TKSlugRemover::create();
 
-function tkInstallRemoveSlug($postType, $slug){
+function tkInstallRemoveSlug($postType, $slug, $isTaxonomy = false){
     global $tkSlugRemover;
-    $tkSlugRemover->tkAddCPT($postType, $slug);
+    if($isTaxonomy){
+        $tkSlugRemover->tkAddTaxonomy($postType, $slug);
+    }else{
+        $tkSlugRemover->tkAddCPT($postType, $slug);
+    }
 }

@@ -32,16 +32,30 @@ Value (optional; must be integer > 0 to be included)
 <input type="hidden" name="tk-conversion-value" value="name_of_conversion_value"/>
 
 
-
 -- Calls (tel: links):
 
 #Setup:
 
 Add
 
-tkInstallCallConversionTracking();
+tkInstallCallConversionTracking(CATEGORY, ACTION, LABEL, VALUE);
 
 to functions.php
+
+Parameters are optional. CATEGORY defaults to "Conversion". ACTION defaults to "Anruf". VALUE must be integer > 0 to be included.
+
+
+-- E-Mails (mailto: links):
+
+#Setup:
+
+Add
+
+tkInstallMailConversionTracking(CATEGORY, ACTION, LABEL, VALUE);
+
+to functions.php
+
+Parameters are optional. CATEGORY defaults to "Conversion". ACTION defaults to "E-Mail". VALUE must be integer > 0 to be included.
 
 
 
@@ -197,17 +211,16 @@ Create a custom field named "tk-bodyclass" on the page/post (using WP's built-in
 #Description:
 
 Removes the custom post type slug from the URL (e.g. ~/lager/lagerhalle-münchen/ becomes ~/lagerhalle-münchen/).
-Currently only works for posts, not terms.
 
 #Setup:
 
 Add
 
-tkInstallRemoveSlug(CUSTOM_POST_TYPE_NAME, SLUG);
+tkInstallRemoveSlug(CUSTOM_POST_TYPE_OR_TAXONOMY_NAME, SLUG, IS_TAXONOMY);
 
 to functions.php
 
-(e.g. tkInstallRemoveSlug("tk-storage", "lager"); )
+(e.g. tkInstallRemoveSlug("tk-storage", "lager"); ) (IS_TAXONOMY defaults to false)
 
 
 
