@@ -11,7 +11,7 @@ function tkAddWpDisplayFilter(TkTemplate $tkTwig)
         return tkReplaceLinebreaks($item, ", ");
     });
 
-    $tkTwig->addFilter("shorten", function ($item, $maxLetters = 28, $suffix="...") {
+    $tkTwig->addFilter("shorten", function ($item, $maxLetters = 28, $suffix = "...") {
         return tkShorten($item, $maxLetters, $suffix);
     });
 
@@ -46,6 +46,10 @@ function tkAddWpDisplayFilter(TkTemplate $tkTwig)
 
     $tkTwig->addFilter("wpshortcode", function ($code) {
         return do_shortcode($code);
+    });
+
+    $tkTwig->addFilter("wptranslate", function ($key, $textdomain) {
+        return __($key, $textdomain);
     });
 
 }

@@ -23,6 +23,10 @@ require_once("betemplate/tk-betemplate.php");
 
 require_once("content-subnav/tk-content-subnav.php");
 
+require_once("options/tk-option-definition.php");
+require_once("options/tk-options-configuration.php");
+require_once("options/tk-options-page.php");
+
 require_once("conversion-tracking/tk-conversion-tracking.php");
 
 require_once("prettyphoto/tk-prettyphoto.php");
@@ -42,18 +46,18 @@ require_once("utils/tk-image-title.php");
 require_once("utils/tk-image-fixes.php");
 
 
-add_action("wp_enqueue_scripts", function(){
-    wp_enqueue_script("tk-prevent-enter-submit", plugins_url()."/tkt-plugin/utils/js/preventEnterSubmit.js", array("jquery"));
+add_action("wp_enqueue_scripts", function () {
+    wp_enqueue_script("tk-prevent-enter-submit", plugins_url() . "/tkt-plugin/utils/js/preventEnterSubmit.js", array("jquery"));
 }, 11);
 
 
-add_action("body_class", function( $classes ) {
-    if(get_post_meta(get_queried_object_id(), "tk-bodyclass", true)){
+add_action("body_class", function ($classes) {
+    if (get_post_meta(get_queried_object_id(), "tk-bodyclass", true)) {
 
         $classesToBeAdded = explode(" ", get_post_meta(get_queried_object_id(), "tk-bodyclass", true));
 
-        return array_merge( $classes, $classesToBeAdded );
-    }else{
+        return array_merge($classes, $classesToBeAdded);
+    } else {
         return $classes;
     }
 });
