@@ -1,4 +1,8 @@
 <?php
+require_once("tk-option-definition.php");
+require_once("tk-section-definition.php");
+require_once("tk-options-per-section.php");
+require_once("tk-options-configuration.php");
 
 /**
  * @property OptionsConfiguration $optionsConfiguration
@@ -10,35 +14,69 @@ class TkOptionsPage
     public function init(OptionsConfiguration $optionsConfiguration)
     {
         $this->optionsConfiguration = $optionsConfiguration;
-        foreach ($optionsConfiguration->optionDefinitions as $optionDefinition) {
-            register_setting($optionsConfiguration->optionsGroupName, $optionDefinition->optionId, array(
-                "sanitize_callback" => "sanitize_text_field"
-            ));
-        }
 
-        add_settings_section(
-            'general',
-            'General',
-            "",
-            $optionsConfiguration->pageSlug
-        );
 
-        foreach ($optionsConfiguration->optionDefinitions as $optionDefinition) {
-            add_settings_field(
-                $optionDefinition->optionId,
-                $optionDefinition->optionName,
-                function () use ($optionDefinition) {
-                    $option = get_option($optionDefinition->optionId);
-                    printf(
-                        '<input type="text" id="%s" name="%s" value="%s" />',
-                        $optionDefinition->optionId,
-                        $optionDefinition->optionId,
-                        isset($option) ? esc_attr($option) : ''
-                    );
-                },
-                $optionsConfiguration->pageSlug,
-                'general'
+        foreach ($optionsConfiguration->optionsPerSection as $optionsPerSection) {
+            add_settings_section(
+                $optionsPerSection->sectionDefinition->sectionId,
+                $optionsPerSection->sectionDefinition->sectionName,
+                $optionsPerSection->sectionDefinition->callback,
+                $optionsConfiguration->pageSlug
             );
+
+            foreach ($optionsPerSection->options as $optionDefinition) {
+                $sanitizeCallback = null;
+                switch ($optionDefinition->optionType) {
+                    case "text":
+                    case "textarea":
+                        $sanitizeCallback = "sanitize_text_field";
+                        break;
+                    case "integer":
+                        $sanitizeCallback = "intval";
+                        break;
+                }
+
+                register_setting($optionsConfiguration->optionsGroupName, $optionDefinition->optionId, array(
+                    "sanitize_callback" => $sanitizeCallback
+                ));
+
+                add_settings_field(
+                    $optionDefinition->optionId,
+                    $optionDefinition->optionName,
+                    function () use ($optionDefinition) {
+                        $option = get_option($optionDefinition->optionId);
+
+                        switch ($optionDefinition->optionType) {
+                            case "text":
+                                printf(
+                                    '<input type="text" id="%s" name="%s" value="%s" />',
+                                    $optionDefinition->optionId,
+                                    $optionDefinition->optionId,
+                                    isset($option) ? esc_attr($option) : ''
+                                );
+                                break;
+                            case "textarea":
+                                printf(
+                                    '<textarea id="%s" name="%s">%s</textarea>',
+                                    $optionDefinition->optionId,
+                                    $optionDefinition->optionId,
+                                    isset($option) ? esc_attr($option) : ''
+                                );
+                                break;
+                            case "integer":
+                                printf(
+                                    '<input type="number" step="1" id="%s" name="%s" value="%s" />',
+                                    $optionDefinition->optionId,
+                                    $optionDefinition->optionId,
+                                    isset($option) ? esc_attr($option) : ''
+                                );
+                                break;
+                        }
+                    },
+                    $optionsConfiguration->pageSlug,
+                    $optionsPerSection->sectionDefinition->sectionId
+                );
+            }
         }
     }
 

@@ -23,8 +23,6 @@ require_once("betemplate/tk-betemplate.php");
 
 require_once("content-subnav/tk-content-subnav.php");
 
-require_once("options/tk-option-definition.php");
-require_once("options/tk-options-configuration.php");
 require_once("options/tk-options-page.php");
 
 require_once("conversion-tracking/tk-conversion-tracking.php");
