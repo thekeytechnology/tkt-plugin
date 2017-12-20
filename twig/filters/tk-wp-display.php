@@ -17,7 +17,6 @@ function tkAddWpDisplayFilter(TkTemplate $tkTwig)
 
     $tkTwig->addFilter("toOptions", function ($items, $selected = NULL, $placeholder = NULL) {
         $options = "";
-        print_a($selected);
 
         $optionWasSelected = false;
         foreach ($items as $item) {
