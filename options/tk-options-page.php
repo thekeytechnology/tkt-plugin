@@ -107,7 +107,7 @@ function tkAddOptionsPage(OptionsConfiguration $optionsConfiguration)
             $optionsConfiguration->parentSlug,
             $optionsConfiguration->pageTitle,
             $optionsConfiguration->menuTitle,
-            'manage_options',
+            $optionsConfiguration->capability,
             $optionsConfiguration->pageSlug,
             function () {
                 global $tkOptionsPage;

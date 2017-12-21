@@ -6,6 +6,7 @@
  * @property string $pageTitle
  * @property string $menuTitle
  * @property string $pageSlug
+ * @property string capability
  * @property OptionsPerSection[] $optionsPerSection
  */
 class OptionsConfiguration
@@ -15,6 +16,7 @@ class OptionsConfiguration
     public $pageTitle;
     public $menuTitle;
     public $pageSlug;
+    public $capability;
     public $optionsPerSection;
 
     /**
@@ -24,10 +26,12 @@ class OptionsConfiguration
      * @param string $pageTitle
      * @param string $menuTitle
      * @param string $pageSlug
+     * @param string $capability
      * @param OptionsPerSection[] $optionsPerSection
      */
-    public function __construct(string $optionsGroupName, string $parentSlug, string $pageTitle, string $menuTitle, string $pageSlug, array $optionsPerSection)
+    public function __construct(string $optionsGroupName, string $parentSlug, string $pageTitle, string $menuTitle, string $pageSlug, string $capability, array $optionsPerSection)
     {
+        $this->capability = $capability;
         $this->optionsGroupName = $optionsGroupName;
         $this->parentSlug = $parentSlug;
         $this->pageTitle = $pageTitle;

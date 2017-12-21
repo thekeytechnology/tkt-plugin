@@ -49,7 +49,7 @@ function tkWpName($item)
     } else if ($item instanceof WP_Post) {
         return $item->post_name;
     } else if ($item instanceof WP_User) {
-        return $item->nickname;
+        return $item->ID;
     } else if (is_array($item)) {
         if (isset($item["name"])) {
             return $item["name"];
