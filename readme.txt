@@ -237,3 +237,12 @@ Add
 tkInstallMailHTML();
 
 to functions.php
+
+--- Option Page ---
+#Description:
+
+To generate a wordpress admin backend options page, you can use the
+
+tkAddOptionsPage(OptionsConfiguration $optionsConfiguration)
+
+function call. The OptionsConfiguration is a struct-like object with several self-explanatory data fields.

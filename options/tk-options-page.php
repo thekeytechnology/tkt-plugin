@@ -102,6 +102,12 @@ class TkOptionsPage
 
 function tkAddOptionsPage(OptionsConfiguration $optionsConfiguration)
 {
+    $filteredOptionsPerSection = array_filter($optionsConfiguration->optionsPerSection, function (OptionsPerSection $optionsPerSection) {
+        $capability = $optionsPerSection->sectionDefinition->capability;
+        return (!$capability or $capability && current_user_can($capability));
+    });
+    $optionsConfiguration->optionsPerSection = $filteredOptionsPerSection;
+
     add_action('admin_menu', function () use ($optionsConfiguration) {
         add_submenu_page(
             $optionsConfiguration->parentSlug,
