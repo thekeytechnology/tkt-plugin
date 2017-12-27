@@ -29,7 +29,12 @@ class TkOptionsPage
                 switch ($optionDefinition->optionType) {
                     case "text":
                     case "textarea":
-                        $sanitizeCallback = "sanitize_text_field";
+                        $sanitizeCallback = function ($text) {
+                            return wp_kses($text, array(
+                                "p" => array(),
+                                "br" => array()
+                            ));
+                        };
                         break;
                     case "integer":
                         $sanitizeCallback = "intval";
