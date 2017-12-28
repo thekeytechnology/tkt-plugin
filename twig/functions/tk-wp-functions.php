@@ -27,4 +27,8 @@ function tkAddWpFunctions(TkTemplate $tkTwig)
 
         return call_user_func($name, $parameter, $_);
     });
+
+    $tkTwig->addFunction("wpoption", function ($name, $default = false) {
+        return get_option($name, $default);
+    });
 }

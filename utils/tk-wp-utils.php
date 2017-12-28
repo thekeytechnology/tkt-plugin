@@ -12,15 +12,16 @@ function tkWpTitle($item)
         return $item->name;
     } else if ($item instanceof WP_Post) {
         return $item->post_title;
-    } else if (is_array($item)) {
+    }else if ($item instanceof WP_User) {
+        return $item->display_name;
+    }  else if (is_array($item)) {
         if (isset($item["name"])) {
             return $item["name"];
         } else if (isset($item["post_title"])) {
             return $item["post_title"];
         }
     }
-    print_a($item);
-    throw new Exception("This type is not supported!");
+    throw new Exception("This type is not supported! " . print_r($item, true));
 }
 
 function tkGetImageForProduct($size, $postForImage)
@@ -47,6 +48,8 @@ function tkWpName($item)
         return $item->slug;
     } else if ($item instanceof WP_Post) {
         return $item->post_name;
+    } else if ($item instanceof WP_User) {
+        return $item->ID;
     } else if (is_array($item)) {
         if (isset($item["name"])) {
             return $item["name"];
@@ -124,6 +127,8 @@ function tkWpId($item)
             return $postId;
         }, function ($termId) {
             return $termId;
+        }, function ($userId) {
+            return $userId;
         }
     );
 }
@@ -158,7 +163,7 @@ function tkWpApplyWithId($item, Callable $toPost, Callable $toTerm = NULL, Calla
         if (isset($toTerm)) {
             return $toTerm($item->term_id, $item->taxonomy);
         } else {
-            throw new Exception("No function provided for this type!");
+            throw new Exception("No function provided for this type! " . print_r($item, true));
         }
     } else if ($item instanceof WP_Post) {
         return $toPost($item->ID);
@@ -166,7 +171,7 @@ function tkWpApplyWithId($item, Callable $toPost, Callable $toTerm = NULL, Calla
         if (isset($toUser)) {
             return $toUser($item->ID);
         } else {
-            throw new Exception("No function provided for this type!");
+            throw new Exception("No function provided for this type! " . print_r($item, true));
         }
     } else if (is_array($item)) {
         if (isset($item["term_id"])) {

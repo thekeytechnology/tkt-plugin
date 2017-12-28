@@ -166,3 +166,29 @@ function tkGetVideoThumbnailPathFromVideoCode($videocode) {
     }
 
 }
+
+function tkGetURLParameter($paramName, $method="")
+{
+    if($method == "GET"){
+        if(isset($_GET[$paramName])){
+            return $_GET[$paramName];
+        }
+    } elseif ($method == "POST"){
+        if(isset($_POST[$paramName])){
+            return $_POST[$paramName];
+        }
+    } else {
+        if(isset($_GET[$paramName])){
+            return $_GET[$paramName];
+        }
+        if(isset($_POST[$paramName])){
+            return $_POST[$paramName];
+        }
+    }
+    return "";
+}
+
+function tkIsProbablyAdwords()
+{
+    return tkGetURLParameter("gclid", "GET") ? true : false;
+}

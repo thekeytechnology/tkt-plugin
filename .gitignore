@@ -24,3 +24,6 @@ wp-content/plugins/hello.php
 /readme.html
 /sitemap.xml
 /sitemap.xml.gz
+
+tkt_theme_files
+utils/tk-conversion-tracking.php

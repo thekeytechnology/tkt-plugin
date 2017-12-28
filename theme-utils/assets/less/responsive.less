@@ -99,4 +99,21 @@
 
 
 
+//custom breakpoints
+.tk-breakpoint-up-custom(@minWidth, @rules){
+  @media only screen and (min-width: @minWidth) {
+    @rules();
+  }
+}
 
+.tk-breakpoint-down-custom(@maxWidth, @rules){
+  @media only screen and (max-width: @maxWidth) {
+    @rules();
+  }
+}
+
+.tk-breakpoint-only-custom(@minWidth, @maxWidth, @rules){
+  @media only screen and (min-width: @minWidth) and (max-width: @maxWidth) {
+    @rules();
+  }
+}

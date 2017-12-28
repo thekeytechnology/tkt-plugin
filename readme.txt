@@ -32,16 +32,30 @@ Value (optional; must be integer > 0 to be included)
 <input type="hidden" name="tk-conversion-value" value="name_of_conversion_value"/>
 
 
-
 -- Calls (tel: links):
 
 #Setup:
 
 Add
 
-tkInstallCallConversionTracking();
+tkInstallCallConversionTracking(CATEGORY, ACTION, LABEL, VALUE);
 
 to functions.php
+
+Parameters are optional. CATEGORY defaults to "Conversion". ACTION defaults to "Anruf". VALUE must be integer > 0 to be included.
+
+
+-- E-Mails (mailto: links):
+
+#Setup:
+
+Add
+
+tkInstallMailConversionTracking(CATEGORY, ACTION, LABEL, VALUE);
+
+to functions.php
+
+Parameters are optional. CATEGORY defaults to "Conversion". ACTION defaults to "E-Mail". VALUE must be integer > 0 to be included.
 
 
 
@@ -106,7 +120,7 @@ to functions.php
 #Description:
 
 Insert mfn builder content anywhere via [tk-betemplate] shortcode. This utilizes BeTheme's "Template" custom post type.
-Caution: the Content WP builder element outputs the current page's the_content.
+Caution: The Content WP builder element outputs the current page's the_content.
 
 Attributes:
 
@@ -177,3 +191,58 @@ to functions.php
 Add the page template and sidebar style to the theme.
 
 In BeTheme's theme options, add a sidebar area named "Inhalt". In that sidebar area, add a html widget containing the shortcode [tkContentSubnav]
+
+
+
+--- Body Class ---
+
+#Description:
+
+Enables adding classes to the body of a specific single page/post without the need for a custom template.
+
+#Setup:
+
+Create a custom field named "tk-bodyclass" on the page/post (using WP's built-in functionality or Pods' page/post type extension) and input the class/classes to be added as its value. (No dots, space as seperator.)
+
+
+
+--- Remove Slug ---
+
+#Description:
+
+Removes the custom post type slug from the URL (e.g. ~/lager/lagerhalle-münchen/ becomes ~/lagerhalle-münchen/).
+
+#Setup:
+
+Add
+
+tkInstallRemoveSlug(CUSTOM_POST_TYPE_OR_TAXONOMY_NAME, SLUG, IS_TAXONOMY);
+
+to functions.php
+
+(e.g. tkInstallRemoveSlug("tk-storage", "lager"); ) (IS_TAXONOMY defaults to false)
+
+
+
+--- Mail HTML ---
+
+#Description:
+
+Sets the content-type of sent mails to text/html.
+
+#Setup:
+
+Add
+
+tkInstallMailHTML();
+
+to functions.php
+
+--- Option Page ---
+#Description:
+
+To generate a wordpress admin backend options page, you can use the
+
+tkAddOptionsPage(OptionsConfiguration $optionsConfiguration)
+
+function call. The OptionsConfiguration is a struct-like object with several self-explanatory data fields.

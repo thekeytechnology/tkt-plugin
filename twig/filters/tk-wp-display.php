@@ -11,13 +11,12 @@ function tkAddWpDisplayFilter(TkTemplate $tkTwig)
         return tkReplaceLinebreaks($item, ", ");
     });
 
-    $tkTwig->addFilter("shorten", function ($item, $maxLetters = 28, $suffix="...") {
+    $tkTwig->addFilter("shorten", function ($item, $maxLetters = 28, $suffix = "...") {
         return tkShorten($item, $maxLetters, $suffix);
     });
 
     $tkTwig->addFilter("toOptions", function ($items, $selected = NULL, $placeholder = NULL) {
         $options = "";
-        print_a($selected);
 
         $optionWasSelected = false;
         foreach ($items as $item) {
@@ -46,6 +45,10 @@ function tkAddWpDisplayFilter(TkTemplate $tkTwig)
 
     $tkTwig->addFilter("wpshortcode", function ($code) {
         return do_shortcode($code);
+    });
+
+    $tkTwig->addFilter("wptranslate", function ($key, $textdomain) {
+        return __($key, $textdomain);
     });
 
 }

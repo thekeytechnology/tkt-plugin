@@ -1,5 +1,6 @@
 <?php
 
+require_once("filters/tk-pods-filters.php");
 require_once("filters/tk-pms-filters.php");
 require_once("filters/tk-tec-filters.php");
 require_once("filters/tk-wc-filters.php");
@@ -23,6 +24,7 @@ class TkTemplate
         tkAddWpTermFilters($tkTwig);
         tkAddWpFunctions($tkTwig);
         tkAddTecFilters($tkTwig);
+        tkAddPodsFilter($tkTwig);
 
         if (function_exists("add_action")) {
             add_action('init', function () use ($tkTwig) {
