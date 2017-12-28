@@ -24,13 +24,16 @@ class TkTemplate
         tkAddWpFunctions($tkTwig);
         tkAddTecFilters($tkTwig);
 
-        add_action('init', function () use ($tkTwig) {
-            $tkTwig->addGlobal("wpuserloggedin", is_user_logged_in());
-            $tkTwig->addGlobal("wplogouturl", wp_logout_url("/"));
-            $tkTwig->addGlobal("wpisajax", is_ajax());
-            $tkTwig->addGlobal("wpcurrentpath", add_query_arg(NULL, NULL));
-            $tkTwig->addGlobal("wpshoulddisplayrecaptcha", TK_RECAPTCHA);
-        });
+        if (function_exists("add_action")) {
+            add_action('init', function () use ($tkTwig) {
+                $tkTwig->addGlobal("wpuserloggedin", is_user_logged_in());
+                $tkTwig->addGlobal("wplogouturl", wp_logout_url("/"));
+                $tkTwig->addGlobal("wpisajax", is_ajax());
+                $tkTwig->addGlobal("wpcurrentpath", add_query_arg(NULL, NULL));
+                $tkTwig->addGlobal("wpshoulddisplayrecaptcha", TK_RECAPTCHA);
+            });
+        }
+
         return $tkTwig;
     }
 
@@ -85,7 +88,7 @@ class TkTemplate
     }
 
 
-    public function renderTemplate($templateName, $args = [])
+    public function renderTemplate($templateName, $args = [], $displayErrors = false)
     {
         if (!isset($this->twig)) {
             return "<marquee class='tk-error'>TEMPLATE SYSTEM NOT INITIALIZED - DID YOU CREATE assets/twig FOLDER IN THEME?!!!</marquee>";
@@ -95,7 +98,11 @@ class TkTemplate
             return $this->twig->render($templateName, $args);
         } catch (Exception $e) {
             error_log("Template Exception: " . $e->getMessage() . " - " . $e->getTraceAsString());
-            return "<marquee class='tk-error'>TEMPLATE ERROR CHECK LOGS!!!</marquee>";
+            if ($displayErrors) {
+                return "<pre>" . $e->getMessage() . "</pre>";
+            } else {
+                return "<marquee class='tk-error'>TEMPLATE ERROR CHECK LOGS!!!</marquee>";
+            }
         }
     }
 
