@@ -116,17 +116,31 @@ function tkAddOptionsPage(OptionsConfiguration $optionsConfiguration)
     $optionsConfiguration->optionsPerSection = $filteredOptionsPerSection;
 
     add_action('admin_menu', function () use ($optionsConfiguration) {
-        add_submenu_page(
-            $optionsConfiguration->parentSlug,
-            $optionsConfiguration->pageTitle,
-            $optionsConfiguration->menuTitle,
-            $optionsConfiguration->capability,
-            $optionsConfiguration->pageSlug,
-            function () {
-                global $tkOptionsPage;
-                $tkOptionsPage->display();
-            }
-        );
+        if ($optionsConfiguration->parentSlug) {
+            add_submenu_page(
+                $optionsConfiguration->parentSlug,
+                $optionsConfiguration->pageTitle,
+                $optionsConfiguration->menuTitle,
+                $optionsConfiguration->capability,
+                $optionsConfiguration->pageSlug,
+                function () {
+                    global $tkOptionsPage;
+                    $tkOptionsPage->display();
+                }
+            );
+        } else {
+            add_options_page(
+                $optionsConfiguration->pageTitle,
+                $optionsConfiguration->menuTitle,
+                $optionsConfiguration->capability,
+                $optionsConfiguration->pageSlug,
+                function () {
+                    global $tkOptionsPage;
+                    $tkOptionsPage->display();
+                }
+            );
+        }
+
     });
 
     add_action("admin_init", function () use ($optionsConfiguration) {
