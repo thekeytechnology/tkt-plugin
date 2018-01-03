@@ -9,7 +9,7 @@ function tkInstallMailHTML()
 {
     add_filter('wp_mail_content_type', function () {
         return "text/html";
-    });
+    }, 100, 0);
 }
 
 add_filter("retrieve_password_message", function ($message) {

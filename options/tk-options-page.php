@@ -32,7 +32,9 @@ class TkOptionsPage
                         $sanitizeCallback = function ($text) {
                             return wp_kses($text, array(
                                 "p" => array(),
-                                "br" => array()
+                                "br" => array(),
+                                "a" => array(),
+                                "href" => array()
                             ));
                         };
                         break;
