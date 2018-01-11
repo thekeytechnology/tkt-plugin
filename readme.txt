@@ -216,11 +216,18 @@ Removes the custom post type slug from the URL (e.g. ~/lager/lagerhalle-münchen
 
 Add
 
-tkInstallRemoveSlug(CUSTOM_POST_TYPE_OR_TAXONOMY_NAME, SLUG, IS_TAXONOMY);
+tkInstallRemoveSlug(CUSTOM_POST_TYPE_OR_TAXONOMY_NAME, SLUG, IS_TAXONOMY, REWRITE_OPTIONS);
 
 to functions.php
 
-(e.g. tkInstallRemoveSlug("tk-storage", "lager"); ) (IS_TAXONOMY defaults to false)
+(e.g. tkInstallRemoveSlug("tk-storage", "lager"); )
+
+IS_TAXONOMY defaults to false.
+
+REWRITE_OPTIONS (optional) is a TKSlugRemoverRewriteOptions object.
+The slug removal functionality relies on certain rewrite rules that may not exist if the permalink structure is not set to "post name".
+If REWRITE_OPTIONS is set, the required rewrite rules are added to the rewrite rules list. TKSlugRemoverRewriteOptions has data fields for setting the rule position (as per the add_rewrite_rule parameter; default "bottom"), the init action priority (default 10) and for enabling verbose page rules (default false). The latter is only necessary if it is not already set by WP (depends on permalink settings).
+Caution: If wp_rewrite->pagination_base is changed and REWRITE_OPTIONS are used, tkInstallRemoveSlug must be called after the change, otherwise pagination URLs will be incorrect for post types/taxonomies that use pagination.
 
 
 
@@ -237,6 +244,8 @@ Add
 tkInstallMailHTML();
 
 to functions.php
+
+
 
 --- Option Page ---
 #Description:
