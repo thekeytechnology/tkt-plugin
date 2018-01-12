@@ -94,3 +94,28 @@ function tkEnableSubnavigation()
 
     add_shortcode("tkContentSubnav", "tkContentSubnav");
 }
+
+function tkAddSidebarToSubnavigation($postType)
+{
+    add_filter('get_post_metadata', function ($metadata, $object_id, $meta_key, $single) use ($postType) {
+        $postType = get_post_type($object_id);
+        if ($postType == $postType) {
+            if (isset($meta_key) && 'mfn-post-sidebar' == $meta_key) {
+                return '0';
+            }
+            if (isset($meta_key) && 'mfn-post-layout' == $meta_key) {
+                return 'right-sidebar';
+            }
+        }
+        return $metadata;
+    }, 100, 4);
+
+
+    add_filter('body_class', function ($classes) use ($postType) {
+        $postType = get_post_type();
+        if ($postType == $postType) {
+            return array_merge($classes, array('page-template-template-tk-content'));
+        }
+        return $classes;
+    });
+}
