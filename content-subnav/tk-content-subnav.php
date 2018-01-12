@@ -54,6 +54,9 @@ function tkEnableSubnavigation()
         $h3Enabled = $atts["enableh3"];
 
         $title = $atts["title"];
+        if (!$title) {
+            $title = "Inhalt";
+        }
         $output = "<h2 class='tk-sidebar-h2'>$title</h2>";
         $output .= "<hr class='tk-hr-2'>";
         $output .= "<ol class='tk-content-subnavigation'>";
