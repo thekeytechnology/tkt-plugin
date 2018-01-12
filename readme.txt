@@ -32,16 +32,30 @@ Value (optional; must be integer > 0 to be included)
 <input type="hidden" name="tk-conversion-value" value="name_of_conversion_value"/>
 
 
-
 -- Calls (tel: links):
 
 #Setup:
 
 Add
 
-tkInstallCallConversionTracking();
+tkInstallCallConversionTracking(CATEGORY, ACTION, LABEL, VALUE);
 
 to functions.php
+
+Parameters are optional. CATEGORY defaults to "Conversion". ACTION defaults to "Anruf". VALUE must be integer > 0 to be included.
+
+
+-- E-Mails (mailto: links):
+
+#Setup:
+
+Add
+
+tkInstallMailConversionTracking(CATEGORY, ACTION, LABEL, VALUE);
+
+to functions.php
+
+Parameters are optional. CATEGORY defaults to "Conversion". ACTION defaults to "E-Mail". VALUE must be integer > 0 to be included.
 
 
 
@@ -106,7 +120,7 @@ to functions.php
 #Description:
 
 Insert mfn builder content anywhere via [tk-betemplate] shortcode. This utilizes BeTheme's "Template" custom post type.
-Caution: the Content WP builder element outputs the current page's the_content.
+Caution: The Content WP builder element outputs the current page's the_content.
 
 Attributes:
 
@@ -180,7 +194,7 @@ In BeTheme's theme options, add a sidebar area named "Inhalt". In that sidebar a
 
 
 
---- BODY CLASS ---
+--- Body Class ---
 
 #Description:
 
@@ -192,18 +206,52 @@ Create a custom field named "tk-bodyclass" on the page/post (using WP's built-in
 
 
 
---- REMOVE SLUG ---
+--- Remove Slug ---
 
 #Description:
 
-Remove the custom post type slug from the URL (e.g. ~/lager/lagerhalle-münchen/ becomes ~/lagerhalle-münchen/).
+Removes the custom post type slug from the URL (e.g. ~/lager/lagerhalle-münchen/ becomes ~/lagerhalle-münchen/).
 
 #Setup:
 
 Add
 
-tkInstallRemoveSlug(CUSTOM_POST_TYPE_NAME, SLUG);
+tkInstallRemoveSlug(CUSTOM_POST_TYPE_OR_TAXONOMY_NAME, SLUG, IS_TAXONOMY, REWRITE_OPTIONS);
 
 to functions.php
 
 (e.g. tkInstallRemoveSlug("tk-storage", "lager"); )
+
+IS_TAXONOMY defaults to false.
+
+REWRITE_OPTIONS (optional) is a TKSlugRemoverRewriteOptions object.
+The slug removal functionality relies on certain rewrite rules that may not exist if the permalink structure is not set to "post name".
+If REWRITE_OPTIONS is set, the required rewrite rules are added to the rewrite rules list. TKSlugRemoverRewriteOptions has data fields for setting the rule position (as per the add_rewrite_rule parameter; default "bottom"), the init action priority (default 10) and for enabling verbose page rules (default false). The latter is only necessary if it is not already set by WP (depends on permalink settings).
+Caution: If wp_rewrite->pagination_base is changed and REWRITE_OPTIONS are used, tkInstallRemoveSlug must be called after the change, otherwise pagination URLs will be incorrect for post types/taxonomies that use pagination.
+
+
+
+--- Mail HTML ---
+
+#Description:
+
+Sets the content-type of sent mails to text/html.
+
+#Setup:
+
+Add
+
+tkInstallMailHTML();
+
+to functions.php
+
+
+
+--- Option Page ---
+#Description:
+
+To generate a wordpress admin backend options page, you can use the
+
+tkAddOptionsPage(OptionsConfiguration $optionsConfiguration)
+
+function call. The OptionsConfiguration is a struct-like object with several self-explanatory data fields.

@@ -1,10 +1,10 @@
 jQuery( document ).ready( function() {
-    jQuery('a[href^="tel:"]').click(function() {
+    jQuery('a[href^="mailto:"]').click(function() {
 
-        var category = tkCallConversionTrackingParameters["category"];
-        var action = tkCallConversionTrackingParameters["action"];
-        var label = tkCallConversionTrackingParameters["label"];
-        var value = parseInt(tkCallConversionTrackingParameters["value"]);
+        var category = tkMailConversionTrackingParameters["category"];
+        var action = tkMailConversionTrackingParameters["action"];
+        var label = tkMailConversionTrackingParameters["label"];
+        var value = parseInt(tkMailConversionTrackingParameters["value"]);
 
         var fieldsObject = {};
 

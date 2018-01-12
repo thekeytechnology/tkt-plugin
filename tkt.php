@@ -2,7 +2,7 @@
 /*
 Plugin Name: TKT Less / Gulp / Twig / WP Utilities
 Plugin URI:  https://www.thekey.technology
-Version:     18.0
+Version:     22
 Author:      the key technology
 Author URI:  https://www.thekey.technology
 License:     proprietary
@@ -17,15 +17,13 @@ if (!defined("TK_RECAPTCHA")) {
     define("TK_RECAPTCHA", false);
 }
 
-if (!defined("TK_MAIL_HTML")){
-    define("TK_MAIL_HTML", false);
-}
-
 require_once "vendor/autoload.php";
 
 require_once("betemplate/tk-betemplate.php");
 
 require_once("content-subnav/tk-content-subnav.php");
+
+require_once("options/tk-options-page.php");
 
 require_once("conversion-tracking/tk-conversion-tracking.php");
 
@@ -46,15 +44,25 @@ require_once("utils/tk-image-title.php");
 require_once("utils/tk-image-fixes.php");
 
 
-add_action("wp_enqueue_scripts", function(){
-    wp_enqueue_script("tk-prevent-enter-submit", plugins_url()."/tkt-plugin/utils/js/preventEnterSubmit.js", array("jquery"));
+add_action("wp_enqueue_scripts", function () {
+    wp_enqueue_script("tk-prevent-enter-submit", plugins_url() . "/tkt-plugin/utils/js/preventEnterSubmit.js", array("jquery"));
 }, 11);
 
 
-add_action("body_class", function( $classes ) {
-    if(get_post_meta(get_queried_object_id(), "tk-bodyclass", true)){
-        return array_merge( $classes, array(get_post_meta(get_queried_object_id(), "tk-bodyclass", true)) );
-    }else{
+add_action("body_class", function ($classes) {
+    if (get_post_meta(get_queried_object_id(), "tk-bodyclass", true)) {
+
+        $classesToBeAdded = explode(" ", get_post_meta(get_queried_object_id(), "tk-bodyclass", true));
+
+        return array_merge($classes, $classesToBeAdded);
+    } else {
         return $classes;
     }
+});
+
+
+add_filter("wp_theme_editor_filetypes", function ($types) {
+    $types[] = "twig";
+
+    return $types;
 });
