@@ -95,7 +95,7 @@ function tkEnableSubnavigation()
     add_shortcode("tkContentSubnav", "tkContentSubnav");
 }
 
-function tkAddSidebarToSubnavigation($postType)
+function tkAddSidebarToPostType($postType)
 {
     add_filter('get_post_metadata', function ($metadata, $object_id, $meta_key, $single) use ($postType) {
         $postType = get_post_type($object_id);
