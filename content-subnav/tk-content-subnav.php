@@ -95,11 +95,17 @@ function tkEnableSubnavigation()
     add_shortcode("tkContentSubnav", "tkContentSubnav");
 }
 
-function tkAddSidebarToPostType($postType)
+function tkAddSidebarToPostType($postType, $onArchives = false)
 {
-    add_filter('get_post_metadata', function ($metadata, $object_id, $meta_key, $single) use ($postType) {
+    add_filter('get_post_metadata', function ($metadata, $object_id, $meta_key, $single) use ($postType, $onArchives) {
         $postType = get_post_type($object_id);
+
         if ($postType == $postType) {
+            $show = $onArchives ? is_archive() : !is_archive();
+            if (!$show) {
+                return $metadata;
+            }
+
             if (isset($meta_key) && 'mfn-post-sidebar' == $meta_key) {
                 return '0';
             }
@@ -111,9 +117,12 @@ function tkAddSidebarToPostType($postType)
     }, 100, 4);
 
 
-    add_filter('body_class', function ($classes) use ($postType) {
+    add_filter('body_class', function ($classes) use ($postType, $onArchives) {
         $postType = get_post_type();
-        if ($postType == $postType) {
+
+        $show = $onArchives ? is_archive() : !is_archive();
+
+        if ($postType == $postType and $show) {
             return array_merge($classes, array('page-template-template-tk-content'));
         }
         return $classes;
