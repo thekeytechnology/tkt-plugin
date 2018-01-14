@@ -1,5 +1,5 @@
 jQuery(document).ready(function ($) {
-    var sidebar = $('.page-template-template-tk-content .sidebar .widget_text');
+    var sidebar = $('.page-template-template-tk-content .sidebar .widget_text, .single .sidebar .widget_text');
 
     var topBar = $("#Top_bar");
     var actionBar = $("#Action_bar");
