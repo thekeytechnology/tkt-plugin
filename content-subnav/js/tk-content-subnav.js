@@ -1,5 +1,5 @@
 jQuery(document).ready(function ($) {
-    var sidebar = $('.page-template-template-tk-content .sidebar .widget_text');
+    var sidebar = $('.page-template-template-tk-content .sidebar .widget_text, .single .sidebar .widget_text');
 
     var topBar = $("#Top_bar");
     var actionBar = $("#Action_bar");
@@ -12,7 +12,7 @@ jQuery(document).ready(function ($) {
     var marginToFooter = 20;
 
     if (sidebar.length) {
-        var originalPosition = sidebar.offset().top;
+        var originalPosition = topBar.hasClass("loading") ? sidebar.offset().top + $(".menu_wrapper").height() : sidebar.offset().top;
 
         $(window).scroll(function () {
 
