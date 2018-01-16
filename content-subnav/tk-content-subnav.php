@@ -71,7 +71,7 @@ function tkEnableSubnavigation()
             if ($type == "h3" and $lastType == "h2") {
                 $output .= "<ol class='tk-content-subsubnavigation'>";
             } else if ($type == "h2" and $lastType == "h3") {
-                $output = "</li></ol>";
+                $output .= "</li></ol>";
             } else {
                 $output .= "</li>";
             }
