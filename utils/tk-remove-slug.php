@@ -113,8 +113,6 @@ class TKSlugRemover
                         break;
                 }
             }
-
-            return $query;
         }
 
         return $query;
