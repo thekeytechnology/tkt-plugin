@@ -15,6 +15,16 @@ function tkRemoveEmptyElements($content)
         '<$1$2>',
         '</$1',
     ), $content);
+
+    //remove errant p tags at the beginning or end
+    $content = preg_replace(array(
+        "#^\s*</p>#",
+        "#<p>\s*$#"
+    ), array(
+        "",
+        ""
+    ), $content);
+
     return preg_replace('#<p>(\s|&nbsp;)*+(<br\s*/*>)*(\s|&nbsp;)*</p>#i', '', $content);
 }
 
