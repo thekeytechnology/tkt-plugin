@@ -1,4 +1,3 @@
-
 --- Conversion Tracking ---
 
 #Description:
@@ -174,6 +173,28 @@ jQuery(document).ready(function($){
 
 
 
+--- Slick ---
+
+#Description:
+
+Enables http://kenwheeler.github.io/slick/
+
+#Setup:
+
+Add
+
+tkInstallSlick();
+
+to functions.php
+
+Include the following (with the options of your choice) in the theme:
+
+jQuery(document).ready(function($){
+    $("INSERT_SELECTOR_HERE").slick();
+});
+
+
+
 --- Content Subnavigation ---
 
 #Description:
@@ -193,6 +214,8 @@ Add the page template and sidebar style to the theme.
 In BeTheme's theme options, add a sidebar area named "Inhalt". In that sidebar area, add a html widget containing the shortcode [tkContentSubnav]
 
 If you need a sidebar for custom post types, use tkAddSidebarToPostType($postType, $onArchives = false) to add the sidebars.
+
+
 
 --- Body Class ---
 

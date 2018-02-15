@@ -195,7 +195,7 @@ function tkInstallRemoveSlug($postType, $slug, $isTaxonomy = false, TKSlugRemove
         if($options->enableVerbosePageRules){
             add_action("init", function(){
                 global $wp_rewrite;
-                $wp_rewrite->use_verbose_page_rules;
+                $wp_rewrite->use_verbose_page_rules = true;
             });
         }
     }
