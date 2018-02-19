@@ -11,7 +11,10 @@ Enables conversion tracking via Google Analytics and Facebook.
 
 Add
 
-tkInstallCF7ConversionTracking();
+
+if (function_exists("tkInstallCF7ConversionTracking")) {
+   tkInstallCF7ConversionTracking(); 
+}
 
 to functions.php and add
 
@@ -37,7 +40,10 @@ Value (optional; must be integer > 0 to be included)
 
 Add
 
-tkInstallCallConversionTracking(CATEGORY, ACTION, LABEL, VALUE);
+if (function_exists("tkInstallCallConversionTracking")) {
+   tkInstallCallConversionTracking(CATEGORY, ACTION, LABEL, VALUE);
+}
+
 
 to functions.php
 
@@ -50,7 +56,9 @@ Parameters are optional. CATEGORY defaults to "Conversion". ACTION defaults to "
 
 Add
 
-tkInstallMailConversionTracking(CATEGORY, ACTION, LABEL, VALUE);
+if (function_exists("tkInstallMailConversionTracking")) {
+   tkInstallMailConversionTracking(CATEGORY, ACTION, LABEL, VALUE);
+}
 
 to functions.php
 
@@ -72,7 +80,9 @@ For img tags in the visual editor, use the Restore Image Title plugin.
 
 Add
 
-tkInstallImageTitle();
+if (function_exists("tkInstallImageTitle")) {
+   tkInstallImageTitle();
+}
 
 to functions.php
 
@@ -92,7 +102,9 @@ Adds title and alt attributes to images uploaded via the media library if the at
 
 Add
 
-tkInstallImageFixes();
+if (function_exists("tkInstallImageFixes")) {
+   tkInstallImageFixes();
+}
 
 to functions.php
 
@@ -108,7 +120,9 @@ Removes empty <p> tags from the_content.
 
 Add
 
-tkInstallRemoveEmptyElements();
+if (tkInstallRemoveEmptyElements("tkInstallImageFixes")) {
+   tkInstallRemoveEmptyElements();
+}
 
 to functions.php
 
@@ -143,7 +157,9 @@ In BeTheme's Theme Options under Global -> Advanced -> Theme Functions -> Post T
 
 Add
 
-tkInstallBeTemplate();
+if (function_exists("tkInstallBeTemplate")) {
+   tkInstallBeTemplate();
+}
 
 to functions.php
 
@@ -161,7 +177,9 @@ Enables http://www.no-margin-for-errors.com/projects/prettyphoto-jquery-lightbox
 
 Add
 
-tkInstallPrettyPhoto();
+if (function_exists("tkInstallPrettyPhoto")) {
+   tkInstallPrettyPhoto();
+}
 
 to functions.php
 
@@ -183,7 +201,9 @@ Enables http://kenwheeler.github.io/slick/
 
 Add
 
-tkInstallSlick();
+if (function_exists("tkInstallSlick")) {
+   tkInstallSlick();
+}
 
 to functions.php
 
@@ -205,7 +225,9 @@ Page template with sidebar that links to sections headed by h2 in the content.
 
 Add
 
-tkEnableSubnavigation();
+if (function_exists("tkEnableSubnavigation")) {
+   tkEnableSubnavigation();
+}
 
 to functions.php
 
@@ -233,13 +255,15 @@ Create a custom field named "tk-bodyclass" on the page/post (using WP's built-in
 
 #Description:
 
-Removes the custom post type slug from the URL (e.g. ~/lager/lagerhalle-mÃ¼nchen/ becomes ~/lagerhalle-mÃ¼nchen/).
+Removes the custom post type slug from the URL (e.g. ~/lager/lagerhalle-münchen/ becomes ~/lagerhalle-münchen/).
 
 #Setup:
 
 Add
 
-tkInstallRemoveSlug(CUSTOM_POST_TYPE_OR_TAXONOMY_NAME, SLUG, IS_TAXONOMY, REWRITE_OPTIONS);
+if (function_exists("tkInstallRemoveSlug")) {
+   tkInstallRemoveSlug(CUSTOM_POST_TYPE_OR_TAXONOMY_NAME, SLUG, IS_TAXONOMY, REWRITE_OPTIONS);
+}
 
 to functions.php
 
@@ -264,7 +288,6 @@ Sets the content-type of sent mails to text/html.
 
 Add
 
-tkInstallMailHTML();
 
 to functions.php
 
