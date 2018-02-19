@@ -255,7 +255,7 @@ Create a custom field named "tk-bodyclass" on the page/post (using WP's built-in
 
 #Description:
 
-Removes the custom post type slug from the URL (e.g. ~/lager/lagerhalle-münchen/ becomes ~/lagerhalle-münchen/).
+Removes the custom post type slug from the URL (e.g. ~/lager/lagerhalle-dresden/ becomes ~/lagerhalle-dresden/).
 
 #Setup:
 
@@ -288,6 +288,9 @@ Sets the content-type of sent mails to text/html.
 
 Add
 
+if (function_exists("tkInstallMailHTML")) {
+   tkInstallMailHTML();
+}
 
 to functions.php
 
