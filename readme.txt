@@ -120,8 +120,8 @@ Removes empty <p> tags from the_content.
 
 Add
 
-if (tkInstallRemoveEmptyElements("tkInstallImageFixes")) {
-   tkInstallRemoveEmptyElements();
+if (function_exists("tkInstallRemoveEmptyElements")) {
+   tkInstallRemoveEmptyElements(); 
 }
 
 to functions.php
