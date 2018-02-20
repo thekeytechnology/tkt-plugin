@@ -54,6 +54,15 @@ document.addEventListener('wpcf7mailsent', function (event) {
         if(typeof fbq !== "undefined"){
             fbq('trackCustom', 'Conversion', {type: action});
         }
+        if (typeof dataLayer !== "undefined") {
+            dataLayer.push({
+                "event": "tk-site-event",
+                "eventCategory": category,
+                "eventAction": action,
+                "eventLabel": label,
+                "eventValue": value
+            })
+        }
     }
 
 }, false);
