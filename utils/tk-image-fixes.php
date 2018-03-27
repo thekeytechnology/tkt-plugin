@@ -196,7 +196,9 @@ function tkAddTitleAndAlt($content)
 
 function tkHasAttribute($element, $attribute)
 {
-    return preg_match("/ " . $attribute . "=[\"'][^\"']+?[\"']/i", $element);
+    $hasAttribute = preg_match("/ " . $attribute . "=[\"'][^\"']+?[\"']/i", $element);
+    $attributeIsEmpty = preg_match("/ " . $attribute . "=[\"'][\"']/i", $element);
+    return $hasAttribute && !$attributeIsEmpty;
 }
 
 function tkAddImageAttribute($image, $attribute, $value)
