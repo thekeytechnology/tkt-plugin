@@ -33,6 +33,34 @@ Label (optional)
 Value (optional; must be integer > 0 to be included)
 <input type="hidden" name="tk-conversion-value" value="name_of_conversion_value"/>
 
+-- MailChimp:
+
+#Setup:
+
+Add
+
+
+if (function_exists("tkInstallMailchimpConversionTracking")) {
+   tkInstallMailchimpConversionTracking();
+}
+
+to functions.php and add
+
+<input type="hidden" name="tk-conversion-action" value="name_of_conversion_action"/>
+
+to the form.
+
+Google Analytics events can be customized further by adding the following to the form:
+
+Category (defaults to "Conversion" if omitted)
+<input type="hidden" name="tk-conversion-category" value="name_of_conversion_category"/>
+
+Label (optional)
+<input type="hidden" name="tk-conversion-label" value="name_of_conversion_label"/>
+
+Value (optional; must be integer > 0 to be included)
+<input type="hidden" name="tk-conversion-value" value="name_of_conversion_value"/>
+
 
 -- Calls (tel: links):
 
