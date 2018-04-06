@@ -1,3 +1,5 @@
+var tkMcTracked = false;
+
 jQuery( document ).ready( function($) {
     $('form#mc-embedded-subscribe-form').submit(function(event) {
         var inputs = $(this).find('input');
@@ -31,27 +33,21 @@ jQuery( document ).ready( function($) {
             }
         }
 
-        if(track){
+        if(track && !tkMcTracked){
             fieldsObject["eventCategory"] = category;
             fieldsObject["eventAction"] = action;
-
             if(label.length > 0){
                 fieldsObject["eventLabel"] = label;
             }
-
             if(value > 0){
                 fieldsObject["eventValue"] = value;
             }
-
-
             if(typeof __gaTracker !== "undefined"){
                 __gaTracker('send', 'event', fieldsObject);
             }
-
             if(typeof __ga !== "undefined"){
                 __ga('send', 'event', fieldsObject);
             }
-
             if(typeof fbq !== "undefined"){
                 fbq('trackCustom', 'Conversion', {type: action});
             }
@@ -64,6 +60,8 @@ jQuery( document ).ready( function($) {
                     "eventValue": value
                 })
             }
+
+            tkMcTracked = true;
         }
     });
 });
