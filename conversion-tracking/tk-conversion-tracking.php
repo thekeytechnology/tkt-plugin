@@ -34,3 +34,10 @@ function tkInstallMailConversionTracking($category = "Conversion", $action="E-Ma
         wp_localize_script("tk-mail-conversion-tracking", "tkMailConversionTrackingParameters", $params);
     }, 11);
 }
+
+function tkInstallMailchimpConversionTracking()
+{
+    add_action("wp_enqueue_scripts", function(){
+        wp_enqueue_script("tk-mailchimp-conversion-tracking", plugins_url()."/tkt-plugin/conversion-tracking/mailchimpConversionTracking.js");
+    }, 11);
+}
