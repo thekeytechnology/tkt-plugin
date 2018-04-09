@@ -60,6 +60,12 @@ function tkAddWpFieldFilters(TkTemplate $tkTwig)
         return "";
     });
 
+    $tkTwig->addFilter("wpthumbnailid", function ($item) {
+        return tkWpApplyWithId($item, function ($id) {
+            return get_post_thumbnail_id($id);
+        });
+    });
+
     $tkTwig->addFilter("wpthumbnailurl", function ($item, $size = "post-thumbnail") {
         if ($item instanceof WP_Post) {
             return get_the_post_thumbnail_url($item, $size);
