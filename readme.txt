@@ -4,6 +4,16 @@
 
 Enables conversion tracking via Google Analytics and Facebook.
 
+You can either activate the by adding
+
+if (function_exists("tkInstallConversionTracking")) {
+   tkInstallConversionTracking(cf7, call, mail, mailchimp);
+}
+
+to activate everything with their default values, or use the functions listed below to activate each separately.
+
+The parameters are optional. Set one to false in order to not install it.
+
 
 -- Contact Form 7:
 
@@ -13,7 +23,7 @@ Add
 
 
 if (function_exists("tkInstallCF7ConversionTracking")) {
-   tkInstallCF7ConversionTracking(); 
+   tkInstallCF7ConversionTracking();
 }
 
 to functions.php and add
