@@ -41,3 +41,21 @@ function tkInstallMailchimpConversionTracking()
         wp_enqueue_script("tk-mailchimp-conversion-tracking", plugins_url()."/tkt-plugin/conversion-tracking/mailchimpConversionTracking.js");
     }, 11);
 }
+
+function tkInstallConversionTracking($cf7 = true, $mail = true, $call = true, $mailchimp = true) {
+    if ($cf7) {
+        tkInstallCF7ConversionTracking();
+    }
+
+    if ($mail) {
+        tkInstallCallConversionTracking();
+    }
+
+    if ($call) {
+        tkInstallMailConversionTracking();
+    }
+
+    if ($mailchimp) {
+        tkInstallMailchimpConversionTracking();
+    }
+}
