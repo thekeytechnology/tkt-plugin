@@ -1,13 +1,14 @@
 <?php
 
-require_once("filters/tk-pods-filters.php");
 require_once("filters/tk-pms-filters.php");
+require_once("filters/tk-pods-filters.php");
 require_once("filters/tk-tec-filters.php");
 require_once("filters/tk-wc-filters.php");
 require_once("filters/tk-wp-display.php");
 require_once("filters/tk-wp-fields.php");
 require_once("filters/tk-wp-terms.php");
 require_once("filters/tk-util-filters.php");
+require_once("functions/tk-util-functions.php");
 require_once("functions/tk-wp-functions.php");
 
 class TkTemplate
@@ -17,14 +18,16 @@ class TkTemplate
         $tkTwig = new TkTemplate($templateDir);
 
         tkAddPmsFilters($tkTwig);
+        tkAddPodsFilter($tkTwig);
+        tkAddTecFilters($tkTwig);
         tkAddUtilFilters($tkTwig);
         tkAddWcFilters($tkTwig);
         tkAddWpDisplayFilter($tkTwig);
         tkAddWpFieldFilters($tkTwig);
         tkAddWpTermFilters($tkTwig);
+
+        tkAddUtilFunctions($tkTwig);
         tkAddWpFunctions($tkTwig);
-        tkAddTecFilters($tkTwig);
-        tkAddPodsFilter($tkTwig);
 
         if (function_exists("add_action")) {
             add_action('init', function () use ($tkTwig) {
