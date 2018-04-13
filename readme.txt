@@ -102,6 +102,20 @@ to functions.php
 
 Parameters are optional. CATEGORY defaults to "Conversion". ACTION defaults to "E-Mail". VALUE must be integer > 0 to be included.
 
+-- SignUps:
+
+#Setup:
+
+Add
+
+if (function_exists("tkInstallSignUpConversionTracking")) {
+   tkInstallSignUpConversionTracking(CATEGORY, ACTION, LABEL, VALUE);
+}
+
+to functions.php
+
+Parameters are optional. CATEGORY defaults to "Conversion". ACTION defaults to "SignUp". VALUE must be integer > 0 to be included.
+
 
 
 --- Attachment Image Titles ---
