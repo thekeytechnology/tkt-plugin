@@ -42,20 +42,49 @@ function tkInstallMailchimpConversionTracking()
     }, 11);
 }
 
-function tkInstallConversionTracking($cf7 = true, $mail = true, $call = true, $mailchimp = true) {
+function tkInstallSignUpConversionTracking($category = "Conversion", $action="SignUp", $label="", $value=0) {
+
+    $params = array(
+        "category" => $category,
+        "action" => $action,
+        "label" => $label,
+        "value" => $value
+    );
+
+    add_action( 'user_register', function() use ($params) {
+        wp_enqueue_script("tk-signup-conversion-tracking", plugins_url()."/tkt-plugin/conversion-tracking/signUpConversionTracking.js", array("jquery"));
+        wp_localize_script("tk-signup-conversion-tracking", "tkSignUpConversionTrackingParameters", $params);
+    }, 10, 1 );
+}
+
+function tkInstallConversionTracking($cf7 = true, $mail = true, $call = true, $mailchimp = true, $signups = true) {
     if ($cf7) {
-        tkInstallCF7ConversionTracking();
+        if (!function_exists("tkInstallCF7ConversionTracking")) {
+            tkInstallCF7ConversionTracking();
+        }
     }
 
     if ($mail) {
-        tkInstallCallConversionTracking();
+        if (!function_exists("tkInstallCallConversionTracking")) {
+            tkInstallCallConversionTracking();
+        }
     }
 
     if ($call) {
-        tkInstallMailConversionTracking();
+        if (!function_exists("tkInstallMailConversionTracking")) {
+            tkInstallMailConversionTracking();
+        }
     }
 
     if ($mailchimp) {
-        tkInstallMailchimpConversionTracking();
+        if (!function_exists("tkInstallMailchimpConversionTracking")) {
+            tkInstallMailchimpConversionTracking();
+        }
+    }
+
+    if ($signups) {
+        if (!function_exists("tkInstallSignUpConversionTracking")) {
+            tkInstallSignUpConversionTracking();
+        }
     }
 }
