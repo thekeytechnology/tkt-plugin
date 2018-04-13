@@ -59,31 +59,31 @@ function tkInstallSignUpConversionTracking($category = "Conversion", $action="Si
 
 function tkInstallConversionTracking($cf7 = true, $mail = true, $call = true, $mailchimp = true, $signups = true) {
     if ($cf7) {
-        if (!function_exists("tkInstallCF7ConversionTracking")) {
+        if (function_exists("tkInstallCF7ConversionTracking")) {
             tkInstallCF7ConversionTracking();
         }
     }
 
     if ($mail) {
-        if (!function_exists("tkInstallCallConversionTracking")) {
+        if (function_exists("tkInstallCallConversionTracking")) {
             tkInstallCallConversionTracking();
         }
     }
 
     if ($call) {
-        if (!function_exists("tkInstallMailConversionTracking")) {
+        if (function_exists("tkInstallMailConversionTracking")) {
             tkInstallMailConversionTracking();
         }
     }
 
     if ($mailchimp) {
-        if (!function_exists("tkInstallMailchimpConversionTracking")) {
+        if (function_exists("tkInstallMailchimpConversionTracking")) {
             tkInstallMailchimpConversionTracking();
         }
     }
 
     if ($signups) {
-        if (!function_exists("tkInstallSignUpConversionTracking")) {
+        if (function_exists("tkInstallSignUpConversionTracking")) {
             tkInstallSignUpConversionTracking();
         }
     }
