@@ -267,6 +267,11 @@ jQuery(document).ready(function($){
     $("INSERT_SELECTOR_HERE").slick();
 });
 
+Attention:
+If you want to target muffin builder wraps as slides, you need to add 
+    $(".slick-slide").removeClass("mcb-wrap"); 
+to your  jQuery(document).ready(function($){ function.
+
 
 
 --- Content Subnavigation ---
