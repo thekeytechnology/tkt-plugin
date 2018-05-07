@@ -272,6 +272,9 @@ If you want to target muffin builder wraps as slides, you need to add
     $(".slick-slide").removeClass("mcb-wrap"); 
 to your  jQuery(document).ready(function($){ function.
 
+Caution:
+Slick does not work well with wp-rocket's lazyloading. Use Slick's own lazyloading and make sure wp-rocket's lazyloading is not applied to Slick slider images. https://docs.wp-rocket.me/article/15-disabling-lazy-load-on-specific-images
+
 
 
 --- Content Subnavigation ---
