@@ -11,7 +11,7 @@ if (!function_exists("tk-next-week-day")) {
             ), $atts, 'tk-next-weekday' );
 
 
-        return date("d-m-Y", strtotime("next sunday"));
+        return date("d-m-Y", strtotime("next " . $atts['day']));
     }
 
     add_shortcode("tk-next-weekday", "tkNextWeekday");
