@@ -363,3 +363,9 @@ To generate a wordpress admin backend options page, you can use the
 tkAddOptionsPage(OptionsConfiguration $optionsConfiguration)
 
 function call. The OptionsConfiguration is a struct-like object with several self-explanatory data fields.
+
+
+--- Shortcodes ---
+
+[tk-next-weekday weekday="<Monday | Tuesday | ... | Sunday (default)>"]
+Will return the date of the next days as specified by the weekday parameter. Use this to have a perpetually extending final registation date.
