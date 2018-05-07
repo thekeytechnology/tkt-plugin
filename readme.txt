@@ -367,5 +367,5 @@ function call. The OptionsConfiguration is a struct-like object with several sel
 
 --- Shortcodes ---
 
-[tk-next-weekday weekday="<Monday | Tuesday | ... | Sunday (default)>"]
+[tk-next-weekday weekday="<sonday | tuesday | ... | sunday (default)>"]
 Will return the date of the next days as specified by the weekday parameter. Use this to have a perpetually extending final registation date.
