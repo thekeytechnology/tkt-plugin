@@ -33,6 +33,7 @@ require_once("shortcodes/tk-breadcrumbs.php");
 require_once("shortcodes/tk-shortcodes.php");
 require_once("shortcodes/tk-variable-parameter.php");
 require_once("shortcodes/tk-read-time.php");
+require_once("shortcodes/tk-next-weekday.php");
 
 require_once("slick/tk-slick.php");
 
