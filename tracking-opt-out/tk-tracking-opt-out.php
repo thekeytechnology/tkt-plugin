@@ -63,11 +63,13 @@ add_action("plugins_loaded", function () {
             remove_action( 'amp_post_template_footer', array( "AEPC_Pixel_Scripts", 'track_on_amp_pages' ) );
         }, 0);
 
-        global $tkOptOutNotices;
-        if (!$tkOptOutNotices["facebook"]) {
-            echo "<!-- Facebook Pixel disabled via user opt-out cookie -->".PHP_EOL;
-            $tkOptOutNotices["facebook"] = true;
-        }
+        add_action("wp_head", function () {
+            global $tkOptOutNotices;
+            if (!$tkOptOutNotices["facebook"]) {
+                echo "<!-- Facebook Pixel disabled via user opt-out cookie -->".PHP_EOL;
+                $tkOptOutNotices["facebook"] = true;
+            }
+        });
     }
 
 
