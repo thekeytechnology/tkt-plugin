@@ -376,6 +376,8 @@ Outputs a link that lets the user set a cookie to opt out of the respective plat
 Supported platforms:
 Google Analytics (Plugin "Google Analytics for WordPress by MonsterInsights"): type="GA"
 Facebook (Plugin "Pixel Caffeine"): type="FB"
+In order for this to work, page caching must also be disabled for the respective cookie names. (tk-PLATFORM-disable-PLATFORMID)
+Contact WPEngine support for the serverside setting, and also add the cookie names to the exclusion list in WP-Rocket.
 
 
 
