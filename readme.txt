@@ -370,5 +370,14 @@ function call. The OptionsConfiguration is a struct-like object with several sel
 
 --- Shortcodes ---
 
+[tkTrackingOptOutLink type="PLATFORM"]Text[/tkTrackingOptOutLink]
+
+Outputs a link that lets the user set a cookie to opt out of the respective platform's tracking.
+Supported platforms:
+Google Analytics (Plugin "Google Analytics for WordPress by MonsterInsights"): type="GA"
+Facebook (Plugin "Pixel Caffeine"): type="FB"
+
+
+
 [tk-next-weekday weekday="<sonday | tuesday | ... | sunday (default)>"]
 Will return the date of the next days as specified by the weekday parameter. Use this to have a perpetually extending final registation date.
