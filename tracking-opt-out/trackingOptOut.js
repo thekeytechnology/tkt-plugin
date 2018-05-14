@@ -11,4 +11,10 @@ jQuery(document).ready( function ($) {
         alert("Facebook Pixel Opt-Out Cookie gesetzt");
         return false;
     });
+
+    $(".tk-gtm-tracking-opt-out-link").on("click", function () {
+        document.cookie = tkOptOutCookieNames["GTM"] + '=true; expires=Wed, 01 Jan 2200 23:59:59 UTC; path=/';
+        alert("Google Tag Manager Opt-Out Cookie gesetzt");
+        return false;
+    });
 });
