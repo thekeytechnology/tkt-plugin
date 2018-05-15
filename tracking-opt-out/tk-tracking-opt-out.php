@@ -5,6 +5,9 @@ add_action("plugins_loaded", function () {
     add_action("wp_enqueue_scripts", function () {
         wp_enqueue_script("tk-tracking-opt-out", plugins_url() . "/tkt-plugin/tracking-opt-out/trackingOptOut.js");
     }, 12);
+    add_action("wp_enqueue_styles", function() {
+        wp_enqueue_style("tk-tracking-opt-out-styles", plugins_url() . "/tkt-plugin/tracking-opt-out/trackingOptOut.css");
+    }, 12);
 
     //Google Analytics
     add_filter("monsterinsights_track_user", function ($track_user) {
@@ -82,16 +85,16 @@ add_action("plugins_loaded", function () {
             case "google":
             case "googleanalytics":
             case "ga":
-                return '<a class="tk-ga-tracking-opt-out-link">' . $content . '</a>';
+                return '<a class="tk-ga-tracking-opt-out-link tk-opt-out-link">' . $content . '</a>';
                 break;
             case "facebook":
             case "fb":
-                return '<a class="tk-fb-tracking-opt-out-link">' . $content . '</a>';
+                return '<a class="tk-fb-tracking-opt-out-link tk-opt-out-link">' . $content . '</a>';
                 break;
             case "gtm":
             case "tagmanager":
             case "googletagmanager":
-                return '<a class="tk-gtm-tracking-opt-out-link">' . $content . '</a>';
+                return '<a class="tk-gtm-tracking-opt-out-link tk-opt-out-link">' . $content . '</a>';
                 break;
             default:
                 return "";
