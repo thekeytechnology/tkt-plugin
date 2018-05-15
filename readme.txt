@@ -368,5 +368,14 @@ Contact WPEngine support for the serverside setting, and also add the cookie nam
 
 ## Shortcodes
 
+    [tk-attribute field="META_KEY" single="<true | false>"]
+    Returns the queried object's post meta value for the specified META_KEY. Single defaults to true.
+
     [tk-next-weekday weekday="<sonday | tuesday | ... | sunday (default)>"]
     Will return the date of the next days as specified by the weekday parameter. Use this to have a perpetually extending final registation date.
+
+    [tk-read-time]
+    Returns the estimated read time of the current post's content. (Uses global $post object, post_content.)
+
+    [tk-variable-parameter tag="TAG" parameter="PARAMETER", tag_attributes="TAG_ATTRIBUTES"]DEFAULT_CONTENT[/tk-variable-parameter]
+    Returns the value of the URL parameter PARAMETER base64-decoded. If tag is set, the returned value is surrounded by a TAG HTML tag. If tag_attributes is set, it is inserted into the tag as HTML attributes (tag_attributes is used as-is).

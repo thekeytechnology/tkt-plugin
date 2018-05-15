@@ -85,16 +85,16 @@ add_action("plugins_loaded", function () {
             case "google":
             case "googleanalytics":
             case "ga":
-                return '<a class="tk-ga-tracking-opt-out-link tk-opt-out-link">' . $content . '</a>';
+                return '<a href="#" class="tk-ga-tracking-opt-out-link tk-opt-out-link">' . $content . '</a>';
                 break;
             case "facebook":
             case "fb":
-                return '<a class="tk-fb-tracking-opt-out-link tk-opt-out-link">' . $content . '</a>';
+                return '<a href="#" class="tk-fb-tracking-opt-out-link tk-opt-out-link">' . $content . '</a>';
                 break;
             case "gtm":
             case "tagmanager":
             case "googletagmanager":
-                return '<a class="tk-gtm-tracking-opt-out-link tk-opt-out-link">' . $content . '</a>';
+                return '<a href="#" class="tk-gtm-tracking-opt-out-link tk-opt-out-link">' . $content . '</a>';
                 break;
             default:
                 return "";
