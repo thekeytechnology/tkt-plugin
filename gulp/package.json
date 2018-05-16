@@ -13,5 +13,8 @@
     "gulp-util": "^3.0.7",
     "gulp-watch": "^4.3.11",
     "path": "^0.12.7"
+  },
+  "dependencies": {
+    "npm": "^6.0.1"
   }
 }
