@@ -361,7 +361,9 @@ Supported platforms:
     Google Tag Manager (Plugin "Duracell Tomi's GTM"): type="GTM"
 
 In order for this to work, page caching must also be disabled for the cookie with the name 
+
     tk-tracking-opt-out
+    
 Contact WPEngine support for the serverside setting, and also add the cookie name to the exclusion list in WP-Rocket.
 
 
