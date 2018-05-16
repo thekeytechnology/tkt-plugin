@@ -1,6 +1,6 @@
 <?php
 
-function tkVariableParameter($atts, $defaultContent = null)
+function tkVariableParameter($atts, $defaultContent = "")
 {
     $tag = s("tag", $atts, "");
     $parameter = s("parameter", $atts, "campaign");
