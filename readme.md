@@ -21,9 +21,7 @@ The parameters are optional. Set one to false in order to not install it.
 You can also install them individually. To do so follow the instructions below:
 
 
-### Contact Form 7
-
-#Setup:
+## Contact Form 7
 
 Add
 
