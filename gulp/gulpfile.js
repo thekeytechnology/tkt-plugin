@@ -1,9 +1,9 @@
-var gulp = require('gulp');
-var less = require('gulp-less');
-var concat = require('gulp-concat');
-var watch = require('gulp-watch');
-var plumber = require('gulp-plumber');
-var gutil = require('gulp-util');
+let gulp = require('gulp');
+let less = require('gulp-less');
+let concat = require('gulp-concat');
+let watch = require('gulp-watch');
+let plumber = require('gulp-plumber');
+let gutil = require('gulp-util');
 
 const themeFolder = "../../../themes/tkt/";
 
@@ -13,7 +13,7 @@ const lessInput = assetsFolder + "less/tk.less";
 const lessWPAdminInput = assetsFolder + "less/tk-wpadmin.less";
 const cssOutput = themeFolder + "css/";
 
-var jsFolder = assetsFolder + "js/";
+let jsFolder = assetsFolder + "js/";
 const jsInput = require(jsFolder + "input.json").map(function (item) {
     return jsFolder + item
 });
