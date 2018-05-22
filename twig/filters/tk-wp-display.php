@@ -43,6 +43,10 @@ function tkAddWpDisplayFilter(TkTemplate $tkTwig)
         print_a($item);
     });
 
+    $tkTwig->addFilter("removeEmptyElements", function ($item) {
+        return tkRemoveEmptyElements($item);
+    });
+
     $tkTwig->addFilter("wpshortcode", function ($code) {
         return do_shortcode($code);
     });
