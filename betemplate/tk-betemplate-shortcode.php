@@ -82,7 +82,7 @@ function tkGetBeThemeTemplate($atts){
                 //visual editor element
                 if($stripdownLevel == 3){
                     $output = preg_replace( '/<div class=".*?column_visual.*?"?\s*>(.*?)<\/div>?\s*$/sD' , '$1' , $output );
-                    //$output = wpautop($output); serves no purpose
+                    //$output = wpautop($output); <p> tags are inherited from the template, no need for this (I think)
                 }
                 //column element
                 if($stripdownLevel == 4){
@@ -92,22 +92,6 @@ function tkGetBeThemeTemplate($atts){
             }
         }
     }
-
-
-    // clean up p tags around block elements
-    $output = preg_replace(array(
-        '#<p>\s*<(div|aside|section|article|header|footer)#',
-        '#</(div|aside|section|article|header|footer)>\s*</p>#',
-        '#</(div|aside|section|article|header|footer)>\s*<br ?/?>#',
-        '#<(div|aside|section|article|header|footer)(.*?)>\s*</p>#',
-        '#<p>\s*</(div|aside|section|article|header|footer)#',
-    ), array(
-        '<$1',
-        '</$1>',
-        '</$1>',
-        '<$1$2>',
-        '</$1',
-    ), $output);
 
     return $output;
 }
