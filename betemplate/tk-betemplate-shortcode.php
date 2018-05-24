@@ -82,7 +82,7 @@ function tkGetBeThemeTemplate($atts){
                 //visual editor element
                 if($stripdownLevel == 3){
                     $output = preg_replace( '/<div class=".*?column_visual.*?"?\s*>(.*?)<\/div>?\s*$/sD' , '$1' , $output );
-                    $output = wpautop($output);
+                    //$output = wpautop($output); serves no purpose
                 }
                 //column element
                 if($stripdownLevel == 4){
