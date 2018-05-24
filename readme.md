@@ -181,7 +181,7 @@ to functions.php
 
 Hint: For easy inclusion of BeTemplate content in a mfn builder section (regular column), use /theme-utils/assets/less/betemplate.less to remove the default styling of the surrounding section/wrap/column.
 
-Hint #2: When using tk-betemplate within visual editor make sure that no <p>-tags are included in the template, as the syntax <p>[tk-betemplate]</p> (the outer <p>-tags are added by visual editor) will result in empty <p></p> before and after the shortcode content, should the shortcode contain <p>-tags as well.
+Hint #2: When using tk-betemplate within visual editor make sure that no <p>-tags are included in the template, as the syntax <p>[tk-betemplate]</p> (the outer <p>-tags are added by visual editor) will result in empty <p></p> before and after the shortcode content.
 ## PrettyPhoto
 
 **Description**
