@@ -108,30 +108,8 @@ Parameters are optional. CATEGORY defaults to "Conversion". ACTION defaults to "
 
 
 
-## Attachment Image Titles
 
-TODO: If Image Fixes works correctly, obsolete this
-
-**Description**
-
-Make WP also add the title to images (doesn't affect tags in visual editor).
-
-For img tags in the visual editor, use the Restore Image Title plugin.
-
-**Setup**
-
-Add
-
-    if (function_exists("tkInstallImageTitle")) {
-        tkInstallImageTitle();
-    }
-
-to functions.php
-
-
-## (BETA) Image Fixes
-
-TODO: Test whether this functions correctly with CDN
+## Image Fixes
 
 **Description**
 
