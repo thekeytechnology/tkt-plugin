@@ -359,3 +359,14 @@ Contact WPEngine support for the serverside setting, and also add the cookie nam
 
     [tk-variable-parameter tag="TAG" parameter="PARAMETER", tag_attributes="TAG_ATTRIBUTES"]DEFAULT_CONTENT[/tk-variable-parameter]
     Returns the value of the URL parameter PARAMETER base64-decoded. If tag is set, the returned value is surrounded by a TAG HTML tag. If tag_attributes is set, it is inserted into the tag as HTML attributes (tag_attributes is used as-is).
+
+## Cache Google Fonts (BETA)
+
+Add
+    if (function_exists("tkCacheGoogleFonts")) {
+       tkCacheGoogleFonts();
+    }
+to functions.php
+
+This will fetch all files from fonts.googleapis.com and fonts.gstatic.com before they are added to the page via wp_enqueue_styles and replace the urls with local urls. Only tested with betheme locally
+
