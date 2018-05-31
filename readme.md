@@ -363,9 +363,11 @@ Contact WPEngine support for the serverside setting, and also add the cookie nam
 ## Cache Google Fonts (BETA)
 
 Add
+
     if (function_exists("tkCacheGoogleFonts")) {
        tkCacheGoogleFonts();
     }
+    
 to functions.php
 
 This will fetch all files from fonts.googleapis.com and fonts.gstatic.com before they are added to the page via wp_enqueue_styles and replace the urls with local urls. Only tested with betheme locally
