@@ -364,8 +364,8 @@ Contact WPEngine support for the serverside setting, and also add the cookie nam
 
 Add
 
-    if (function_exists("tkCacheGoogleFonts")) {
-       tkCacheGoogleFonts();
+    if (function_exists("tkInstallCacheGoogleFonts")) {
+       tkInstallCacheGoogleFonts();
     }
     
 to functions.php
