@@ -42,5 +42,5 @@ function tkSaveFontFile($src, $target) {
 
 
 function tkInstallCacheGoogleFonts() {
-    add_action('wp_enqueue_styles', 'tkCacheGoogleFonts', 9999);
+    add_action('wp_enqueue_scripts', 'tkCacheGoogleFonts', 9999);
 }
