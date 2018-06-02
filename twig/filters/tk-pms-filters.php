@@ -44,6 +44,16 @@ function tkAddPmsFilters(TkTemplate $tkTwig)
 
     });
 
+    $tkTwig->addFilter("pmsTimeDiffRegistrationToVideoDate", function($videoId) {
+
+        $videoDelay = intval(tkWpMeta($videoId, 'tk-delay', true));
+        $dateWithDelay = new DateTime(wp_get_current_user()->user_registered);
+        $dateWithDelay = $dateWithDelay->add(new DateInterval('P' . $videoDelay . 'D'));
+        $now = new DateTime();
+        $difference = $now->diff($dateWithDelay);
+        return $difference->format("%r%a Tage, %H:%I");
+    });
+
     $tkTwig->addFilter("pmsIsFreeSubscription", function ($subscription) {
         return pms_get_subscription_plan($subscription['ID'])->price == 0;
     });
