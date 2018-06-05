@@ -355,7 +355,7 @@ Contact WPEngine support for the serverside setting, and also add the cookie nam
     Will return the date of the next days as specified by the weekday parameter. Use this to have a perpetually extending final registation date.
 
     [tk-read-time]
-    Returns the estimated read time of the current post's content. (Uses global $post object, post_content.)
+    Returns the estimated read time of the current post's content. (Uses global $post object, post_content.). You may also use tkReadTime() to have more control over how the time is rendered.
 
     [tk-variable-parameter tag="TAG" parameter="PARAMETER", tag_attributes="TAG_ATTRIBUTES"]DEFAULT_CONTENT[/tk-variable-parameter]
     Returns the value of the URL parameter PARAMETER base64-decoded. If tag is set, the returned value is surrounded by a TAG HTML tag. If tag_attributes is set, it is inserted into the tag as HTML attributes (tag_attributes is used as-is).
