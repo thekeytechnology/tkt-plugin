@@ -21,7 +21,7 @@ The parameters are optional. Set one to false in order to not install it.
 You can also install them individually. To do so follow the instructions below:
 
 
-## Contact Form 7
+### Contact Form 7
 
 Add
 
@@ -45,6 +45,33 @@ Label (optional)
 
 Value (optional; must be integer > 0 to be included)
     <input type="hidden" name="tk-conversion-value" value="name_of_conversion_value"/>
+
+
+### Calls (tel: links)
+
+Add
+
+    if (function_exists("tkInstallCallConversionTracking")) {
+        tkInstallCallConversionTracking(CATEGORY, ACTION, LABEL, VALUE);
+    }
+
+to functions.php
+
+Parameters are optional. CATEGORY defaults to "Conversion". ACTION defaults to "Anruf". VALUE must be integer > 0 to be included.
+
+
+### E-Mails (mailto: links)
+
+Add
+
+    if (function_exists("tkInstallMailConversionTracking")) {
+       tkInstallMailConversionTracking(CATEGORY, ACTION, LABEL, VALUE);
+    }
+
+to functions.php
+
+Parameters are optional. CATEGORY defaults to "Conversion". ACTION defaults to "E-Mail". VALUE must be integer > 0 to be included.
+
 
 ### MailChimp
 
@@ -72,32 +99,10 @@ Value (optional; must be integer > 0 to be included)
     <input type="hidden" name="tk-conversion-value" value="name_of_conversion_value"/>
 
 
-### Calls (tel: links)
-Add
-
-    if (function_exists("tkInstallCallConversionTracking")) {
-        tkInstallCallConversionTracking(CATEGORY, ACTION, LABEL, VALUE);
-    }
-
-to functions.php
-
-Parameters are optional. CATEGORY defaults to "Conversion". ACTION defaults to "Anruf". VALUE must be integer > 0 to be included.
-
-
-## E-Mails (mailto: links)
-Add
-
-    if (function_exists("tkInstallMailConversionTracking")) {
-       tkInstallMailConversionTracking(CATEGORY, ACTION, LABEL, VALUE);
-    }
-
-to functions.php
-
-Parameters are optional. CATEGORY defaults to "Conversion". ACTION defaults to "E-Mail". VALUE must be integer > 0 to be included.
-
-
 ### SignUps
+
 Add
+
     if (function_exists("tkInstallSignUpConversionTracking")) {
        tkInstallSignUpConversionTracking(CATEGORY, ACTION, LABEL, VALUE);
     }
@@ -105,7 +110,6 @@ Add
 to functions.php
 
 Parameters are optional. CATEGORY defaults to "Conversion". ACTION defaults to "SignUp". VALUE must be integer > 0 to be included.
-
 
 
 
@@ -126,6 +130,7 @@ Add
     }
 
 to functions.php
+
 
 ## Empty Element Removal
 
@@ -182,6 +187,8 @@ to functions.php
 Hint: For easy inclusion of BeTemplate content in a mfn builder section (regular column), use /theme-utils/assets/less/betemplate.less to remove the default styling of the surrounding section/wrap/column.
 
 Hint #2: When using tk-betemplate within visual editor make sure that no <p>-tags are included in the template, as the syntax <p>[tk-betemplate]</p> (the outer <p>-tags are added by visual editor) will result in empty <p></p> before and after the shortcode content.
+
+
 ## PrettyPhoto
 
 **Description**
@@ -202,7 +209,6 @@ Include the following (with the options of your choice) in the theme:
     jQuery(document).ready(function($){
         $("a[rel^='prettyPhoto']").prettyPhoto();
     });
-
 
 
 ## Slick
@@ -236,7 +242,6 @@ Caution:
 Slick does not work well with wp-rocket's lazyloading. Use Slick's own lazyloading and make sure wp-rocket's lazyloading is not applied to Slick slider images. https://docs.wp-rocket.me/article/15-disabling-lazy-load-on-specific-images
 
 
-
 ## Content Subnavigation
 
 **Description**
@@ -260,7 +265,6 @@ In BeTheme's theme options, add a sidebar area named "Inhalt". In that sidebar a
 If you need a sidebar for custom post types, use tkAddSidebarToPostType($postType, $onArchives = false) to add the sidebars.
 
 
-
 ## Body Class
 
 **Description**
@@ -270,7 +274,6 @@ Enables adding classes to the body of a specific single page/post without the ne
 **Setup**
 
 Create a custom field named "tk-bodyclass" on the page/post (using WP's built-in functionality or Pods' page/post type extension) and input the class/classes to be added as its value. (No dots, space as seperator.)
-
 
 
 ## Remove Slug
@@ -299,7 +302,6 @@ to functions.php
     Caution: If wp_rewrite->pagination_base is changed and REWRITE_OPTIONS are used, tkInstallRemoveSlug must be called after the change, otherwise pagination URLs will be incorrect for post types/taxonomies that use pagination.
 
 
-
 ## Mail HTML
 
 **Description**
@@ -317,9 +319,9 @@ Add
 to functions.php
 
 
-
 ## Option Page
-**Description**
+
+**Setup**
 
 To generate a wordpress admin backend options page, you can use the
 
@@ -330,9 +332,16 @@ function call. The OptionsConfiguration is a struct-like object with several sel
 
 ## Tracking Opt Out
 
-    [tkTrackingOptOutLink type="PLATFORM"]Text[/tkTrackingOptOutLink]
+**Description**
 
 Outputs a link that lets the user set a cookie to opt out of the respective platform's tracking.
+
+**Setup**
+
+Use this shortcode:
+
+    [tkTrackingOptOutLink type="PLATFORM"]Text[/tkTrackingOptOutLink]
+    
 Supported platforms:
 
     Google Analytics (Plugin "Google Analytics for WordPress by MonsterInsights"): type="GA"
@@ -344,6 +353,58 @@ In order for this to work, page caching must also be disabled for the cookie wit
     tk-tracking-opt-out
     
 Contact WPEngine support for the serverside setting, and also add the cookie name to the exclusion list in WP-Rocket.
+
+
+## Cache Google Fonts (BETA)
+
+Add
+
+    if (function_exists("tkInstallCacheGoogleFonts")) {
+       tkInstallCacheGoogleFonts();
+    }
+    
+to functions.php
+
+This will fetch all files from fonts.googleapis.com and fonts.gstatic.com before they are added to the page via wp_enqueue_styles and replace the urls with local urls. Only tested with betheme locally
+
+
+## URL Parameter Tracking
+
+**Description**
+
+Enables tracking of traffic entering via URL with gclid (Adwords) or utm_source parameter. If someone enters teh site with one of those parameters set, a cookie (tk-upt) is set which stores any of the following (if present): gclid, any of the five utm_ parameters, campaign parameter. (The campaign parameter is stored in base64-decoded form.)
+The cookie stores only the most recent set of parameters. If someone enters via URL with gclid or utm_source parameters and already had a tk-upt cookie, it will be overwritten by the new one.
+
+**Setup**
+
+Add
+
+    if (function_exists("tkInstallUrlParamTracker")) {
+       tkInstallUrlParamTracker();
+    }
+    
+to functions.php
+Note: This will also enable shortcodes for CF7 form elements and CF7 mail subject/body.
+
+This functionality includes the following shortcodes:
+
+    [tk-upt-cookie-value param="PARAM" return_content_if_no_param="<true | false>"]CONTENT[/tk-upt-cookie-value]
+    Returns the specified parameter's value preceded by CONTENT.
+    PARAM refers to the URL parameter stored in the tk-upt cookie.
+    If return_content_if_no_param is set, CONTENT is returned even if PARAM doesn't exist or is empty.
+    
+    [tk-upt-cookie-cf7-input]
+    Generates hidden inputs for contact forms. Those inputs contain the parameter values stored in the tk-upt cookie. Placing it in a CF7 form also enables the following mail tags:
+    [tk-upt-traffic-source] (Outputs "Adwords" if gclid is set, utm_source value is set, "organisch" otherwise.)
+    [tk-upt-gclid]
+    [tk-upt-utm_source]
+    [tk-upt-utm_medium]
+    [tk-upt-utm_campaign]
+    [tk-upt-utm_term]
+    [tk-upt-utm_content]
+    [tk-upt-campaign]
+    
+    All output of those shortcodes is filtered through wp_kses.
 
 
 ## Shortcodes
@@ -359,16 +420,3 @@ Contact WPEngine support for the serverside setting, and also add the cookie nam
 
     [tk-variable-parameter tag="TAG" parameter="PARAMETER", tag_attributes="TAG_ATTRIBUTES"]DEFAULT_CONTENT[/tk-variable-parameter]
     Returns the value of the URL parameter PARAMETER base64-decoded. If tag is set, the returned value is surrounded by a TAG HTML tag. If tag_attributes is set, it is inserted into the tag as HTML attributes (tag_attributes is used as-is).
-
-## Cache Google Fonts (BETA)
-
-Add
-
-    if (function_exists("tkInstallCacheGoogleFonts")) {
-       tkInstallCacheGoogleFonts();
-    }
-    
-to functions.php
-
-This will fetch all files from fonts.googleapis.com and fonts.gstatic.com before they are added to the page via wp_enqueue_styles and replace the urls with local urls. Only tested with betheme locally
-
