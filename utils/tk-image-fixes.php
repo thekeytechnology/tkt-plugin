@@ -16,12 +16,13 @@ if (!function_exists('mfn_get_attachment_id_url')) {
         $attachment_id = 0;
         if (substr($url, 0, 1) === '/') {
             $url = get_site_url() . $url;
-        } else {
-            $url = get_site_url() . parse_url($url)["path"];
         }
 
-
         $dir = wp_upload_dir();
+        if(is_ssl()) {
+            $dir = str_replace( 'http://', 'https://', $dir );
+        }
+
         $urlInUploadDirectory = strpos($url, $dir['baseurl'] . '/');
         if (false !== $urlInUploadDirectory) {
             $file = basename($url);
