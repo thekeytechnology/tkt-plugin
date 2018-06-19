@@ -19,6 +19,10 @@ if (!function_exists('mfn_get_attachment_id_url')) {
         }
 
         $dir = wp_upload_dir();
+        if(is_ssl()) {
+            $dir = str_replace( 'http://', 'https://', $dir );
+        }
+
         $urlInUploadDirectory = strpos($url, $dir['baseurl'] . '/');
         if (false !== $urlInUploadDirectory) {
             $file = basename($url);
