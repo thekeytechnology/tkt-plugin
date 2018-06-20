@@ -2,48 +2,9 @@
 
 function tkInstallUrlParamTracker ()
 {
-    add_action("init", function () {
-        $setCookie = false;
-        $data = array();
-        if (isset($_GET["gclid"])) {
-            $data["gclid"] = $_GET["gclid"];
-            $setCookie = true;
-        }
-
-        if (isset($_GET["utm_source"])) {
-            $data["utm_source"] = $_GET["utm_source"];
-            $data = tkAddParameterToArrayIfSet("utm_medium", $data);
-            $data = tkAddParameterToArrayIfSet("utm_campaign", $data);
-            $data = tkAddParameterToArrayIfSet("utm_term", $data);
-            $data = tkAddParameterToArrayIfSet("utm_content", $data);
-            $setCookie = true;
-        }
-
-        if ($setCookie) {
-            if ( isset($_GET["campaign"]) ) {
-                $data["campaign"] = base64_decode($_GET["campaign"]);
-            }
-            setcookie("tk-upt", json_encode($data), (time() + 86400 * 30), COOKIEPATH, COOKIE_DOMAIN);
-        }
-    });
-
-    add_shortcode("tk-upt-cookie-value", function ($attr, $content = "") {
-        $attr = shortcode_atts(array(
-            "param" => "",
-            "return_content_if_no_param" => false
-        ), $attr);
-
-        $output = s($attr["param"], tkGetUPTCookie(), "");
-        $output = wp_kses($output, array(), array());
-        if ($output) {
-            $output = $content . $output;
-        }
-
-        if (!$output && $attr["return_content_if_no_param"]) {
-            $output = $content;
-        }
-        return $output;
-    });
+    add_action("wp_enqueue_scripts", function () {
+        wp_enqueue_script("tk-upt", plugins_url() . "/tkt-plugin/url-param-tracker/tk-upt.js", array("jquery"));
+    }, 12);
 
     add_shortcode("tk-upt-cookie-cf7-input", function () {
         $output = "";
@@ -64,26 +25,26 @@ function tkInstallUrlParamTracker ()
                 $trafficSource = __("organisch", "tkt-plugin");
             }
         }
-        $output .= '<input type="hidden" name="tk-upt-traffic-source" value="' . $trafficSource . '"/>';
+        $output .= '<input type="hidden" name="tk-upt-traffic-source" id="tk-upt-traffic-source" value="' . $trafficSource . '"/>';
 
-        $output .= '<input type="hidden" name="tk-upt-gclid" value="' . wp_kses($gclid, array(), array()) . '"/>';
+        $output .= '<input type="hidden" name="tk-upt-gclid" id="tk-upt-gclid" class="tk-upt-input" value="' . wp_kses($gclid, array(), array()) . '"/>';
 
-        $output .= '<input type="hidden" name="tk-upt-utm_source" value="' . $utmSource . '"/>';
+        $output .= '<input type="hidden" name="tk-upt-utm_source" id="tk-upt-utm_source" class="tk-upt-input" value="' . $utmSource . '"/>';
 
         $value = s("utm_medium", $cookie, "");
-        $output .= '<input type="hidden" name="tk-upt-utm_medium" value="' . wp_kses($value, array(), array()) . '"/>';
+        $output .= '<input type="hidden" name="tk-upt-utm_medium" id="tk-upt-utm_medium" class="tk-upt-input" value="' . wp_kses($value, array(), array()) . '"/>';
 
         $value = s("utm_campaign", $cookie, "");
-        $output .= '<input type="hidden" name="tk-upt-utm_campaign" value="' . wp_kses($value, array(), array()) . '"/>';
+        $output .= '<input type="hidden" name="tk-upt-utm_campaign" id="tk-upt-utm_campaign" class="tk-upt-input" value="' . wp_kses($value, array(), array()) . '"/>';
 
         $value = s("utm_term", $cookie, "");
-        $output .= '<input type="hidden" name="tk-upt-utm_term" value="' . wp_kses($value, array(), array()) . '"/>';
+        $output .= '<input type="hidden" name="tk-upt-utm_term" id="tk-upt-utm_term" class="tk-upt-input" value="' . wp_kses($value, array(), array()) . '"/>';
 
         $value = s("utm_content", $cookie, "");
-        $output .= '<input type="hidden" name="tk-upt-utm_content" value="' . wp_kses($value, array(), array()) . '"/>';
+        $output .= '<input type="hidden" name="tk-upt-utm_content" id="tk-upt-utm_content" class="tk-upt-input" value="' . wp_kses($value, array(), array()) . '"/>';
 
         $value = s("campaign", $cookie, "");
-        $output .= '<input type="hidden" name="tk-upt-campaign" value="' . wp_kses($value, array(), array()) . '"/>';
+        $output .= '<input type="hidden" name="tk-upt-campaign" id="tk-upt-campaign" class="tk-upt-input" value="' . wp_kses($value, array(), array()) . '"/>';
 
         return $output;
     });
@@ -96,14 +57,6 @@ function tkInstallUrlParamTracker ()
         $components["body"] = do_shortcode($components["body"]);
         return $components;
     }, 10, 3);
-}
-
-function tkAddParameterToArrayIfSet ($param, $array)
-{
-    if ( isset($_GET[$param]) ) {
-        $array[$param] = $_GET[$param];
-    }
-    return $array;
 }
 
 function tkGetUPTCookie ()

@@ -386,13 +386,8 @@ Add
 to functions.php
 Note: This will also enable shortcodes for CF7 form elements and CF7 mail subject/body.
 
-This functionality includes the following shortcodes:
+This functionality includes the following shortcode:
 
-    [tk-upt-cookie-value param="PARAM" return_content_if_no_param="<true | false>"]CONTENT[/tk-upt-cookie-value]
-    Returns the specified parameter's value preceded by CONTENT.
-    PARAM refers to the URL parameter stored in the tk-upt cookie.
-    If return_content_if_no_param is set, CONTENT is returned even if PARAM doesn't exist or is empty.
-    
     [tk-upt-cookie-cf7-input]
     Generates hidden inputs for contact forms. Those inputs contain the parameter values stored in the tk-upt cookie. Placing it in a CF7 form also enables the following mail tags:
     [tk-upt-traffic-source] (Outputs "Adwords" if gclid is set, utm_source value is set, "organisch" otherwise.)
@@ -404,8 +399,6 @@ This functionality includes the following shortcodes:
     [tk-upt-utm_content]
     [tk-upt-campaign]
     
-    All output of those shortcodes is filtered through wp_kses.
-
 
 ## Shortcodes
 
