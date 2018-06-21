@@ -1,6 +1,6 @@
 jQuery(document).ready(function ($) {
 
-    function tkGetUrlParameter(name)
+    function tkGetUrlParameter (name)
     {
         name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
         var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
@@ -19,10 +19,66 @@ jQuery(document).ready(function ($) {
     }
 
 
-    function tkB64DecodeUnicode(str) {
+    function tkB64DecodeUnicode (str)
+    {
         return decodeURIComponent(Array.prototype.map.call(window.atob(str), function(c) {
             return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2)
         }).join(''))
+    }
+
+
+    function tkGetCookieValue (name)
+    {
+        var nameEQ = name + "=";
+        var cookies = document.cookie.split(";");
+        for(var i = 0; i < cookies.length; i++) {
+            var temp = cookies[i];
+            temp = temp.trim();
+            if (temp.indexOf(nameEQ) == 0) {
+                return temp.substring(nameEQ.length, temp.length);
+            }
+        }
+        return null;
+    }
+
+    function tkSetUPTInputValues (data)
+    {
+        $(".tk-upt-input").each(function () {
+            $(this).val("");
+        });
+        var recognizedParams = [
+            "gclid",
+            "utm_source",
+            "utm_medium",
+            "utm_campaign",
+            "utm_term",
+            "utm_content",
+            "campaign"
+        ];
+        var regex = new RegExp(/[^a-zA-Z0-9äÄöÖüÜß\-_\s]/g);
+        for (var key in data) {
+            if (recognizedParams.includes(key)) {
+                if (key === "gclid") {
+                    $(".tk-upt-traffic-source").each(function () {
+                        $(this).val("Adwords");
+                    });
+                    $(".tk-upt-gclid").each(function () {
+                        $(this).val(data[key].replace(regex, ""));
+                    });
+                } else if (key === "utm_source") {
+                    $(".tk-upt-traffic-source").each(function () {
+                        $(this).val(data[key].replace(regex, ""));
+                    });
+                    $(".tk-upt-utm_source").each(function () {
+                        $(this).val(data[key].replace(regex, ""));
+                    });
+                } else {
+                    $(".tk-upt-"+key).each(function () {
+                        $(this).val(data[key].replace(regex, ""));
+                    });
+                }
+            }
+        }
     }
 
 
@@ -53,21 +109,11 @@ jQuery(document).ready(function ($) {
         var expires = date.toUTCString();
         document.cookie = "tk-upt=" + JSON.stringify(tkUPTdata) + "; expires=" + expires + "; path=/; domain=." + window.location.hostname;
 
-        $(".tk-upt-input").each(function () {
-            $(this).val("");
-        });
-
-        var regex = new RegExp(/[^a-zA-Z0-9äÄöÖüÜß\-_\s]/g);
-        for (var key in tkUPTdata) {
-            if (key === "gclid") {
-                $("#tk-upt-traffic-source").val("Adwords");
-                $("#tk-upt-gclid").val(tkUPTdata[key].replace(regex, ""));
-            } else if (key === "utm_source") {
-                $("#tk-upt-traffic-source").val(tkUPTdata[key].replace(regex, ""));
-                $("#tk-upt-utm_source").val(tkUPTdata[key].replace(regex, ""));
-            } else {
-                $("#tk-upt-"+key).val(tkUPTdata[key].replace(regex, ""));
-            }
+        tkSetUPTInputValues(tkUPTdata);
+    } else {
+        var data = tkGetCookieValue("tk-upt");
+        if (null !== data) {
+            tkSetUPTInputValues(JSON.parse(data));
         }
     }
 });
