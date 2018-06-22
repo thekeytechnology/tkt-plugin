@@ -95,7 +95,7 @@ jQuery(document).ready(function ($) {
             if (document.referrer.match(/\.google\./gi)) {
                 tkUPTdata["traffic-source"] = "organisch";
                 tkUPTdata["referrer"] = document.referrer;
-            } else if (undefined !== document.referrer) {
+            } else if ( (undefined !== document.referrer) && ("" !== document.referrer) ) {
                 tkUPTdata["traffic-source"] = "referral";
                 tkUPTdata["referrer"] = document.referrer;
             } else {
