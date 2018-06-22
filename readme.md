@@ -372,8 +372,14 @@ This will fetch all files from fonts.googleapis.com and fonts.gstatic.com before
 
 **Description**
 
-Enables tracking of traffic entering via URL with gclid (Adwords) or utm_source parameter. If someone enters teh site with one of those parameters set, a cookie (tk-upt) is set which stores any of the following (if present): gclid, any of the five utm_ parameters, campaign parameter. (The campaign parameter is stored in base64-decoded form.)
-The cookie stores only the most recent set of parameters. If someone enters via URL with gclid or utm_source parameters and already had a tk-upt cookie, it will be overwritten by the new one.
+Enables tracking of traffic entering the site, so that the source of the traffic can be determined. This works via cookie (tk-upt), which is set on page load (unless the user entered the current page from another page of the same domain (checks against window.location.hostname)).
+The cookie also stores the values of the gclid, utm_ and campaign parameters. (The campaign parameter is stored in base64-decoded form.) Data is not escaped on storage.
+The following sources are tracked:
+Adwords: if gclid URL parameter is present
+anything using the utm_source parameter (if set at the same time as gclid, it counts as Adwords)
+Organic: if referrer contains .google.
+Referral: if not organic and referrer is set (and not internal, see above)
+Direct: if no referrer is set
 
 **Setup**
 
@@ -390,7 +396,7 @@ This functionality includes the following shortcode:
 
     [tk-upt-cookie-cf7-input]
     Generates hidden inputs for contact forms. Those inputs contain the parameter values stored in the tk-upt cookie. Placing it in a CF7 form also enables the following mail tags:
-    [tk-upt-traffic-source] (Outputs "Adwords" if gclid is set, utm_source value is set, "organisch" otherwise.)
+    [tk-upt-traffic-source]
     [tk-upt-gclid]
     [tk-upt-utm_source]
     [tk-upt-utm_medium]
@@ -398,9 +404,13 @@ This functionality includes the following shortcode:
     [tk-upt-utm_term]
     [tk-upt-utm_content]
     [tk-upt-campaign]
+    [tk-upt-referrer]
     
 
 ## Shortcodes
+
+    [tkTemplate name="TWIG_FILE"]
+    Renders the twig template TWIG_FILE.
 
     [tk-attribute field="META_KEY" single="<true | false>"]
     Returns the queried object's post meta value for the specified META_KEY. Single defaults to true.

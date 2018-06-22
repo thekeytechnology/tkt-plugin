@@ -46,37 +46,22 @@ jQuery(document).ready(function ($) {
         $(".tk-upt-input").each(function () {
             $(this).val("");
         });
-        var recognizedParams = [
+        var recognizedKeys = [
             "gclid",
             "utm_source",
             "utm_medium",
             "utm_campaign",
             "utm_term",
             "utm_content",
-            "campaign"
+            "campaign",
+            "referrer",
+            "traffic-source"
         ];
-        var regex = new RegExp(/[^a-zA-Z0-9äÄöÖüÜß\-_\s]/g);
         for (var key in data) {
-            if (recognizedParams.includes(key)) {
-                if (key === "gclid") {
-                    $(".tk-upt-traffic-source").each(function () {
-                        $(this).val("Adwords");
-                    });
-                    $(".tk-upt-gclid").each(function () {
-                        $(this).val(data[key].replace(regex, ""));
-                    });
-                } else if (key === "utm_source") {
-                    $(".tk-upt-traffic-source").each(function () {
-                        $(this).val(data[key].replace(regex, ""));
-                    });
-                    $(".tk-upt-utm_source").each(function () {
-                        $(this).val(data[key].replace(regex, ""));
-                    });
-                } else {
-                    $(".tk-upt-"+key).each(function () {
-                        $(this).val(data[key].replace(regex, ""));
-                    });
-                }
+            if (recognizedKeys.includes(key)) {
+                $(".tk-upt-"+key).each(function () {
+                    $(this).val(data[key]);
+                });
             }
         }
     }
@@ -85,20 +70,41 @@ jQuery(document).ready(function ($) {
     var tkUPTsetCookie = false;
     var tkUPTdata = {};
 
-    var tkUPTparam = tkGetUrlParameter("gclid");
-    if (tkUPTparam.length) {
-        tkUPTdata["gclid"] = tkUPTparam;
-        tkUPTsetCookie = true;
-    }
     tkUPTparam = tkGetUrlParameter("utm_source");
     if (tkUPTparam.length) {
         tkUPTdata["utm_source"] = tkUPTparam;
+        tkUPTdata["traffic-source"] = tkUPTparam;
         tkUPTdata = tkAddParameterToDataIfSet("utm_medium", tkUPTdata);
         tkUPTdata = tkAddParameterToDataIfSet("utm_campaign", tkUPTdata);
         tkUPTdata = tkAddParameterToDataIfSet("utm_term", tkUPTdata);
         tkUPTdata = tkAddParameterToDataIfSet("utm_content", tkUPTdata);
+        tkUPTdata["referrer"] = document.referrer;
         tkUPTsetCookie = true;
     }
+    var tkUPTparam = tkGetUrlParameter("gclid");
+    if (tkUPTparam.length) {
+        tkUPTdata["gclid"] = tkUPTparam;
+        tkUPTdata["traffic-source"] = "Adwords";
+        tkUPTdata["referrer"] = document.referrer;
+        tkUPTsetCookie = true;
+    }
+
+    if (!tkUPTsetCookie) {
+
+        if (document.referrer.indexOf(window.location.hostname) === -1) {
+            if (document.referrer.match(/\.google\./gi)) {
+                tkUPTdata["traffic-source"] = "organisch";
+                tkUPTdata["referrer"] = document.referrer;
+            } else if (undefined !== document.referrer) {
+                tkUPTdata["traffic-source"] = "referral";
+                tkUPTdata["referrer"] = document.referrer;
+            } else {
+                tkUPTdata["traffic-source"] = "direkt";
+            }
+            tkUPTsetCookie = true;
+        }
+    }
+
     if (tkUPTsetCookie) {
         tkUPTparam = tkGetUrlParameter("campaign");
         if (tkUPTparam.length) {

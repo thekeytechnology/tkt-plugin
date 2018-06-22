@@ -9,14 +9,15 @@ function tkInstallUrlParamTracker ()
     add_shortcode("tk-upt-cookie-cf7-input", function () {
 
         $output = '
-                <input name="tk-upt-traffic-source" class="tk-upt-traffic-source" value="organisch" type="hidden">
+                <input name="tk-upt-traffic-source" class="tk-upt-traffic-source tk-upt-input" value="" type="hidden">
                 <input name="tk-upt-gclid" class="tk-upt-gclid tk-upt-input" value="" type="hidden">
                 <input name="tk-upt-utm_source" class="tk-upt-utm_source tk-upt-input" value="" type="hidden">
                 <input name="tk-upt-utm_medium" class="tk-upt-utm_medium tk-upt-input" value="" type="hidden">
                 <input name="tk-upt-utm_campaign" class="tk-upt-utm_campaign tk-upt-input" value="" type="hidden">
                 <input name="tk-upt-utm_term" class="tk-upt-utm_term tk-upt-input" value="" type="hidden">
                 <input name="tk-upt-utm_content" class="tk-upt-utm_content tk-upt-input" value="" type="hidden">
-                <input name="tk-upt-campaign" class="tk-upt-campaign tk-upt-input" value="" type="hidden">';
+                <input name="tk-upt-campaign" class="tk-upt-campaign tk-upt-input" value="" type="hidden">
+                <input name="tk-upt-referrer" class="tk-upt-referrer tk-upt-input" value="" type="hidden">';
 
         return $output;
     });
