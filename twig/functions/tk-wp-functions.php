@@ -23,12 +23,22 @@ function tkAddWpFunctions(TkTemplate $tkTwig)
         return wp_get_current_user();
     });
 
-    $tkTwig->addFunction("wpcalluserfunc", function ($name, $parameter = null, $_ = null) {
-
-        return call_user_func($name, $parameter, $_);
-    });
-
     $tkTwig->addFunction("wpoption", function ($name, $default = false) {
         return get_option($name, $default);
+    });
+
+    $tkTwig->addFunction("wpdynamicsidebar", function ($name) {
+        dynamic_sidebar($name);
+    });
+
+    $tkTwig->addFunction("wpsearchform", function ($echo = true) {
+        get_search_form($echo);
+    });
+
+
+
+    //not actually a WP function; remains here for backwards compatibility
+    $tkTwig->addFunction("wpcalluserfunc", function ($name, $parameter = null, $_ = null) {
+        return call_user_func($name, $parameter, $_);
     });
 }

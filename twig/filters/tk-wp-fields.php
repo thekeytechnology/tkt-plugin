@@ -127,6 +127,10 @@ function tkAddWpFieldFilters(TkTemplate $tkTwig)
     $tkTwig->addFilter("wpdisplayname", function (WP_User $item) {
         return $item->display_name;
     });
+    
+    $tkTwig->addFilter("wpuserprop", function (WP_User $item, $prop) {
+        return $item->{$prop};
+    });
 
 
     $tkTwig->addFilter("wpVideoThumbnail", function ($videoCode) {
