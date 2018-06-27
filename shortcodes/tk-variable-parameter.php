@@ -12,7 +12,7 @@ function tkVariableParameter($atts, $defaultContent = "")
         //That can lead to problems if sitelink targets also support the campaign paremeter.
         //E.g. A site about location A is used as sitelink for an ad that leads to a site about location B.
         //Without overriding the campaign parameter, someone clicking the sitelink would see site B with content referring to location A.
-        $campaign = $_GET[$parameter];
+        $campaign = esc_html($_GET[$parameter]);
         $content = base64_decode(urldecode($campaign));
     }
 
