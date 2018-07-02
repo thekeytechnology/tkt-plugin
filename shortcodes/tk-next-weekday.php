@@ -25,4 +25,5 @@ if (!function_exists("tkNextWeekday")) {
     }
 
     add_shortcode("tk-next-weekday", "tkNextWeekday");
+    add_shortcode("tk-strtotime", "tkStrToTime");
 }
