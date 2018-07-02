@@ -386,11 +386,14 @@ Direct: if no referrer is set
 Add
 
     if (function_exists("tkInstallUrlParamTracker")) {
-       tkInstallUrlParamTracker();
+       tkInstallUrlParamTracker(OPTIONS);
     }
     
 to functions.php
 Note: This will also enable shortcodes for CF7 form elements and CF7 mail subject/body.
+
+    OPTIONS (optional) is an associative array. Supported options:
+    adwordsTrafficSourceName - overrides the Adwords traffic source name output by the [tk-upt-traffic-source] cf7 mail tag.
 
 This functionality includes the following shortcode:
 

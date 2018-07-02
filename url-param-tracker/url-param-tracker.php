@@ -1,9 +1,10 @@
 <?php
 
-function tkInstallUrlParamTracker ()
+function tkInstallUrlParamTracker ($options = array())
 {
-    add_action("wp_enqueue_scripts", function () {
+    add_action("wp_enqueue_scripts", function () use ($options) {
         wp_enqueue_script("tk-upt", plugins_url() . "/tkt-plugin/url-param-tracker/tk-upt.js", array("jquery"));
+        wp_localize_script("tk-upt", "tkUPTOptions", $options);
     }, 12);
 
     add_shortcode("tk-upt-cookie-cf7-input", function () {

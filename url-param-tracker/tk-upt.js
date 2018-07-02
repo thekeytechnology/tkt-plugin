@@ -84,7 +84,12 @@ jQuery(document).ready(function ($) {
     var tkUPTparam = tkGetUrlParameter("gclid");
     if (tkUPTparam.length) {
         tkUPTdata["gclid"] = tkUPTparam;
-        tkUPTdata["traffic-source"] = "Adwords";
+
+        if ("adwordsTrafficSourceName" in tkUPTOptions) {
+            tkUPTdata["traffic-source"] = tkUPTOptions["adwordsTrafficSourceName"];
+        } else {
+            tkUPTdata["traffic-source"] = "Adwords";
+        }
         tkUPTdata["referrer"] = document.referrer;
         tkUPTsetCookie = true;
     }
