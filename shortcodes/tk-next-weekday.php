@@ -1,12 +1,27 @@
 <?php
 if (!function_exists("tkNextWeekday")) {
-
-    function tkNextWeekday($atts) {
+    function tkNextWeekday($atts)
+    {
         $atts = shortcode_atts(
             array(
                 'day' => 'Sunday',
-            ), $atts, 'tk-next-weekday' );
-        return date("d.m.Y", strtotime("next sunday"));
+                'format' => "d.m.Y."
+            ), $atts, 'tk-next-weekday');
+
+        tkStrToTime(array(
+            "key" => "next " . $atts["day"],
+            "format" => $atts["format"]
+        ));
+    }
+
+    function tkStrToTime($atts)
+    {
+        $atts = shortcode_atts(
+            array(
+                'key' => 'now',
+                'format' => "d.m.Y"
+            ), $atts, 'tk-strtotime');
+        return date($atts["format"], strtotime($atts["key"]));
     }
 
     add_shortcode("tk-next-weekday", "tkNextWeekday");
