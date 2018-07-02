@@ -426,3 +426,20 @@ This functionality includes the following shortcode:
 
     [tk-variable-parameter tag="TAG" parameter="PARAMETER", tag_attributes="TAG_ATTRIBUTES"]DEFAULT_CONTENT[/tk-variable-parameter]
     Returns the value of the URL parameter PARAMETER base64-decoded. If tag is set, the returned value is surrounded by a TAG HTML tag. If tag_attributes is set, it is inserted into the tag as HTML attributes (tag_attributes is used as-is).
+        
+## Link Manipulation
+
+To manipulate links on a global level you can use
+
+    [tkOpenAllLinksInNewTab]
+    This shortcode adds a JS to add the target=_blank to all links on the current page. Use for landing pages
+    
+    if (function_exists("tkInstallOpenAllLinksInNewTab")) {
+        tkInstallOpenAllLinksInNewTab();
+    }
+    This adds the same functionality globally
+    
+    if (function_exists("tkInstallOpenAllExternalLinksInNewTab")) {
+        tkInstallOpenAllExternalLinksInNewTab();
+    }
+    This installs a JS to open all external links in new tabs
