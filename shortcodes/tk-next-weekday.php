@@ -8,7 +8,7 @@ if (!function_exists("tkNextWeekday")) {
                 'format' => "d.m.Y."
             ), $atts, 'tk-next-weekday');
 
-        tkStrToTime(array(
+        return tkStrToTime(array(
             "key" => "next " . $atts["day"],
             "format" => $atts["format"]
         ));
