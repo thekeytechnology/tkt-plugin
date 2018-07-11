@@ -1,4 +1,4 @@
-jQuery(document).ready(function () {
+jQuery(document).ready(function ($) {
     $('a')
         .filter('[href^="http"], [href^="//"]')
         .not('[href*="' + window.location.host + '"]')
