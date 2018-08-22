@@ -419,7 +419,7 @@ Source-Based Replacement:
     Add the data-tk-sbr-SOURCEID attribute to the tag whose content should be replaced. Caution: This replaces the entire content of the tag.
     To replace a href attribute, use the data-tk-href-sbr-SOURCEID attribute.
     
-    Example: <a href="tel:+491234567" data-tk-sbr-google-ads="tel:+49 <neue nummmer>">Anrufen</a>
+    Example: <a href="tel:<Original Nummer>" data-tk-sbr-google-ads="tel:<Adwords Nummer>" data-tk-href-sbr-google-ads="tel:<Adwords Nummer>"><Original Nummer></a>
     
     Alternatively, use the following shortcode to create an <a> tag with the data attributes:
     [tk-sbr-link]CONTENT[/tk-sbr-link]
