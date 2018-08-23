@@ -8,9 +8,9 @@ function tkInstallUrlParamTracker ($options = array())
     }, 12);
 
     add_shortcode("tk-upt-cookie-cf7-input", function () {
-
         $output = '
                 <input name="tk-upt-traffic-source" class="tk-upt-traffic-source tk-upt-input" value="" type="hidden">
+                <input name="tk-upt-traffic-source-id" class="tk-upt-traffic-source-id tk-upt-input" value="" type="hidden">
                 <input name="tk-upt-gclid" class="tk-upt-gclid tk-upt-input" value="" type="hidden">
                 <input name="tk-upt-utm_source" class="tk-upt-utm_source tk-upt-input" value="" type="hidden">
                 <input name="tk-upt-utm_medium" class="tk-upt-utm_medium tk-upt-input" value="" type="hidden">
@@ -21,6 +21,25 @@ function tkInstallUrlParamTracker ($options = array())
                 <input name="tk-upt-referrer" class="tk-upt-referrer tk-upt-input" value="" type="hidden">';
 
         return $output;
+    });
+
+    add_shortcode("tk-sbr-link", function ($atts, $content = "") {
+        $atts = shortcode_atts(array(
+            "traffic_source_id" => "google-ads",
+            "tag_attributes" => ""
+        ), $atts, "tk-source-based-replacement");
+
+        $parts = explode("|||", $content);
+        if ($atts["traffic_source_id"] && count($parts) == 4) {
+            $parts = array_map("do_shortcode", $parts);
+            $output = '<a href="'. $parts[0] .'" ';
+            $output .= 'data-tk-href-sbr-'.$atts["traffic_source_id"].'="' . esc_attr($parts[1]) . '" ';
+            $output .= 'data-tk-sbr-'.$atts["traffic_source_id"].'="' . esc_attr($parts[3]) . '" ';
+            $output .= $atts["tag_attributes"].'>' . $parts[2] . '</a>';
+            return $output;
+        } else {
+            return $content;
+        }
     });
 
     if (false === has_filter("wpcf7_form_elements", "do_shortcode")) {

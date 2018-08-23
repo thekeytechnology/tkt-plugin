@@ -1,6 +1,6 @@
 jQuery(document).ready(function ($) {
 
-    function tkGetUrlParameter (name)
+    function tkGetUrlParameter(name)
     {
         name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
         var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
@@ -9,7 +9,7 @@ jQuery(document).ready(function ($) {
     }
 
 
-    function tkAddParameterToDataIfSet (param, data)
+    function tkAddParameterToDataIfSet(param, data)
     {
         var tmp = tkGetUrlParameter(param);
         if (tmp.length) {
@@ -19,7 +19,7 @@ jQuery(document).ready(function ($) {
     }
 
 
-    function tkB64DecodeUnicode (str)
+    function tkB64DecodeUnicode(str)
     {
         return decodeURIComponent(Array.prototype.map.call(window.atob(str), function(c) {
             return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2)
@@ -27,7 +27,7 @@ jQuery(document).ready(function ($) {
     }
 
 
-    function tkGetCookieValue (name)
+    function tkGetCookieValue(name)
     {
         var nameEQ = name + "=";
         var cookies = document.cookie.split(";");
@@ -41,7 +41,7 @@ jQuery(document).ready(function ($) {
         return null;
     }
 
-    function tkSetUPTInputValues (data)
+    function tkSetUPTInputValues(data)
     {
         $(".tk-upt-input").each(function () {
             $(this).val("");
@@ -55,7 +55,8 @@ jQuery(document).ready(function ($) {
             "utm_content",
             "campaign",
             "referrer",
-            "traffic-source"
+            "traffic-source",
+            "traffic-source-id"
         ];
         for (var key in data) {
             if (recognizedKeys.includes(key)) {
@@ -66,6 +67,16 @@ jQuery(document).ready(function ($) {
         }
     }
 
+    function tkApplySourceBasedReplacements(trafficSourceID)
+    {
+        $("[data-tk-sbr-"+trafficSourceID+"]").each(function (){
+            if ($(this).is("[href]")) {
+                $(this).attr("href", $(this).data("tk-href-sbr-"+trafficSourceID));
+            }
+            $(this).html($(this).data("tk-sbr-"+trafficSourceID))
+        });
+    }
+
 
     var tkUPTsetCookie = false;
     var tkUPTdata = {};
@@ -74,6 +85,7 @@ jQuery(document).ready(function ($) {
     if (tkUPTparam.length) {
         tkUPTdata["utm_source"] = tkUPTparam;
         tkUPTdata["traffic-source"] = tkUPTparam;
+        tkUPTdata["traffic-source-id"] = tkUPTparam;
         tkUPTdata = tkAddParameterToDataIfSet("utm_medium", tkUPTdata);
         tkUPTdata = tkAddParameterToDataIfSet("utm_campaign", tkUPTdata);
         tkUPTdata = tkAddParameterToDataIfSet("utm_term", tkUPTdata);
@@ -90,21 +102,24 @@ jQuery(document).ready(function ($) {
         } else {
             tkUPTdata["traffic-source"] = "Adwords";
         }
+        tkUPTdata["traffic-source-id"] = "google-ads";
         tkUPTdata["referrer"] = document.referrer;
         tkUPTsetCookie = true;
     }
 
     if (!tkUPTsetCookie) {
-
         if (document.referrer.indexOf(window.location.hostname) === -1) {
             if (document.referrer.match(/\.google\./gi)) {
                 tkUPTdata["traffic-source"] = "organisch";
+                tkUPTdata["traffic-source-id"] = "organic";
                 tkUPTdata["referrer"] = document.referrer;
             } else if ( (undefined !== document.referrer) && ("" !== document.referrer) ) {
                 tkUPTdata["traffic-source"] = "referral";
+                tkUPTdata["traffic-source-id"] = "referral";
                 tkUPTdata["referrer"] = document.referrer;
             } else {
                 tkUPTdata["traffic-source"] = "direkt";
+                tkUPTdata["traffic-source-id"] = "direct";
             }
             tkUPTsetCookie = true;
         }
@@ -121,10 +136,13 @@ jQuery(document).ready(function ($) {
         document.cookie = "tk-upt=" + JSON.stringify(tkUPTdata) + "; expires=" + expires + "; path=/; domain=." + window.location.hostname;
 
         tkSetUPTInputValues(tkUPTdata);
+        tkApplySourceBasedReplacements(tkUPTdata["traffic-source-id"]);
     } else {
         var data = tkGetCookieValue("tk-upt");
         if (null !== data) {
-            tkSetUPTInputValues(JSON.parse(data));
+            data = JSON.parse(data);
+            tkSetUPTInputValues(data);
+            tkApplySourceBasedReplacements(data["traffic-source-id"]);
         }
     }
 });

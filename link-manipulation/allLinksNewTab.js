@@ -1,3 +1,3 @@
-jQuery(document).ready(function () {
+jQuery(document).ready(function ($) {
     $('a').attr('target', '_blank');
 });

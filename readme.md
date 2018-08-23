@@ -368,18 +368,20 @@ to functions.php
 This will fetch all files from fonts.googleapis.com and fonts.gstatic.com before they are added to the page via wp_enqueue_styles and replace the urls with local urls. Only tested with betheme locally
 
 
-## URL Parameter Tracking
+## URL Parameter Tracking / Source-Based Replacement
 
 **Description**
 
 Enables tracking of traffic entering the site, so that the source of the traffic can be determined. This works via cookie (tk-upt), which is set on page load (unless the user entered the current page from another page of the same domain (checks against window.location.hostname)).
 The cookie also stores the values of the gclid, utm_ and campaign parameters. (The campaign parameter is stored in base64-decoded form.) Data is not escaped on storage.
 The following sources are tracked:
-Adwords: if gclid URL parameter is present
-anything using the utm_source parameter (if set at the same time as gclid, it counts as Adwords)
-Organic: if referrer contains .google.
-Referral: if not organic and referrer is set (and not internal, see above)
-Direct: if no referrer is set
+Adwords (ID: google-ads)): if gclid URL parameter is present
+anything using the utm_source parameter (ID is the same as the parameter) (if set at the same time as gclid, it counts as Adwords)
+Organic (ID: organic): if referrer contains .google.
+Referral (ID: referral): if not organic and referrer is set (and not internal, see above)
+Direct (ID: direct): if no referrer is set
+
+Also enables replacing mailto/tel links based on the traffic source.
 
 **Setup**
 
@@ -400,6 +402,7 @@ This functionality includes the following shortcode:
     [tk-upt-cookie-cf7-input]
     Generates hidden inputs for contact forms. Those inputs contain the parameter values stored in the tk-upt cookie. Placing it in a CF7 form also enables the following mail tags:
     [tk-upt-traffic-source]
+    [tk-upt-traffic-source-id]
     [tk-upt-gclid]
     [tk-upt-utm_source]
     [tk-upt-utm_medium]
@@ -409,6 +412,28 @@ This functionality includes the following shortcode:
     [tk-upt-campaign]
     [tk-upt-referrer]
     
+    (tk-upt-traffic-source is a potentially variable human-readable name, tk-upt-traffic-source-id is a machine-readable name)
+    
+Source-Based Replacement:
+
+    Add the data-tk-sbr-SOURCEID attribute to the tag whose content should be replaced. Caution: This replaces the entire content of the tag.
+    To replace a href attribute, use the data-tk-href-sbr-SOURCEID attribute.
+    
+    Example: <a href="tel:[[Original Nummer]]" data-tk-sbr-google-ads="tel:[[Adwords Nummer]]" data-tk-href-sbr-google-ads="tel:[[Adwords Nummer]]">[[Original Nummer]]</a>
+    
+    Alternatively, use the following shortcode to create an <a> tag with the data attributes:
+    [tk-sbr-link]CONTENT[/tk-sbr-link]
+    
+    It supports the following parameters:
+    traffic_source_id - traffic source ID; defaults to google-ads (Adwords)
+    tag_attributes - if set, it is inserted into the tag as HTML attributes (tag_attributes is used as-is).
+    
+    CONTENT must contain the following in this exact order, seperated by |||
+    - default value of the href attribute
+    - override value of the href attribute
+    - default tag content
+    - override tag content
+    This shortcode also applies do_shortcode to each part (after splitting CONTENT).
 
 ## Shortcodes
 
@@ -417,6 +442,10 @@ This functionality includes the following shortcode:
 
     [tk-attribute field="META_KEY" single="<true | false>"]
     Returns the queried object's post meta value for the specified META_KEY. Single defaults to true.
+    
+    [tk-option option="OPTION" default="DEFAULT" do_shortcode="<true | false>"]
+    Returns the result of WP's get_option(OPTION, DEFAULT), optionally with do_shortcode applied to the result. 
+    Reminder: Accessing Pods custom settings works by prefixing the option name with the Pod name followed by an underscore, e.g. tk-settings_tk-email
 
     [tk-next-weekday weekday="<sonday | tuesday | ... | sunday (default)>"]
     Will return the date of the next days as specified by the weekday parameter. Use this to have a perpetually extending final registation date.
