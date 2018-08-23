@@ -55,7 +55,7 @@ require_once("link-manipulation/link-manipulation.php");
 require_once("twig/tk-twig.php");
 
 require_once("url-param-tracker/url-param-tracker.php");
-require_once("parameter-based-replacement/parameter-based-replacement.js");
+require_once("parameter-based-replacement/parameter-based-replacement.php");
 
 require_once("utils/tk-wp-utils.php");
 require_once("utils/tk-utils.php");
