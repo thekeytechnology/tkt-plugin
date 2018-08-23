@@ -434,6 +434,19 @@ Source-Based Replacement:
     - default tag content
     - override tag content
     This shortcode also applies do_shortcode to each part (after splitting CONTENT).
+    
+    
+## Parameter based Replacement
+
+This is meant to replace "Source-Based Replacement". It will replace Strings over the entire document if certain querystrings are given:
+    
+    // Replace tel number for adwords traffic 
+    if (function_exists("tkInstallParameterBasedReplacement")) {
+        tkInstallParameterBasedReplacement('tel:+49 10 11 12', "tel:+49 800 12 13", "utm_source", "google-ads");
+    }
+
+  
+The last two parameters are optional and will default to "utm_source" and "google-ads".
 
 ## Shortcodes
 
