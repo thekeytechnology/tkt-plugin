@@ -440,7 +440,7 @@ Source-Based Replacement:
 
 This is meant to replace "Source-Based Replacement". It will replace Strings over the entire document if certain querystrings are given:
     
-    // This will replace "tel:+49 10 11 12" with "tel:+49 800 12 13" everywhere, but only when the query string conttains utm_source=google-ads
+    // This will replace "tel:+49 10 11 12" with "tel:+49 800 12 13" everywhere, but only when the query string contains utm_source=google-ads
     if (function_exists("tkInstallParameterBasedReplacement")) {
         tkInstallParameterBasedReplacement("tel:+49 10 11 12", "tel:+49 800 12 13", "utm_source", "google-ads");
     }
