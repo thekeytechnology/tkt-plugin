@@ -16,6 +16,10 @@ function tkAddUtilFilters(TkTemplate $tkTwig)
     $tkTwig->addFilter("tkContains", function ($array1, $array2) {;
         return empty(array_intersect($array1, $array2));
     });
+
+    $tkTwig->addFilter("stripTags", function ($string) {;
+        return strip_tags($string);
+    });
 }
 
 
