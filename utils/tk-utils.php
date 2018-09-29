@@ -192,3 +192,12 @@ function tkIsProbablyAdwords()
 {
     return tkGetURLParameter("gclid", "GET") ? true : false;
 }
+
+
+function tkOutputFilters($filter)
+{
+    global $wp_filter;
+    echo '<pre>';
+    var_dump($wp_filter[$filter]);
+    echo '</pre>';
+}

@@ -46,18 +46,17 @@ function tkAddWpFieldFilters(TkTemplate $tkTwig)
         return tkWpId($item);
     });
 
-    $tkTwig->addFIlter("wpattachmentalt", function($attachmentOrId) {
+    $tkTwig->addFIlter("wpattachmentalt", function ($attachmentOrId) {
         $attachment = wp_prepare_attachment_for_js($attachmentOrId);
         return $attachment["alt"];
     });
 
     $tkTwig->addFilter("wpthumbnail", function ($item, $size = "post-thumbnail") {
-        if ($item instanceof WP_Post) {
-            return get_the_post_thumbnail($item, $size);
-        } else if ($item instanceof WC_Product_Variable) {
+        if ($item instanceof WC_Product_Variable) {
             return tkGetImageForProduct($size, $item->post);
+        } else {
+            return get_the_post_thumbnail(tkWpId($item), $size);
         }
-        return "";
     });
 
     $tkTwig->addFilter("wpthumbnailid", function ($item) {
@@ -127,7 +126,7 @@ function tkAddWpFieldFilters(TkTemplate $tkTwig)
     $tkTwig->addFilter("wpdisplayname", function (WP_User $item) {
         return $item->display_name;
     });
-    
+
     $tkTwig->addFilter("wpuserprop", function (WP_User $item, $prop) {
         return $item->{$prop};
     });
@@ -137,7 +136,7 @@ function tkAddWpFieldFilters(TkTemplate $tkTwig)
         return tkGetVideoThumbnailPathFromVideoCode($videoCode);
     });
 
-    $tkTwig->addFilter("wppostterms", function($item, $taxonomy){
+    $tkTwig->addFilter("wppostterms", function ($item, $taxonomy) {
         return wp_get_post_terms(tkWpId($item), $taxonomy);
     });
 }
