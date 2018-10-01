@@ -19,6 +19,8 @@ function tkWpTitle($item)
             return $item["name"];
         } else if (isset($item["post_title"])) {
             return $item["post_title"];
+        } else if (isset($item["display_name"])) {
+            return $item["display_name"];
         }
     }
     throw new Exception("This type is not supported! " . print_r($item, true));
