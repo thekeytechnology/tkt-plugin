@@ -178,6 +178,8 @@ function tkWpApplyWithId($item, Callable $toPost, Callable $toTerm = NULL, Calla
     } else if (is_array($item)) {
         if (isset($item["term_id"])) {
             return $toTerm(intval($item["term_id"]), $item["taxonomy"]);
+        } else if (isset($item["user_login"])) {
+           return $toUser(intval($item["ID"]));
         } else if (isset($item["ID"])) {
             return $toPost(intval($item["ID"]), $item["post_type"]);
         }
