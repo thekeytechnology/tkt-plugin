@@ -22,8 +22,11 @@ function tkAddWpFieldFilters(TkTemplate $tkTwig)
         return $output;
     });
 
-    $tkTwig->addFilter("wppostdate", function (WP_Post $item) {
-        return $item->post_date;
+    $tkTwig->addFilter("wppostdate", function ($item) {
+        if ($item instanceof WP_Post) {
+            return $item->post_date;
+        }
+        return "";
     });
 
     $tkTwig->addFilter("wpmeta", function ($item, $metaKey, $single = true) {
