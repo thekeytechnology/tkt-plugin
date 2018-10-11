@@ -58,7 +58,11 @@ function tkEnableSubnavigation()
             $title = "Inhalt";
         }
         $output = "<h2 class='tk-sidebar-h2'>$title</h2>";
-        $output .= "<hr class='tk-hr-2'>";
+        $disableHr = $atts["disablehr"];
+        if (!$disableHr) {
+            $output .= "<hr class='tk-hr-2'>";
+        }
+
         $output .= "<ol class='tk-content-subnavigation'>";
 
         $lastType = false;
