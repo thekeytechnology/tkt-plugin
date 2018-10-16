@@ -16,7 +16,12 @@ function tkInstallParameterBasedReplacement ($search , $replace, $parameter  = '
 
     if (isset($_GET[$parameter]) ) {
         if ($_GET[$parameter] == $value) {
-            $pbr_list[] = [$search, $replace];
+            $pbr_list[] = array(
+                'parameter' => $parameter,
+                'value' => $value,
+                'search' => $search,
+                'replace' => $replace
+            );
         }
     }
 }
