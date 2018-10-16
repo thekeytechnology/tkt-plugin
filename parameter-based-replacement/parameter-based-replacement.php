@@ -14,14 +14,12 @@ function tkInstallParameterBasedReplacement ($search , $replace, $parameter  = '
 
     require_once("parameter-based-replacement-include-js.php");
 
-    if (isset($_GET[$parameter]) ) {
-        if ($_GET[$parameter] == $value) {
-            $pbr_list[] = array(
-                'parameter' => $parameter,
-                'value' => $value,
-                'search' => $search,
-                'replace' => $replace
-            );
-        }
-    }
+    $pbr_list[] = array(
+        'parameter' => $parameter,
+        'value' => $value,
+        'search' => $search,
+        'replace' => $replace
+    );
+
+
 }
