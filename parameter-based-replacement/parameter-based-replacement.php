@@ -13,7 +13,7 @@ function tkInstallParameterBasedReplacement ($search , $replace, $parameter  = '
     global $pbr_list;
 
     require_once("parameter-based-replacement-include-js.php");
-
+/*
     $pbr_list[] = array(
         'parameter' => $parameter,
         'value' => $value,
@@ -21,5 +21,5 @@ function tkInstallParameterBasedReplacement ($search , $replace, $parameter  = '
         'replace' => $replace
     );
 
-
+*/
 }
