@@ -21,6 +21,16 @@ function tkAddWpTermFilters(TkTemplate $tkTwig)
         return tkWpTaxonomyList($item);
     });
 
+    $tkTwig->addFilter("wptaxonomy", function ($taxonomyName) {
+        return get_taxonomy($taxonomyName);
+    });
+
+    $tkTwig->addFilter("wpterms", function($taxonomyName, $hideEmpty = false) {
+        return get_terms(array(
+            'taxonomy' => $taxonomyName,
+            'hide_empty' => $hideEmpty,
+        ));
+    });
 
     $tkTwig->addFilter("wpsubterms", function (WP_Term $term, $orderField = NULL) {
         return tkWpGetSubterms($term->taxonomy, $term, $orderField);
