@@ -119,6 +119,8 @@ function tkWpUrl($item)
         return get_permalink($postId);
     }, function ($termId, $taxonomy) use ($item) {
         return get_term_link($termId, $taxonomy);
+    }, function ($userId) use ($item) {
+        return get_author_posts_url($userId);
     });
 }
 
