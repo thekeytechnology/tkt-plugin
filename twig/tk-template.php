@@ -7,6 +7,7 @@ require_once("filters/tk-wc-filters.php");
 require_once("filters/tk-wp-display.php");
 require_once("filters/tk-wp-fields.php");
 require_once("filters/tk-wp-terms.php");
+require_once("filters/tk-elementor.php");
 require_once("filters/tk-util-filters.php");
 require_once("functions/tk-util-functions.php");
 require_once("functions/tk-wp-functions.php");
@@ -25,6 +26,7 @@ class TkTemplate
         tkAddWpDisplayFilter($tkTwig);
         tkAddWpFieldFilters($tkTwig);
         tkAddWpTermFilters($tkTwig);
+        tkAddElementorFilters($tkTwig);
 
         tkAddUtilFunctions($tkTwig);
         tkAddWpFunctions($tkTwig);
