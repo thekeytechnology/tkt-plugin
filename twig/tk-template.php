@@ -66,6 +66,8 @@ class TkTemplate
             try {
                 $this->twig = new Twig_Environment($loader, $parameters);
                 $this->twig->addExtension(new Twig_Extensions_Extension_Intl());
+                $this->twig->addExtension(new Twig_Extensions_Extension_Array());
+
             } catch (Exception $ex) {
                 print_r($ex);
             }
