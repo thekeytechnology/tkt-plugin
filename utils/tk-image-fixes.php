@@ -1,61 +1,5 @@
 <?php
 
-/**
- * Override beTheme Function that did not work.
- *
- * This is needed for two reasons:
- *  1) With this beTheme can add alt tags and such saved in the media library to images within the muffin builder
- *  2) This is used to get the id for images used in tk_make_content_images_responsive, which works like wp_make_content_images_responsive,
- *     only that it covers all images, not just those that have their id saved in their class
- *
- */
-if (!function_exists('mfn_get_attachment_id_url')) {
-
-    function mfn_get_attachment_id_url($url)
-    {
-        $attachment_id = 0;
-        if (substr($url, 0, 1) === '/') {
-            $url = get_site_url() . $url;
-        }
-
-        $dir = wp_upload_dir();
-        if(is_ssl()) {
-            $dir = str_replace( 'http://', 'https://', $dir );
-        }
-
-        $urlInUploadDirectory = strpos($url, $dir['baseurl'] . '/');
-        if (false !== $urlInUploadDirectory) {
-            $file = basename($url);
-            $query_args = array(
-                'post_type' => 'attachment',
-                'post_status' => 'inherit',
-                'fields' => 'ids',
-                'meta_query' => array(
-                    array(
-                        'value' => $file,
-                        'compare' => 'LIKE',
-                        'key' => '_wp_attachment_metadata',
-                    ),
-                )
-            );
-            $query = new WP_Query($query_args);
-            if ($query->have_posts()) {
-                foreach ($query->posts as $post_id) {
-
-                    $meta = wp_get_attachment_metadata($post_id);
-                    $original_file = basename($meta['file']);
-                    $cropped_image_files = wp_list_pluck($meta['sizes'], 'file');
-                    if ($original_file === $file || in_array($file, $cropped_image_files)) {
-                        $attachment_id = $post_id;
-                        break;
-                    }
-                }
-                wp_reset_postdata();
-            }
-        }
-        return $attachment_id;
-    }
-}
 
 /**
  * Filters 'img' elements in post output to add 'srcset' and 'sizes' attributes.
@@ -349,6 +293,63 @@ function tk_buffer_end()
 
 function tkInstallImageFixes()
 {
+    /**
+     * Override beTheme Function that did not work.
+     *
+     * This is needed for two reasons:
+     *  1) With this beTheme can add alt tags and such saved in the media library to images within the muffin builder
+     *  2) This is used to get the id for images used in tk_make_content_images_responsive, which works like wp_make_content_images_responsive,
+     *     only that it covers all images, not just those that have their id saved in their class
+     *
+     */
+    if (!function_exists('mfn_get_attachment_id_url')) {
+
+        function mfn_get_attachment_id_url($url)
+        {
+            $attachment_id = 0;
+            if (substr($url, 0, 1) === '/') {
+                $url = get_site_url() . $url;
+            }
+
+            $dir = wp_upload_dir();
+            if(is_ssl()) {
+                $dir = str_replace( 'http://', 'https://', $dir );
+            }
+
+            $urlInUploadDirectory = strpos($url, $dir['baseurl'] . '/');
+            if (false !== $urlInUploadDirectory) {
+                $file = basename($url);
+                $query_args = array(
+                    'post_type' => 'attachment',
+                    'post_status' => 'inherit',
+                    'fields' => 'ids',
+                    'meta_query' => array(
+                        array(
+                            'value' => $file,
+                            'compare' => 'LIKE',
+                            'key' => '_wp_attachment_metadata',
+                        ),
+                    )
+                );
+                $query = new WP_Query($query_args);
+                if ($query->have_posts()) {
+                    foreach ($query->posts as $post_id) {
+
+                        $meta = wp_get_attachment_metadata($post_id);
+                        $original_file = basename($meta['file']);
+                        $cropped_image_files = wp_list_pluck($meta['sizes'], 'file');
+                        if ($original_file === $file || in_array($file, $cropped_image_files)) {
+                            $attachment_id = $post_id;
+                            break;
+                        }
+                    }
+                    wp_reset_postdata();
+                }
+            }
+            return $attachment_id;
+        }
+    }
+
     add_action('wp_head', 'tk_buffer_start', 1);
     add_action('wp_footer', 'tk_buffer_end', 9999);
 }
