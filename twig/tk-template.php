@@ -115,6 +115,10 @@ class TkTemplate
         }
     }
 
+    public function displayTemplate($templateName, $args = [], $displayErrors = false) {
+        echo $this->renderTemplate($templateName, $args, $displayErrors);
+    }
+
 
     private function getTemplateFolders($base)
     {
