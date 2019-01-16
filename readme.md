@@ -445,7 +445,9 @@ This is meant to replace "Source-Based Replacement". It will replace Strings ove
         tkInstallParameterBasedReplacement("tel:+49 10 11 12", "tel:+49 800 12 13", "utm_source", "google-ads");
     }
 
-The last two parameters are optional and will default to "utm_source" and "google-ads".
+The last two parameters are optional and will default to "gclid" and "*".
+
+If the value is set to *, the replacement will take place when the parameter exists, regardless of value.
 
 ## Shortcodes
 

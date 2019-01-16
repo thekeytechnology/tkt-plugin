@@ -9,11 +9,17 @@ jQuery(document).ready(function ($) {
             /* map them from key=value to {key: value} */
             var queryParamsArray = {};
             queryParams.forEach(function(queryParamString) {
-                var keyValuePair = queryParamString.split('=');
-                queryParamsArray[keyValuePair[0]] = keyValuePair[1];
+
+                if (queryParamString.includes('=')) {
+                    var keyValuePair = queryParamString.split('=');
+                    queryParamsArray[keyValuePair[0]] = keyValuePair[1];
+                } else {
+                    queryParamsArray[queryParamString] = "";
+                }
+
             });
 
-            if (queryParamsArray[pbr_replace_pair['parameter']]) {
+            if (queryParamsArray[pbr_replace_pair['parameter']] != undefined ) {
                 if (queryParamsArray[pbr_replace_pair['parameter']] == pbr_replace_pair['value'] || pbr_replace_pair['value'] == "*") {
                     var regex = new RegExp(pbr_replace_pair['search'],'g');
 
