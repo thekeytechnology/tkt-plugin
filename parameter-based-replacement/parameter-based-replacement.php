@@ -8,7 +8,7 @@
 
 $pbr_list = array();
 
-function tkInstallParameterBasedReplacement ($search , $replace, $parameter  = 'utm_source', $value = 'google-ads') {
+function tkInstallParameterBasedReplacement ($search , $replace, $parameter  = 'gclid', $value = '*') {
 
     global $pbr_list;
 

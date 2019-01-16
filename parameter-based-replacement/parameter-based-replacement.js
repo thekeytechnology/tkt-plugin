@@ -13,11 +13,14 @@ jQuery(document).ready(function ($) {
                 queryParamsArray[keyValuePair[0]] = keyValuePair[1];
             });
 
-            if (queryParamsArray[pbr_replace_pair['parameter']] == pbr_replace_pair['value']) {
-                var regex = new RegExp(pbr_replace_pair['search'],'g');
+            if (queryParamsArray[pbr_replace_pair['parameter']]) {
+                if (queryParamsArray[pbr_replace_pair['parameter']] == pbr_replace_pair['value'] || pbr_replace_pair['value'] == "*") {
+                    var regex = new RegExp(pbr_replace_pair['search'],'g');
 
-                document.body.innerHTML = document.body.innerHTML.replace(regex, pbr_replace_pair['replace']);
+                    document.body.innerHTML = document.body.innerHTML.replace(regex, pbr_replace_pair['replace']);
+                }
             }
+
         });
     }
 });
