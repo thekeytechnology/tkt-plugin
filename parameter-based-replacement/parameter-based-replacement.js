@@ -1,14 +1,18 @@
 
 jQuery(document).ready(function ($) {
     if (typeof pbr_list !== 'undefined') {
+
         pbr_list.forEach(function(pbr_replace_pair){
 
+            var cookieValue = readCookie('tk-pbr_' + pbr_replace_pair['parameter']);
 
-
-
-            if (window.location.href.indexOf(pbr_replace_pair['parameter']) != -1) {
+            if (window.location.href.indexOf(pbr_replace_pair['parameter']) != -1 || cookieValue) {
                 var regex = new RegExp(pbr_replace_pair['search'],'g');
                 document.body.innerHTML = document.body.innerHTML.replace(regex, pbr_replace_pair['replace']);
+
+                if (!cookieValue) {
+                    createCookie('tk-pbr_' + pbr_replace_pair['parameter'], pbr_replace_pair['value'], 30)
+                }
             }
 
 
@@ -40,5 +44,33 @@ jQuery(document).ready(function ($) {
             }*/
 
         });
+    }
+
+
+    /* ripped from https://www.quirksmode.org/js/cookies.html */
+    function createCookie(name, value, days) {
+        var expires;
+
+        if (days) {
+            var date = new Date();
+            date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+            expires = "; expires=" + date.toGMTString();
+        } else {
+            expires = "";
+        }
+        document.cookie = encodeURIComponent(name) + "=" + encodeURIComponent(value) + expires + "; path=/";
+    }
+
+    function readCookie(name) {
+        var nameEQ = encodeURIComponent(name) + "=";
+        var ca = document.cookie.split(';');
+        for (var i = 0; i < ca.length; i++) {
+            var c = ca[i];
+            while (c.charAt(0) === ' ')
+                c = c.substring(1, c.length);
+            if (c.indexOf(nameEQ) === 0)
+                return decodeURIComponent(c.substring(nameEQ.length, c.length));
+        }
+        return null;
     }
 });
