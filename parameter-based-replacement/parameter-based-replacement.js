@@ -5,14 +5,15 @@ jQuery(document).ready(function ($) {
         pbr_list.forEach(function(pbr_replace_pair){
 
             var cookieValue = readCookie('tk-pbr_' + pbr_replace_pair['parameter']);
+            var parameterExists = window.location.href.indexOf(pbr_replace_pair['parameter']) != -1;
 
-            if (window.location.href.indexOf(pbr_replace_pair['parameter']) != -1 || cookieValue) {
+            if (parameterExists || cookieValue) {
                 var regex = new RegExp(pbr_replace_pair['search'],'g');
                 document.body.innerHTML = document.body.innerHTML.replace(regex, pbr_replace_pair['replace']);
+            }
 
-                if (!cookieValue) {
-                    createCookie('tk-pbr_' + pbr_replace_pair['parameter'], pbr_replace_pair['value'], 30)
-                }
+            if (parameterExists) {
+                createCookie('tk-pbr_' + pbr_replace_pair['parameter'], pbr_replace_pair['value'], 30)
             }
 
 
