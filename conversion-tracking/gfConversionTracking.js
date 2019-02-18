@@ -60,13 +60,11 @@ function tkGfConversionTracking() {
             "eventValue": value
         })
     }
-    console.log(fieldsObject);
-
 }
 
 /* So it only runs once per page load */
 var tkGfConversionTracked = tkGfConversionTracked ? tkGfConversionTracked : false;
-if (tkGfConversionTracked) {
+if (!tkGfConversionTracked) {
     tkGfConversionTracking();
     tkGfConversionTracked = true;
 }
