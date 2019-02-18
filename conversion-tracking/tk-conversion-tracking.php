@@ -57,6 +57,19 @@ function tkInstallSignUpConversionTracking($category = "Conversion", $action="Si
     }, 10, 1 );
 }
 
+$tkGfConversionParams = array();
+function tkInstallGfConversionTracking($category = "Conversion", $action="contact", $label="", $value=0) {
+    global $tkGfConversionParams;
+    $tkGfConversionParams = array(
+        "category" => $category,
+        "action" => $action,
+        "label" => $label,
+        "value" => $value
+    );
+
+    require_once('gfConversionTracking.php');
+}
+
 function tkInstallConversionTracking($cf7 = true, $mail = true, $call = true, $mailchimp = true, $signups = true) {
     if ($cf7) {
         if (function_exists("tkInstallCF7ConversionTracking")) {

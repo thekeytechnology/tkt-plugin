@@ -50,4 +50,16 @@ function tkInstallUrlParamTracker ($options = array())
         $components["body"] = do_shortcode($components["body"]);
         return $components;
     }, 10, 3);
+
+
+    add_shortcode('tk-url-param', 'tk_url_param');
+}
+
+function tk_url_param($atts) {
+
+    if (key_exists($atts['field'], $_POST)) {
+        return $_POST[$atts['field']];
+    } else {
+        return "";
+    }
 }
