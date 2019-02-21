@@ -4,13 +4,15 @@ jQuery(document).ready(function ($) {
 
         pbr_list.forEach(function(pbr_replace_pair){
 
+
             var cookieValue = readCookie('tk-pbr_' + pbr_replace_pair['parameter']);
             var parameterExists = window.location.href.indexOf(pbr_replace_pair['parameter']) != -1;
 
+
             if (parameterExists || cookieValue) {
-                var regex = new RegExp(pbr_replace_pair['search'],'g');
-                document.body.innerHTML = document.body.innerHTML.replace(regex, pbr_replace_pair['replace']);
+                replaceText('*', pbr_replace_pair['search'], pbr_replace_pair['replace'], 'g')
             }
+
 
             if (parameterExists) {
                 createCookie('tk-pbr_' + pbr_replace_pair['parameter'], pbr_replace_pair['value'], 30)
@@ -73,5 +75,23 @@ jQuery(document).ready(function ($) {
                 return decodeURIComponent(c.substring(nameEQ.length, c.length));
         }
         return null;
+    }
+
+    /* Taken from https://stackoverflow.com/questions/5558613/replace-words-in-the-body-text */
+    function replaceText(selector, text, newText, flags) {
+        var matcher = new RegExp(text, flags);
+        $(selector).each(function () {
+            var $this = $(this);
+
+            if ($this.is('a')) {
+                var href = $this.attr('href');
+                if (href) {
+                    $this.attr('href', href.replace(matcher, newText));
+                }
+            }
+
+            if (!$this.children().length)
+                $this.text($this.text().replace(matcher, newText));
+        });
     }
 });
