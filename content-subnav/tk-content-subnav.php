@@ -51,6 +51,12 @@ function tkEnableSubnavigation()
     {
         global $tkHeadings;
 
+	 if (!$tkHeadings) {
+            $tkHeadings = array();
+        }
+
+        $tkHeadings = apply_filters("tk-filter-subnav-headings", $tkHeadings);
+
         $h3Enabled = $atts["enableh3"];
 
         $output = "";
