@@ -51,7 +51,11 @@ function tkEnableSubnavigation()
     {
         global $tkHeadings;
 
-	 if (!$tkHeadings) {
+        if (!$tkHeadings) {
+            add_ids_to_header_tags(get_the_content());
+        }
+
+        if (!$tkHeadings) {
             $tkHeadings = array();
         }
 
