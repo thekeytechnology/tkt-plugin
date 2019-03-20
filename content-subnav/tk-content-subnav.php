@@ -52,7 +52,16 @@ function tkEnableSubnavigation()
         global $tkHeadings;
 
         if (!$tkHeadings) {
-            add_ids_to_header_tags(get_the_content());
+            $queriedObject = get_queried_object();
+            $rawContent = "";
+            if ($queriedObject instanceof WP_Post) {
+                $rawContent = $queriedObject->post_content;
+            } else if ($queriedObject instanceof WP_Term) {
+                $rawContent = $queriedObject->description;
+            }
+
+            $filteredContent = apply_filters("the_content", $rawContent);
+            add_ids_to_header_tags($filteredContent);
         }
 
         if (!$tkHeadings) {
