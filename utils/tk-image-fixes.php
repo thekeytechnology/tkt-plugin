@@ -219,6 +219,7 @@ function tkAddTitleAndAlt($content)
     foreach ($imagesMissingTitle as $image => $src) {
         /* Try with image path, if nothing comes up, remove dimensions and try again */
         $dimensionlessSrc =  preg_replace($dimensionPattern, $dimensionReplacement, $src);
+        $metaInfo = false;
         if (array_key_exists($src, $image_meta_array)) {
 
             $metaInfo = $image_meta_array[$src];
@@ -238,6 +239,7 @@ function tkAddTitleAndAlt($content)
     foreach ($imagesMissingAlt as $image => $src) {
         /* Try with image path, if nothing comes up, remove dimensions and try again */
         $dimensionlessSrc =  preg_replace($dimensionPattern, $dimensionReplacement, $src);
+        $metaInfo = false;
         if (array_key_exists($src, $image_meta_array)) {
 
             $metaInfo = $image_meta_array[$src];
@@ -257,6 +259,7 @@ function tkAddTitleAndAlt($content)
     foreach ($imagesMissingBoth as $image => $src) {
         /* Try with image path, if nothing comes up, remove dimensions and try again */
         $dimensionlessSrc =  preg_replace($dimensionPattern, $dimensionReplacement, $src);
+        $metaInfo = false;
         if (array_key_exists($src, $image_meta_array)) {
             $metaInfo = $image_meta_array[$src];
         } elseif(array_key_exists($dimensionlessSrc, $image_meta_array)) {
@@ -318,36 +321,6 @@ function tk_buffer_end()
     ob_end_flush();
 }
 
-
-/**
- * Get all the registered image sizes along with their dimensions
- *
- * From https://wordpress.stackexchange.com/questions/33532/how-to-get-a-list-of-all-the-possible-thumbnail-sizes-set-within-a-theme
- *
- * @global array $_wp_additional_image_sizes
- *
- * @link http://core.trac.wordpress.org/ticket/18947 Reference ticket
- *
- * @return array $image_sizes The image sizes
- */
-function tk_get_all_image_sizes() {
-    global $_wp_additional_image_sizes;
-
-    $default_image_sizes = get_intermediate_image_sizes();
-
-    foreach ( $default_image_sizes as $size ) {
-        $image_sizes[ $size ][ 'width' ] = intval( get_option( "{$size}_size_w" ) );
-        $image_sizes[ $size ][ 'height' ] = intval( get_option( "{$size}_size_h" ) );
-        $image_sizes[ $size ][ 'crop' ] = get_option( "{$size}_crop" ) ? get_option( "{$size}_crop" ) : false;
-    }
-
-    if ( isset( $_wp_additional_image_sizes ) && count( $_wp_additional_image_sizes ) ) {
-        $image_sizes = array_merge( $image_sizes, $_wp_additional_image_sizes );
-    }
-
-    return $image_sizes;
-}
-
 $tk_image_meta_array = array();
 function tk_get_image_meta_array() {
     global $wpdb;
@@ -359,28 +332,23 @@ function tk_get_image_meta_array() {
         return $tk_image_meta_array;
     }
 
-    $statement ="SELECT guid, ID, post_title, meta_value as post_alt FROM $wpdb->posts INNER JOIN $wpdb->postmeta ON $wpdb->posts.ID = $wpdb->postmeta.post_id WHERE $wpdb->postmeta.meta_key = '_wp_attachment_image_alt' AND $wpdb->posts.post_type='attachment' AND $wpdb->posts.post_mime_type LIKE '%image%'";
+    $statement = "SELECT guid, ID, post_title, meta_value as post_alt 
+                  FROM $wpdb->posts as posts 
+                  LEFT JOIN   (SELECT meta_value, post_id 
+                              FROM $wpdb->posts as posts 
+                              INNER JOIN $wpdb->postmeta as postmeta ON posts.ID = postmeta.post_id 
+                              WHERE postmeta.meta_key = '_wp_attachment_image_alt') as postmeta 
+                  ON posts.ID = postmeta.post_id 
+                  WHERE posts.post_type='attachment' AND posts.post_mime_type LIKE '%image%'";
+
     $values = $wpdb->get_results($statement);
-    $image_sizes = tk_get_all_image_sizes();
 
     $assoc_array = array();
     foreach ($values as $value) {
         $path = parse_url($value->guid, PHP_URL_PATH);
-        $assoc_array[$path] = $value;
-
-        foreach ($image_sizes as $image_size) {
-            $width = $image_size['width'];
-            $height = $image_size['height'];
-            $image_formats = array('jpg', 'png', 'jpeg');
-
-            foreach ($image_formats as $format) {
-                if (strpos($path,".$format") !== false) {
-                    $sizePath = str_replace(".$format", "-" . $width . "x" . $height . ".$format", $path);
-                }
-            }
-            $assoc_array[$sizePath] = $value;
+        if (!key_exists($path, $assoc_array)) {
+            $assoc_array[$path] = $value;
         }
-
     }
     $tk_image_meta_array = $assoc_array;
     return $assoc_array;
