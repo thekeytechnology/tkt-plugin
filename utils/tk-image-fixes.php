@@ -1,6 +1,4 @@
 <?php
-
-
 /**
  * Filters 'img' elements in post output to add 'srcset' and 'sizes' attributes.
  *
@@ -186,68 +184,98 @@ function tkAddTitleAndAlt($content)
 
     $imagesMissingBoth = array();
 
+    $image_meta_array = tk_get_image_meta_array();
+
     foreach ($matches[0] as $image) {
 
         if (false == tkHasAttribute($image, "title") &&
             false == tkHasAttribute($image, "alt") &&
-            preg_match('/(?:src|data-lazy)=["\'](.*?)["\']/i', $image, $src) &&
-            ($attachment_id = mfn_get_attachment_id_url($src[1]))) {
+            preg_match('/(?:src|data-lazy)=["\'](.*?)["\']/i', $image, $src)) {
 
-            $imagesMissingBoth[$image] = $attachment_id;
-            $attachment_ids[$attachment_id] = true;
+            $path = parse_url($src[1], PHP_URL_PATH);
+
+            $imagesMissingBoth[$image] = $path;
 
         } else if (false == tkHasAttribute($image, "title") &&
             false != tkHasAttribute($image, "alt") &&
-            preg_match('/(?:src|data-lazy)=["\'](.*?)["\']/i', $image, $src) &&
-            ($attachment_id = mfn_get_attachment_id_url($src[1]))) {
+            preg_match('/(?:src|data-lazy)=["\'](.*?)["\']/i', $image, $src) ) {
+            $path = parse_url($src[1], PHP_URL_PATH);
 
-            $imagesMissingTitle[$image] = $attachment_id;
-            $attachment_ids[$attachment_id] = true;
+            $imagesMissingTitle[$image] = $path;
 
         } else if (false != tkHasAttribute($image, "title") &&
             false == tkHasAttribute($image, "alt") &&
-            preg_match('/(?:src|data-lazy)=["\'](.*?)["\']/i', $image, $src) &&
-            ($attachment_id = mfn_get_attachment_id_url($src[1]))) {
+            preg_match('/(?:src|data-lazy)=["\'](.*?)["\']/i', $image, $src)) {
+            $path = parse_url($src[1], PHP_URL_PATH);
 
-            $imagesMissingAlt[$image] = $attachment_id;
-            $attachment_ids[$attachment_id] = true;
+            $imagesMissingAlt[$image] = $path;
         }
     }
 
-    if (count($attachment_ids) > 1) {
-        /* Warm object cache for use with 'get_post_meta()'.
-         * To avoid making a database call for each image, a single query
-         * warms the object cache with the meta information for all images.
-         */
-        update_meta_cache('post', array_keys($attachment_ids));
-    }
+    /* For dimension replacement */
+    $dimensionPattern = '/\-*(\d+)x(\d+)\.(.*)$/';
+    $dimensionReplacement = '.$3';
 
-    foreach ($imagesMissingTitle as $image => $attachment_id) {
-        $title = get_the_title($attachment_id);
-        if ($title) {
-            $content = str_replace($image, tkAddImageAttribute($image, "title", $title), $content);
+    foreach ($imagesMissingTitle as $image => $src) {
+        /* Try with image path, if nothing comes up, remove dimensions and try again */
+        $dimensionlessSrc =  preg_replace($dimensionPattern, $dimensionReplacement, $src);
+        if (array_key_exists($src, $image_meta_array)) {
+
+            $metaInfo = $image_meta_array[$src];
+
+        } elseif(array_key_exists($dimensionlessSrc, $image_meta_array)) {
+            $metaInfo = $image_meta_array[$dimensionlessSrc];
+        }
+
+        if ($metaInfo) {
+            $title = $metaInfo->post_title;
+            if ($title) {
+                $content = str_replace($image, tkAddImageAttribute($image, "title", $title), $content);
+            }
         }
     }
 
-    foreach ($imagesMissingAlt as $image => $attachment_id) {
-        $alt = get_post_meta($attachment_id, "_wp_attachment_image_alt", true);
-        if ($alt) {
-            $content = str_replace($image, tkAddImageAttribute($image, "alt", $alt), $content);
+    foreach ($imagesMissingAlt as $image => $src) {
+        /* Try with image path, if nothing comes up, remove dimensions and try again */
+        $dimensionlessSrc =  preg_replace($dimensionPattern, $dimensionReplacement, $src);
+        if (array_key_exists($src, $image_meta_array)) {
+
+            $metaInfo = $image_meta_array[$src];
+
+        } elseif(array_key_exists($dimensionlessSrc, $image_meta_array)) {
+            $metaInfo = $image_meta_array[$dimensionlessSrc];
+        }
+
+        if ($metaInfo) {
+            $alt = $image_meta_array[$src]->post_alt;
+            if ($alt) {
+                $content = str_replace($image, tkAddImageAttribute($image, "alt", $alt), $content);
+            }
         }
     }
 
-    foreach ($imagesMissingBoth as $image => $attachment_id) {
+    foreach ($imagesMissingBoth as $image => $src) {
+        /* Try with image path, if nothing comes up, remove dimensions and try again */
+        $dimensionlessSrc =  preg_replace($dimensionPattern, $dimensionReplacement, $src);
+        if (array_key_exists($src, $image_meta_array)) {
+            $metaInfo = $image_meta_array[$src];
+        } elseif(array_key_exists($dimensionlessSrc, $image_meta_array)) {
+            $metaInfo = $image_meta_array[$dimensionlessSrc];
+        }
+
         //we alter the HTML element we're searching for, so we need to remember the altered version
         $imageNew = $image;
 
-        $title = get_the_title($attachment_id);
-        if ($title) {
-            $imageNew = tkAddImageAttribute($image, "title", $title);
-            $content = str_replace($image, $imageNew, $content);
-        }
-        $alt = get_post_meta($attachment_id, "_wp_attachment_image_alt", true);
-        if ($alt) {
-            $content = str_replace($imageNew, tkAddImageAttribute($imageNew, "alt", $alt), $content);
+        if ($metaInfo) {
+            $title = $metaInfo->post_title;
+            if ($title) {
+                $imageNew = tkAddImageAttribute($image, "title", $title);
+                $content = str_replace($image, $imageNew, $content);
+            }
+            $alt = $metaInfo->post_alt;
+            if ($alt) {
+                $content = str_replace($imageNew, tkAddImageAttribute($imageNew, "alt", $alt), $content);
+            }
         }
     }
 
@@ -288,6 +316,74 @@ function tk_buffer_start()
 function tk_buffer_end()
 {
     ob_end_flush();
+}
+
+
+/**
+ * Get all the registered image sizes along with their dimensions
+ *
+ * From https://wordpress.stackexchange.com/questions/33532/how-to-get-a-list-of-all-the-possible-thumbnail-sizes-set-within-a-theme
+ *
+ * @global array $_wp_additional_image_sizes
+ *
+ * @link http://core.trac.wordpress.org/ticket/18947 Reference ticket
+ *
+ * @return array $image_sizes The image sizes
+ */
+function tk_get_all_image_sizes() {
+    global $_wp_additional_image_sizes;
+
+    $default_image_sizes = get_intermediate_image_sizes();
+
+    foreach ( $default_image_sizes as $size ) {
+        $image_sizes[ $size ][ 'width' ] = intval( get_option( "{$size}_size_w" ) );
+        $image_sizes[ $size ][ 'height' ] = intval( get_option( "{$size}_size_h" ) );
+        $image_sizes[ $size ][ 'crop' ] = get_option( "{$size}_crop" ) ? get_option( "{$size}_crop" ) : false;
+    }
+
+    if ( isset( $_wp_additional_image_sizes ) && count( $_wp_additional_image_sizes ) ) {
+        $image_sizes = array_merge( $image_sizes, $_wp_additional_image_sizes );
+    }
+
+    return $image_sizes;
+}
+
+$tk_image_meta_array = array();
+function tk_get_image_meta_array() {
+    global $wpdb;
+
+    global $tk_image_meta_array;
+
+    /* So it only gets executed once */
+    if (!empty($tk_image_meta_array)) {
+        return $tk_image_meta_array;
+    }
+
+    $statement ="SELECT guid, ID, post_title, meta_value as post_alt FROM $wpdb->posts INNER JOIN $wpdb->postmeta ON $wpdb->posts.ID = $wpdb->postmeta.post_id WHERE $wpdb->postmeta.meta_key = '_wp_attachment_image_alt' AND $wpdb->posts.post_type='attachment' AND $wpdb->posts.post_mime_type LIKE '%image%'";
+    $values = $wpdb->get_results($statement);
+    $image_sizes = tk_get_all_image_sizes();
+
+    $assoc_array = array();
+    foreach ($values as $value) {
+        $path = parse_url($value->guid, PHP_URL_PATH);
+        $assoc_array[$path] = $value;
+
+        foreach ($image_sizes as $image_size) {
+            $width = $image_size['width'];
+            $height = $image_size['height'];
+            $image_formats = array('jpg', 'png', 'jpeg');
+
+            foreach ($image_formats as $format) {
+                if (strpos($path,".$format") !== false) {
+                    $sizePath = str_replace(".$format", "-" . $width . "x" . $height . ".$format", $path);
+                }
+            }
+            $assoc_array[$sizePath] = $value;
+        }
+
+    }
+    $tk_image_meta_array = $assoc_array;
+    return $assoc_array;
 }
 
 
