@@ -1,7 +1,6 @@
 jQuery(document).ready(function ($) {
 
-    function tkGetUrlParameter(name)
-    {
+    function tkGetUrlParameter(name) {
         name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
         var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
         var results = regex.exec(location.search);
@@ -9,8 +8,7 @@ jQuery(document).ready(function ($) {
     }
 
 
-    function tkAddParameterToDataIfSet(param, data)
-    {
+    function tkAddParameterToDataIfSet(param, data) {
         var tmp = tkGetUrlParameter(param);
         if (tmp.length) {
             data[param] = tmp;
@@ -19,19 +17,17 @@ jQuery(document).ready(function ($) {
     }
 
 
-    function tkB64DecodeUnicode(str)
-    {
-        return decodeURIComponent(Array.prototype.map.call(window.atob(str), function(c) {
+    function tkB64DecodeUnicode(str) {
+        return decodeURIComponent(Array.prototype.map.call(window.atob(str), function (c) {
             return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2)
         }).join(''))
     }
 
 
-    function tkGetCookieValue(name)
-    {
+    function tkGetCookieValue(name) {
         var nameEQ = name + "=";
         var cookies = document.cookie.split(";");
-        for(var i = 0; i < cookies.length; i++) {
+        for (var i = 0; i < cookies.length; i++) {
             var temp = cookies[i];
             temp = temp.trim();
             if (temp.indexOf(nameEQ) == 0) {
@@ -41,8 +37,7 @@ jQuery(document).ready(function ($) {
         return null;
     }
 
-    function tkSetUPTInputValues(data)
-    {
+    function tkSetUPTInputValues(data) {
         $(".tk-upt-input").each(function () {
             $(this).val("");
         });
@@ -60,20 +55,19 @@ jQuery(document).ready(function ($) {
         ];
         for (var key in data) {
             if (recognizedKeys.includes(key)) {
-                $(".tk-upt-"+key).each(function () {
+                $(".tk-upt-" + key).each(function () {
                     $(this).val(data[key]);
                 });
             }
         }
     }
 
-    function tkApplySourceBasedReplacements(trafficSourceID)
-    {
-        $("[data-tk-sbr-"+trafficSourceID+"]").each(function (){
+    function tkApplySourceBasedReplacements(trafficSourceID) {
+        $("[data-tk-sbr-" + trafficSourceID + "]").each(function () {
             if ($(this).is("[href]")) {
-                $(this).attr("href", $(this).data("tk-href-sbr-"+trafficSourceID));
+                $(this).attr("href", $(this).data("tk-href-sbr-" + trafficSourceID));
             }
-            $(this).html($(this).data("tk-sbr-"+trafficSourceID))
+            $(this).html($(this).data("tk-sbr-" + trafficSourceID))
         });
     }
 
@@ -113,7 +107,11 @@ jQuery(document).ready(function ($) {
                 tkUPTdata["traffic-source"] = "organisch";
                 tkUPTdata["traffic-source-id"] = "organic";
                 tkUPTdata["referrer"] = document.referrer;
-            } else if ( (undefined !== document.referrer) && ("" !== document.referrer) ) {
+            } else if (document.referrer.match(/\.bing\./gi)) {
+                tkUPTdata["traffic-source"] = "organisch (bing)";
+                tkUPTdata["traffic-source-id"] = "organic-bing";
+                tkUPTdata["referrer"] = document.referrer;
+            } else if ((undefined !== document.referrer) && ("" !== document.referrer)) {
                 tkUPTdata["traffic-source"] = "referral";
                 tkUPTdata["traffic-source-id"] = "referral";
                 tkUPTdata["referrer"] = document.referrer;
