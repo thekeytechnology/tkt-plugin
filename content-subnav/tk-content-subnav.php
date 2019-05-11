@@ -32,7 +32,8 @@ function tkEnableSubnavigation()
                 $find[] = $match['full_tag'];
                 $id = sanitize_title($match['tag_contents']);
                 $id_attr = sprintf(' id="%s"', $id);
-                $replace[] = sprintf('<%1$s%2$s%3$s>%4$s</%1$s>', $match['tag_name'], $match['tag_extra'], $id_attr, $match['tag_contents']);
+                $headingFormat = apply_filters("tk-filter-subnav-heading-format", '<%1$s%2$s%3$s>%4$s</%1$s>');
+                $replace[] = sprintf($headingFormat, $match['tag_name'], $match['tag_extra'], $id_attr, $match['tag_contents']);
 
                 $tkHeadings[] =
                     array(
@@ -60,8 +61,7 @@ function tkEnableSubnavigation()
                 $rawContent = $queriedObject->description;
             }
 
-            $filteredContent = apply_filters("the_content", $rawContent);
-            add_ids_to_header_tags($filteredContent);
+            apply_filters("the_content", $rawContent);
         }
 
         if (!$tkHeadings) {
