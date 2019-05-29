@@ -2,7 +2,7 @@
 
 function tkSendMail($email, $subject, $content, $replyTo)
 {
-    wp_mail($email, $subject, $content, array("Content-type" => "text/html", "Reply-To" => $replyTo));
+    wp_mail($email, $subject, $content, array("Content-type: text/html", "Reply-To: $replyTo"));
 }
 
 function tkInstallMailHTML()
