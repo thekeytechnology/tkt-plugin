@@ -106,7 +106,7 @@ function tkBreadcrumbItems($items, $args = array(), $index = 0)
 
     $linkClass = s("link_class", $args, "");
 
-    $link = $isLastItem ? "<span class='$linkClass'>$name</span>" : "<a href='$url' class='$linkClass' rel='v:url' property='v:title'>$name</a>";
+    $link = $isLastItem || empty($url) ? "<span class='$linkClass'>$name</span>" : "<a href='$url' class='$linkClass' rel='v:url' property='v:title'>$name</a>";
 
     $separatorIcon = s("separator", $args, "&gt;");
 
