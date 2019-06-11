@@ -106,7 +106,7 @@ function tkBreadcrumbItems($items, $args = array(), $index = 0)
 
     $linkClass = s("link_class", $args, "");
 
-    $link = $isLastItem || empty($url) ? "<span class='$linkClass'>$name</span>" : "<a href='$url' class='$linkClass' rel='v:url' property='v:title'>$name</a>";
+    $link = $isLastItem ? "<span class='$linkClass' property='v:title'>$name</span><link property='v:url' href=''/>" : "<a href='$url' class='$linkClass' rel='v:url' property='v:title'>$name</a>";
 
     $separatorIcon = s("separator", $args, "&gt;");
 
@@ -118,7 +118,7 @@ function tkBreadcrumbItems($items, $args = array(), $index = 0)
 
     $beforeFirstItem = $index == 0 ? s("before_first_item", $args, "") : "";
 
-    return "$beforeFirstItem$separator<span class='$breadcrumbClass$itemClass' $type>$link" . tkBreadcrumbItems($items, $args, ++$index) . "</span>";
+    return "$beforeFirstItem$separator<span class='$breadcrumbClass$itemClass' $type> $link" . tkBreadcrumbItems($items, $args, ++$index) . "</span>";
 }
 
 function tkGetWPRootPath()
