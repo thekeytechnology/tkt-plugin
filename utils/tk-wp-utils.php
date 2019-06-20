@@ -10,7 +10,7 @@ function tkWpTitle($item)
         return "";
     } else if ($item instanceof WP_Term) {
         return $item->name;
-    } else if ($item instanceof WP_Post) {
+    } else if (tkObjectIsPost($item)) {
         return $item->post_title;
     }else if ($item instanceof WP_User) {
         return $item->display_name;
@@ -48,7 +48,7 @@ function tkWpName($item)
         return "";
     } else if ($item instanceof WP_Term) {
         return $item->slug;
-    } else if ($item instanceof WP_Post) {
+    } else if (tkObjectIsPost($item)) {
         return $item->post_name;
     } else if ($item instanceof WP_User) {
         return $item->ID;
@@ -76,7 +76,7 @@ function tkWpRawContent($item)
         return "";
     } else if ($item instanceof WP_Term) {
         return $item->description;
-    } else if ($item instanceof WP_Post) {
+    } else if (tkObjectIsPost($item)) {
         return $item->post_content;
     } else if (is_array($item)) {
         if (isset($item["description"])) {
@@ -139,7 +139,7 @@ function tkWpId($item)
 
 function tkWpType($item)
 {
-    if ($item instanceof WP_Post) {
+    if (tkObjectIsPost($item)) {
         return $item->post_type;
     }
     if ($item instanceof WP_Term) {
@@ -169,7 +169,7 @@ function tkWpApplyWithId($item, Callable $toPost, Callable $toTerm = NULL, Calla
         } else {
             throw new Exception("No function provided for this type! " . print_r($item, true));
         }
-    } else if ($item instanceof WP_Post) {
+    } else if (tkObjectIsPost($item)) {
         return $toPost($item->ID);
     } else if ($item instanceof WP_User) {
         if (isset($toUser)) {
@@ -181,12 +181,17 @@ function tkWpApplyWithId($item, Callable $toPost, Callable $toTerm = NULL, Calla
         if (isset($item["term_id"])) {
             return $toTerm(intval($item["term_id"]), $item["taxonomy"]);
         } else if (isset($item["user_login"])) {
-           return $toUser(intval($item["ID"]));
+            return $toUser(intval($item["ID"]));
         } else if (isset($item["ID"])) {
             return $toPost(intval($item["ID"]), $item["post_type"]);
         }
     }
     throw new Exception("This type is not supported! " . print_r($item, true));
+}
+
+function tkObjectIsPost($item)
+{
+    return $item instanceof WP_Post || (is_object($item) && isset($item->post_type));
 }
 
 function tkWpGetSubterms($taxonomy, WP_Term $parentTerm = NULL, $orderField = NULL)
