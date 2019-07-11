@@ -2,7 +2,7 @@
 /*
 Plugin Name: TKT Less / Gulp / Twig / WP Utilities
 Plugin URI:  https://www.thekey.technology
-Version:     77
+Version:     78
 Author:      the key technology
 Author URI:  https://www.thekey.technology
 License:     proprietary
@@ -18,7 +18,7 @@ if (!defined("TK_RECAPTCHA")) {
 }
 
 
-require 'plugin-update-checker/plugin-update-checker.php';
+require 'plugin-update-checker-4.7/plugin-update-checker.php';
 $updateChecker = Puc_v4_Factory::buildUpdateChecker(
     'https://bitbucket.org/thekeytechnologies/tkt-plugin',
     __FILE__,
