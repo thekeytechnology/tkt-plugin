@@ -1,9 +1,7 @@
 let gulp = require('gulp');
 let less = require('gulp-less');
 let concat = require('gulp-concat');
-let watch = require('gulp-watch');
 let plumber = require('gulp-plumber');
-let gutil = require('gulp-util');
 
 const themeFolder = "../../../themes/tkt/";
 
@@ -19,40 +17,38 @@ const jsInput = require(jsFolder + "input.json").map(function (item) {
 });
 const jsOutput = themeFolder + "/js/";
 
-gulp.task("less", function () {
-    return gulp.src(lessInput)
-        .pipe(plumber(function (error) {
-            gutil.log(error.message);
-            this.emit('end');
-        }))
+function css() {
+    return gulp
+        .src(lessInput)
+        .pipe(plumber())
         .pipe(less())
         .pipe(gulp.dest(cssOutput))
-});
+}
 
-gulp.task("less-wpadmin", function () {
-    return gulp.src(lessWPAdminInput)
-        .pipe(plumber(function (error) {
-            gutil.log(error.message);
-            this.emit('end');
-        }))
+function cssWpAdmin() {
+    return gulp
+        .src(lessWPAdminInput, {allowEmpty: true})
+        .pipe(plumber())
         .pipe(less())
         .pipe(gulp.dest(cssOutput))
-});
+}
 
-gulp.task("js", function () {
-    return gulp.src(jsInput)
-        .pipe(plumber(function (error) {
-            gutil.log(error.message);
-            this.emit('end');
-        }))
+function js() {
+    return gulp
+        .src(jsInput)
         .pipe(concat("tk.js"))
         .pipe(gulp.dest(jsOutput))
-});
+}
 
-gulp.task('start-watching', function () {
-    gulp.watch(assetsFolder + "**/*.*", ['less', 'less-wpadmin', 'js']);
-});
 
-gulp.task('default', ['less', 'less-wpadmin', 'js']);
+function watchFiles() {
+    gulp.watch(assetsFolder + "**/*.less", css, cssWpAdmin);
+    gulp.watch(assetsFolder + "**/*.js", js);
+}
 
-gulp.task('watch', ['default', 'start-watching']);
+
+const build = gulp.series(gulp.parallel(css, cssWpAdmin));
+const watch = gulp.parallel(watchFiles);
+
+exports.default = build;
+exports.watch = watch;
