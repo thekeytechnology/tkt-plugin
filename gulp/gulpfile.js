@@ -22,7 +22,7 @@ function css() {
         .src(lessInput)
         .pipe(plumber())
         .pipe(less())
-        .pipe(gulp.dest(cssOutput))
+        .pipe(gulp.dest(cssOutput));
 }
 
 function cssWpAdmin() {
@@ -30,18 +30,21 @@ function cssWpAdmin() {
         .src(lessWPAdminInput, {allowEmpty: true})
         .pipe(plumber())
         .pipe(less())
-        .pipe(gulp.dest(cssOutput))
+        .pipe(gulp.dest(cssOutput));
 }
 
 function js() {
     return gulp
         .src(jsInput)
         .pipe(concat("tk.js"))
-        .pipe(gulp.dest(jsOutput))
+        .pipe(gulp.dest(jsOutput));
 }
 
 
 function watchFiles() {
+    css();
+    cssWpAdmin();
+    js();
     gulp.watch(assetsFolder + "**/*.less", css, cssWpAdmin);
     gulp.watch(assetsFolder + "**/*.js", js);
 }
