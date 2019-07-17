@@ -2,7 +2,7 @@
 /*
 Plugin Name: TKT Less / Gulp / Twig / WP Utilities
 Plugin URI:  https://www.thekey.technology
-Version:     79
+Version:     80
 Author:      the key technology
 Author URI:  https://www.thekey.technology
 License:     proprietary
@@ -40,6 +40,10 @@ require_once("conversion-tracking/tk-conversion-tracking.php");
 
 require_once("prettyphoto/tk-prettyphoto.php");
 
+require_once("parameter-based-replacement/parameter-based-replacement.php");
+
+require_once("prg-pattern/tk-prg-utils.php");
+
 require_once("shortcodes/tk-breadcrumbs.php");
 require_once("shortcodes/tk-shortcodes.php");
 require_once("shortcodes/tk-variable-parameter.php");
@@ -55,7 +59,6 @@ require_once("link-manipulation/link-manipulation.php");
 require_once("twig/tk-twig.php");
 
 require_once("url-param-tracker/url-param-tracker.php");
-require_once("parameter-based-replacement/parameter-based-replacement.php");
 
 require_once("utils/tk-wp-utils.php");
 require_once("utils/tk-utils.php");

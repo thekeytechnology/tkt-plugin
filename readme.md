@@ -486,3 +486,22 @@ To manipulate links on a global level you can use
         tkInstallOpenAllExternalLinksInNewTab();
     }
     This installs a JS to open all external links in new tabs
+    
+    
+## PRG Link Masking
+
+**Description**
+
+This is used to apply prg masking to menu links. To activate run the function 
+
+**Setup**
+
+Add
+
+    if (function_exists("tkInstallPrgLinkMasking")) {
+        tkInstallPrgLinkMasking();
+    }
+    
+Now you have to add rel="prg" to all menu items you want to mask via the prg pattern. 
+
+**These links will be turned into input type="submit" elements, be sure to adjust your css**
