@@ -50,8 +50,8 @@ function watchFiles() {
 }
 
 
-const build = gulp.series(gulp.parallel(css, cssWpAdmin));
-const watch = gulp.parallel(watchFiles);
+const build = gulp.series(gulp.parallel(js, css, cssWpAdmin));
+const watch = gulp.series(build, gulp.parallel(watchFiles));
 
 exports.default = build;
 exports.watch = watch;
