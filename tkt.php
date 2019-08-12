@@ -2,7 +2,7 @@
 /*
 Plugin Name: TKT Less / Gulp / Twig / WP Utilities
 Plugin URI:  https://www.thekey.technology
-Version:     82
+Version:     83
 Author:      the key technology
 Author URI:  https://www.thekey.technology
 License:     proprietary
@@ -33,6 +33,8 @@ require_once("betemplate/tk-betemplate.php");
 require_once("content-subnav/tk-content-subnav.php");
 
 require_once("cache-google-fonts/tk-cache-google-fonts.php");
+
+require_once ("elementor/_elementor.php");
 
 require_once("options/tk-options-page.php");
 
@@ -70,6 +72,7 @@ require_once("utils/tk-mail.php");
 require_once("utils/tk-image-title.php");
 require_once("utils/tk-image-fixes.php");
 require_once("utils/tk-elementor-utils.php");
+require_once("utils/tk-breadcrumbs.php");
 
 add_action("wp_enqueue_scripts", function () {
     wp_enqueue_script("tk-prevent-enter-submit", plugins_url() . "/tkt-plugin/utils/js/preventEnterSubmit.js", array("jquery"));

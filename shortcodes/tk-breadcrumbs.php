@@ -2,7 +2,7 @@
 
 //TODO check whether the non-page ones also need fixing
 
-function tkDefaultBreadcrumbs($rootName, $queriedObject)
+function tkDefaultBreadcrumbs($rootName, $queriedObject, $args = array())
 {
 
     $breadcrumbs = array(
@@ -78,6 +78,6 @@ function tkDefaultBreadcrumbs($rootName, $queriedObject)
     }
 
 
-    return tkBreadcrumbs($breadcrumbs);
+    return tkBreadcrumbs($breadcrumbs, $args);
 }
 
