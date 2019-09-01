@@ -15,3 +15,17 @@ if (function_exists("add_action")) {
 
 
 
+function tk_add_elementor_widget_category( $elements_manager ) {
+
+    $elements_manager->add_category(
+        'TKT',
+        [
+            'title' => 'the key technology',
+            'icon' => 'fa fa-key',
+        ]
+    );
+
+}
+if (function_exists("add_action")) {
+    add_action('elementor/elements/categories_registered', 'tk_add_elementor_widget_category', 10, 1);
+}
