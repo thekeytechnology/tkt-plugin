@@ -1,5 +1,7 @@
 <?php
 
+/* Since our wpcontent filter does not use the_content, we
+need a special function to retreive that content */
 function tkElementorContent($item)
 {
     $content = tkElementorRawContent($item);
@@ -24,4 +26,15 @@ function tkElementorRawContent($item)
         }
     }
     throw new Exception("This type is not supported! " . print_r($item, true));
+}
+
+/* When applying the 'the_content' filter, elementor adds the content of the current page
+on its own for some reason, so here we just apply the default filters */
+function tkElementorWpContent($item) {
+    $content = tkWpRawContent($item);
+    $content = wptexturize($content);
+    $content = convert_smilies($content);
+    $content = wpautop($content);
+    $content = str_replace(']]>', ']]&gt;', $content);
+    return $content;
 }
