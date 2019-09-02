@@ -146,7 +146,12 @@ function tkDefaultBreadcrumbs($rootName, $queriedObject, $args = array())
 
 function tkGetShopBreadcrumb($queriedObject) {
     $breadcrumb = false;
-    $shopId = wc_get_page_id( 'shop' );
+    if (function_exists("wc_get_page_id")) {
+        $shopId = wc_get_page_id( 'shop' );
+    } else {
+        $shopId = false;
+    }
+
     if ($shopId) {
         $breadcrumb = array(
             "name" => apply_filters('tk_breadcrumbs_shop_name', get_the_title($shopId)),
@@ -181,9 +186,11 @@ function tkGetBlogBreadcrumb($queriedObject) {
 }
 
 function tkGetPrimaryCategoryBreadcrumb($queriedObject, $taxonomy) {
+
     if (class_exists("WPSEO_Primary_Term")) {
         $termObject = new WPSEO_Primary_Term($taxonomy, $queriedObject->ID);
-        $firstCategory = $termObject->get_primary_term();
+        $catId = $termObject->get_primary_term();
+        $firstCategory = get_term_by('id',$catId, $taxonomy);
     } else {
         $terms = get_the_terms($queriedObject->ID, $taxonomy);
         $firstCategory = s(0, $terms);
