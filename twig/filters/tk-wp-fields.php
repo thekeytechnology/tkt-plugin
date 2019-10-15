@@ -134,6 +134,10 @@ function tkAddWpFieldFilters(TkTemplate $tkTwig)
         return $item->{$prop};
     });
 
+    $tkTwig->addFilter("wpavatar", function (WP_User $item, $height = 96, $default = "", $alt = "", $args = null) {
+        return get_avatar(tkWpId($item), $height, $default, $alt, $args);
+    });
+
 
     $tkTwig->addFilter("wpVideoThumbnail", function ($videoCode) {
         return tkGetVideoThumbnailPathFromVideoCode($videoCode);
