@@ -35,7 +35,9 @@ function tkAddWpFunctions(TkTemplate $tkTwig)
         get_search_form($echo);
     });
 
-
+    $tkTwig->addFunction("wpuserby", function ($field, $id) {
+        return get_user_by($field, $id);
+    });
 
     //not actually a WP function; remains here for backwards compatibility
     $tkTwig->addFunction("wpcalluserfunc", function ($name, $parameter = null, $_ = null) {
