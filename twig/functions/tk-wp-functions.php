@@ -6,12 +6,12 @@ function tkAddWpFunctions(TkTemplate $tkTwig)
         return get_post($postId);
     });
 
-    $tkTwig->addFunction("wpterms", function ($taxonomyName) {
+    $tkTwig->addFunction("wpterms", function ($taxonomyName, $orderBy = "meta_value_num", $meta_key = "tk-order") {
         return get_terms(array(
             "taxonomy" => $taxonomyName,
             "hide_empty" => false,
-            "orderby" => "meta_value_num",
-            "meta_key" => "tk-order"
+            "orderby" => $orderBy,
+            "meta_key" => $meta_key
         ));
     });
 
