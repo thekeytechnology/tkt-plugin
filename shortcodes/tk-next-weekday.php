@@ -5,7 +5,7 @@ if (!function_exists("tkNextWeekday")) {
         $atts = shortcode_atts(
             array(
                 'day' => 'Sunday',
-                'format' => "d.m.Y."
+                'format' => "d.m.Y"
             ), $atts, 'tk-next-weekday');
 
         return tkStrToTime(array(

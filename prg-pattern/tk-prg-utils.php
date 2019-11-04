@@ -15,6 +15,19 @@ function tkCreatePRGForm($href, $classes, $title, $target) {
     return $html;
 }
 
+function tkPRGShortcode($atts) {
+    $href = isset($atts['href']) ? $atts['href'] : "";
+    $title = isset($atts['title']) ? $atts['title'] : "";
+    $target = isset($atts['target']) ? $atts['target'] : "";
+    $classes = isset($atts['classes']) ? $atts['classes'] : array();
+
+    tkCreatePRGForm($href, $classes, $title, $target);
+}
+
+if (function_exists('add_shortcode')) {
+    add_shortcode('tk-prg', 'tkPRGShortcode');
+}
+
 
 
 function tkApplyPrgMaskingToNavLinks($item_output, $item, $depth, $args) {
@@ -47,5 +60,7 @@ function tkApplyPrgMaskingToNavLinks($item_output, $item, $depth, $args) {
 
 
 function tkInstallPrgLinkMasking() {
-    add_filter('walker_nav_menu_start_el', 'tkApplyPrgMaskingToNavLinks', 10, 4);
+    if (function_exists('add_filter')) {
+        add_filter('walker_nav_menu_start_el', 'tkApplyPrgMaskingToNavLinks', 10, 4);
+    }
 }
