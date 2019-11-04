@@ -7,9 +7,11 @@
  * @return string
  */
 function tkCreatePRGForm($href, $classes, $title, $target) {
-    $classString = implode(' ', $classes);
-    $html = "<form action='/wp-content/plugins/tkt-plugin/prg-pattern/tk-prg.php' method='post' target='$target'>
-        <input type='submit' class='$classString tk-prg-input' value='$title'/>
+    if (is_array($classes)) {
+        $classes = implode(' ', $classes);
+    }
+    $html = "<form action='/wp-content/plugins/tkt-plugin/prg-pattern/tk-prg.php' method='post' target='$target' class='$classes tk-prg-form'>
+        <input type='submit' class='tk-prg-input' value='$title'/>
         <input type='hidden' name='tk-target' value='$href' />
     </form>";
     return $html;
@@ -21,7 +23,7 @@ function tkPRGShortcode($atts) {
     $target = isset($atts['target']) ? $atts['target'] : "";
     $classes = isset($atts['classes']) ? $atts['classes'] : array();
 
-    tkCreatePRGForm($href, $classes, $title, $target);
+    return tkCreatePRGForm($href, $classes, $title, $target);
 }
 
 if (function_exists('add_shortcode')) {
