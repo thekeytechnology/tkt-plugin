@@ -36,7 +36,7 @@ function tkApplyPrgMaskingToNavLinks($item_output, $item, $depth, $args) {
 
     preg_match_all('/<a[^>]+rel=([\'"])(?<rel>.+?)\1[^>]*>/i', $item_output, $rel);
 
-    if ($rel && $rel['rel'][0] == 'prg') {
+    if ($rel && isset($rel['rel']) && isset($rel['rel'][0]) && $rel['rel'][0] == 'prg') {
         preg_match_all('/<a[^>]+class=([\'"])(?<class>.+?)\1[^>]*>/i', $item_output, $class);
         $class = $class['class'][0];
 
