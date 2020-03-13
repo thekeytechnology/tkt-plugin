@@ -11,15 +11,28 @@ function tkGetBreadcrumbStructuredData($items) {
 
     $itemListElement = [];
 
+    $index = 1;
+    $domain = get_home_url();
+
     foreach ($items as $item) {
+
+        $url = $item['url'];
+        if (strpos($url, $domain) !== 0) {
+            $url = $domain . $url;
+        }
+
         $itemListElement[] = array(
             "@type" => "ListItem",
-            "position" => 1,
+            "position" => $index,
             "item" => array(
-                "@id" => $item["url"],
+                "@id" => $url,
                 "name" => $item["name"],
             )
         );
+
+
+
+        $index++;
     }
 
     $structuredData = array(
@@ -30,7 +43,7 @@ function tkGetBreadcrumbStructuredData($items) {
 
     $json = json_encode($structuredData);
 
-    return "<script type=\"application/ld+json\">$structuredData</script>";
+    return '<script type="application/ld+json">' . $json . '</script>';
 }
 
 
