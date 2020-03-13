@@ -1,17 +1,43 @@
 <?php
 
-function tkBreadcrumbs($items, $args = array())
-{
+function tkBreadcrumbs($items, $args = array()) {
     $containerClass = s("container_class", $args, "");
-    return '<div class="tk-breadcrumbs ' . $containerClass . '" xmlns:v="http://rdf.data-vocabulary.org/#">' . tkBreadcrumbItems($items, $args, 0) . '</div>';
+    $script = tkGetBreadcrumbStructuredData($items);
+
+    return $script . '<div class="tk-breadcrumbs ' . $containerClass . '" xmlns:v="http://rdf.data-vocabulary.org/#">' . tkBreadcrumbItems($items, $args, 0) . '</div>';
 }
 
-function tkBreadcrumbItems($items, $args = array(), $index = 0)
-{
+function tkGetBreadcrumbStructuredData($items) {
+
+    $itemListElement = [];
+
+    foreach ($items as $item) {
+        $itemListElement[] = array(
+            "@type" => "ListItem",
+            "position" => 1,
+            "item" => array(
+                "@id" => $item["url"],
+                "name" => $item["name"],
+            )
+        );
+    }
+
+    $structuredData = array(
+        "@context" => "https://schema.org",
+        "@type" => "BreadcrumbList",
+        "itemListElement" => $itemListElement
+    );
+
+    $json = json_encode($structuredData);
+
+    return "<script type=\"application/ld+json\">$structuredData</script>";
+}
+
+
+function tkBreadcrumbItems($items, $args = array(), $index = 0) {
     if ($index >= sizeof($items)) {
         return "";
     }
-    $type = $index == 0 ? "typeof='v:Breadcrumb'" : "rel='v:child' typeof='v:Breadcrumb'";
 
     $entry = $items[$index];
     $name = $entry["name"];
@@ -21,7 +47,7 @@ function tkBreadcrumbItems($items, $args = array(), $index = 0)
 
     $linkClass = s("link_class", $args, "");
 
-    $link = $isLastItem || empty($url)  ? "<span class='$linkClass' property='v:title'>$name</span><link property='v:url' href='$url'/>" : "<a href='$url' class='$linkClass' rel='v:url' property='v:title'>$name</a>";
+    $link = $isLastItem || empty($url) ? "<span class='$linkClass'>$name</span><link href='$url'/>" : "<a href='$url' class='$linkClass'>$name</a>";
 
     $separatorIcon = s("separator", $args, "&gt;");
 
@@ -33,5 +59,5 @@ function tkBreadcrumbItems($items, $args = array(), $index = 0)
 
     $beforeFirstItem = $index == 0 ? s("before_first_item", $args, "") : "";
 
-    return "$beforeFirstItem$separator<span class='$breadcrumbClass$itemClass' $type> $link" . tkBreadcrumbItems($items, $args, ++$index) . "</span>";
+    return "$beforeFirstItem$separator<span class='$breadcrumbClass$itemClass'> $link" . tkBreadcrumbItems($items, $args, ++$index) . "</span>";
 }

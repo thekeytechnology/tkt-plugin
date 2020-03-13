@@ -38,23 +38,47 @@ function tkApplyPrgMaskingToNavLinks($item_output, $item, $depth, $args) {
 
     if ($rel && isset($rel['rel']) && isset($rel['rel'][0]) && $rel['rel'][0] == 'prg') {
         preg_match_all('/<a[^>]+class=([\'"])(?<class>.+?)\1[^>]*>/i', $item_output, $class);
-        $class = $class['class'][0];
+        if (isset($class['class']) && isset($class['class'][0])) {
+            $class = $class['class'][0];
+        } else {
+            $class = "";
+        }
+
 
         preg_match_all('/<a[^>]+href=([\'"])(?<href>.+?)\1[^>]*>/i', $item_output, $href);
-        $href = $href['href'][0];
+        if (isset($href['href']) && isset($href['href'][0])) {
+            $href = $href['href'][0];
+        } else {
+            $href = "";
+        }
 
         preg_match_all('/<a[^>]+target=([\'"])(?<target>.+?)\1[^>]*>/i', $item_output, $target);
-        $target = $target['target'][0];
+        if (isset($target['target']) && isset($target['target'][0])) {
+            $target = $target['target'][0];
+        } else {
+            $target = "";
+        }
 
         preg_match('/<a ?.*>(.*)<\/a>/', $item_output, $title);
-        $title = $title[1];
+        if (isset($title[1])) {
+            $title =$title[1];
+        } else {
+            $title = "";
+        }
 
         preg_match('/(<a ?.*>?.*<\/a>)/', $item_output, $fullLink);
-        $fullLink = $fullLink[1];
+        if (isset($fullLink[1])) {
+            $fullLink = $fullLink[1];
+        } else {
+            $fullLink = "";
+        }
 
-        $form = tkCreatePRGForm($href, $class, $title, $target);
+        if ($href) {
+            $form = tkCreatePRGForm($href, $class, $title, $target);
+            $item_output = str_replace($fullLink, $form, $item_output);
+        }
 
-        $item_output = str_replace($fullLink, $form, $item_output);
+
     }
 
     return $item_output;
