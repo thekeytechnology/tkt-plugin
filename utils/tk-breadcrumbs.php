@@ -24,10 +24,8 @@ function tkGetBreadcrumbStructuredData($items) {
         $itemListElement[] = array(
             "@type" => "ListItem",
             "position" => $index,
-            "item" => array(
-                "@id" => $url,
-                "name" => $item["name"],
-            )
+            "name" => $item["name"],
+            "item" => $url
         );
 
 
