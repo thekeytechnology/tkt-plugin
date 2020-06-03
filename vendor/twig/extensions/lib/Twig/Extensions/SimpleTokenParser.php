@@ -8,6 +8,12 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
+
+@trigger_error('The grammar feature is deprecated since version 1.5 and will be removed in 2.0.', E_USER_DEPRECATED);
+
+/**
+ * @deprecated since version 1.5
+ */
 abstract class Twig_Extensions_SimpleTokenParser extends Twig_TokenParser
 {
     /**
@@ -15,7 +21,7 @@ abstract class Twig_Extensions_SimpleTokenParser extends Twig_TokenParser
      *
      * @param Twig_Token $token A Twig_Token instance
      *
-     * @return Twig_NodeInterface A Twig_NodeInterface instance
+     * @return Twig_Node A Twig_Node instance
      */
     public function parse(Twig_Token $token)
     {
@@ -40,17 +46,17 @@ abstract class Twig_Extensions_SimpleTokenParser extends Twig_TokenParser
     /**
      * Gets the nodes based on the parsed values.
      *
-     * @param array   $values An array of values
-     * @param integer $line   The parser line
+     * @param array $values An array of values
+     * @param int   $line   The parser line
      */
     abstract protected function getNode(array $values, $line);
 
     protected function getAttribute($node, $attribute, $arguments = array(), $type = Twig_Node_Expression_GetAttr::TYPE_ANY, $line = -1)
     {
         return new Twig_Node_Expression_GetAttr(
-            $node instanceof Twig_NodeInterface ? $node : new Twig_Node_Expression_Name($node, $line),
-            $attribute instanceof Twig_NodeInterface ? $attribute : new Twig_Node_Expression_Constant($attribute, $line),
-            $arguments instanceof Twig_NodeInterface ? $arguments : new Twig_Node($arguments),
+            $node instanceof Twig_Node ? $node : new Twig_Node_Expression_Name($node, $line),
+            $attribute instanceof Twig_Node ? $attribute : new Twig_Node_Expression_Constant($attribute, $line),
+            $arguments instanceof Twig_Node ? $arguments : new Twig_Node($arguments),
             $type,
             $line
         );
@@ -61,7 +67,7 @@ abstract class Twig_Extensions_SimpleTokenParser extends Twig_TokenParser
         return $this->getAttribute($node, $attribute, $arguments, Twig_Node_Expression_GetAttr::TYPE_METHOD, $line);
     }
 
-    protected function markAsSafe(Twig_NodeInterface $node, $line = -1)
+    protected function markAsSafe(Twig_Node $node, $line = -1)
     {
         return new Twig_Node_Expression_Filter(
             $node,
@@ -71,7 +77,7 @@ abstract class Twig_Extensions_SimpleTokenParser extends Twig_TokenParser
         );
     }
 
-    protected function output(Twig_NodeInterface $node, $line = -1)
+    protected function output(Twig_Node $node, $line = -1)
     {
         return new Twig_Node_Print($node, $line);
     }
@@ -80,7 +86,7 @@ abstract class Twig_Extensions_SimpleTokenParser extends Twig_TokenParser
     {
         $nodes = array();
         foreach ($values as $value) {
-            if ($value instanceof Twig_NodeInterface) {
+            if ($value instanceof Twig_Node) {
                 $nodes[] = $value;
             }
         }
@@ -88,7 +94,7 @@ abstract class Twig_Extensions_SimpleTokenParser extends Twig_TokenParser
         return $nodes;
     }
 
-    static public function parseGrammar($str, $main = true)
+    public static function parseGrammar($str, $main = true)
     {
         static $cursor;
 

@@ -7,6 +7,8 @@ Configuration
 The ``i18n`` extension adds `gettext`_ support to Twig. It defines one tag,
 ``trans``.
 
+To use it, first, :ref:`install the Extensions library<extensions-install>`.
+
 You need to register this extension before using the ``trans`` block::
 
     $twig->addExtension(new Twig_Extensions_Extension_I18n());
@@ -85,6 +87,21 @@ The ``plural`` tag should provide the ``count`` used to select the right
 string. Within the translatable string, the special ``count`` variable always
 contain the count value (here the value of ``apple_count``).
 
+To add notes for translators, use the ``notes`` block:
+
+.. code-block:: jinja
+
+    {% trans %}
+        Hey {{ name }}, I have one apple.
+    {% plural apple_count %}
+        Hey {{ name }}, I have {{ count }} apples.
+    {% notes %}
+        This is shown in the user menu. This string should be shorter than 30 chars
+    {% endtrans %}
+
+You can use ``notes`` with or without ``plural``. Once you get your templates compiled you should
+configure the ``gettext`` parser to get something like this: ``xgettext --add-comments=notes``
+
 Within an expression or in a tag, you can use the ``trans`` filter to translate
 simple strings or variables:
 
@@ -118,10 +135,21 @@ Extracting Template Strings
 ---------------------------
 
 If you use the Twig I18n extension, you will probably need to extract the
-template strings at some point. Unfortunately, the ``xgettext`` utility does
-not understand Twig templates natively. But there is a simple workaround: as
-Twig converts templates to PHP files, you can use ``xgettext`` on the template
-cache instead.
+template strings at some point.
+
+Using Poedit 2
+~~~~~~~~~~~~~~
+
+Poedit 2 has native support for extracting from Twig files and no extra
+setup is necessary (Pro version).
+
+Using ``xgettext`` or Poedit 1
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Unfortunately, the ``xgettext`` utility does not understand Twig templates
+natively and neither do tools based on it such as free versions of Poedit.
+But there is a simple workaround: as Twig converts templates to
+PHP files, you can use ``xgettext`` on the template cache instead.
 
 Create a script that forces the generation of the cache for all your
 templates. Here is a simple example to get you started::

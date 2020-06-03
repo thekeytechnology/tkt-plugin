@@ -1,6 +1,6 @@
 {
   "require": {
-    "twig/twig": "~1.0",
-    "twig/extensions": "1.0.*@dev"
+    "twig/twig": "2.12.5",
+    "twig/extensions": "1.5.4"
   }
 }
