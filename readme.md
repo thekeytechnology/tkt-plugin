@@ -505,3 +505,48 @@ Add
 Now you have to add rel="prg" to all menu items you want to mask via the prg pattern. 
 
 **These links will be turned into input type="submit" elements, be sure to adjust your css**
+
+## Google Maps
+
+**Description**
+
+Adds the class TkMap, which allows you to create google maps which are only loaded when clicked on. 
+
+Also includes a shortcode to create maps inline.
+
+Inegrates with Borlabs Cookie.
+
+**Setup** 
+
+    if (function_exists("tkInstallGoogleMaps")) {
+        tkInstallGoogleMaps();
+        add_filter('tk-google-maps-api-key', function () {
+            return "your key here";
+        });
+        add_filter('tk-google-maps-borlabs-cookie', function () {
+            return array(
+                "group" => "external-media",
+                "cookie" => "googlemaps"
+            );
+        });
+    }
+   
+The filter "tk-google-maps-borlabs-cookie" is optional. With it, clicking on the maps will also set the Borlabs Cookie consent for the specified cookie.
+
+Shortcode arguments are:
+
+id:         Custom map id, will be a uuid if not set
+
+class:      Custom class added to the map
+
+style:      Can be any google maps style (https://developers.google.com/maps/documentation/javascript/style-reference). Defaults to terrain
+
+zoom:       Defaults to 13
+
+image:      Url of the placeholder image. Defaults to a placeholder image included with the plugin.
+
+center:     Center of the map. If not set the map will be made to fit all its markers. Format: center="12.345,67.890"
+
+controls:   String containing the controls that should be enabled. Possible values: zoomControl, mapTypeControl, streetViewControl, fullscreenControl, draggable. Defaults to all controls enabled
+
+markers:    List of markers. Format: markers="12.345,67.890|54.321,09.876|..."
