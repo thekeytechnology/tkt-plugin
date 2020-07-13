@@ -128,7 +128,7 @@ class TkMap {
 
         $placeholderContent = $this->placeholderContent ? $this->placeholderContent : '
             <p>Klicken Sie hier, um die Karte anzuzeigen.<br> Dabei werden Inhalte von Google
-                    Maps nachgeladen <br><a href="https://policies.google.com/privacy?hl=de" style="color: red;" target="_blank">Mehr
+                    Maps nachgeladen <br><a class="tk-google-maps-policy-link" href="https://policies.google.com/privacy?hl=de" style="color: red;" target="_blank">Mehr
                         erfahren</a></p>
         ';
 

@@ -2,6 +2,10 @@ tkMaps = typeof (tkMaps) !== "undefined" ? tkMaps : {};
 
 jQuery(function ($) {
 
+    $("a.tk-google-maps-policy-link").click(function(event) {
+        event.stopPropagation();
+    });
+
     const tkMapsNotInitializedClass = "tk-map-not-initialized";
     $("." + tkMapsNotInitializedClass).click(function() {
         let borlabsCookie = JSON.parse(tkGoogleMapsOptions.borlabsCookie);
