@@ -4,10 +4,10 @@ jQuery(function ($) {
 
     const tkMapsNotInitializedClass = "tk-map-not-initialized";
     $("." + tkMapsNotInitializedClass).click(function() {
-        let $borlabsCookie = JSON.parse(tkGoogleMapsOptions.borlabsCookie);
+        let borlabsCookie = JSON.parse(tkGoogleMapsOptions.borlabsCookie);
 
-        if ($borlabsCookie) {
-            window.BorlabsCookie.addConsent($borlabsCookie.group, $borlabsCookie.cookie);
+        if (borlabsCookie) {
+            window.BorlabsCookie.addConsent(borlabsCookie.group, borlabsCookie.cookie);
         }
         window.tkInitMaps();
     });
