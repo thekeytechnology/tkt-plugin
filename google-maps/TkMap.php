@@ -127,8 +127,8 @@ class TkMap {
         $markersJson = json_encode($this->markers);
 
         $placeholderContent = $this->placeholderContent ? $this->placeholderContent : '
-            <p> class="text-center">Klicken Sie hier, um die Karte anzuzeigen.<br> Dabei werden Inhalte von Google
-                    Maps nachgeladen <br><a href="https://policies.google.com/privacy" style="color: red;" target="_blank">Mehr
+            <p>Klicken Sie hier, um die Karte anzuzeigen.<br> Dabei werden Inhalte von Google
+                    Maps nachgeladen <br><a href="https://policies.google.com/privacy?hl=de" style="color: red;" target="_blank">Mehr
                         erfahren</a></p>
         ';
 
