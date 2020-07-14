@@ -28,7 +28,10 @@ function tkGoogleMapsShortcode($args = array()) {
         $centerTuple = explode(",", $args['center']);
 
         if (count($centerTuple) == 2) {
-            $map->setCenter($centerTuple);
+            $map->setCenter(array(
+                "lat" => $centerTuple[0],
+                "lng" => $centerTuple[1]
+            ));
         }
     }
 
