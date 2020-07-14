@@ -19,14 +19,23 @@
 require_once("tk-enqueue-google-maps-scripts.php");
 
 class TkMap {
+
+    const CONTROL_ZOOM = "zoomControl";
+    const CONTROL_MAP_TYPE = "mapTypeControl";
+    const CONTROL_STREET_VIEW = "streetViewControl";
+    const CONTROL_FULLSCREEN = "fullscreenControl";
+    const CONTROL_DRAGGABLE = "draggable";
+    const CONTROL_SCROLL_WHEEL = "scrollwheel";
+
     public $id;
-    public $class = "tk-map-initialized";
+    public $class = "";
     public $style = "terrain";
     public $zoom = 13;
     public $center;
     public $markers = array();
     public $placeholderImage;
     public $placeholderContent;
+    public $height;
     public $controls = array(
         "zoomControl" => true,
         "mapTypeControl" => true,
@@ -36,13 +45,14 @@ class TkMap {
         "scrollwheel" => false
     );
 
-    public function __construct($id = "", $params = array(), $markers = array()) {
-        $this->id = $id;
+    public function __construct($params = array(), $markers = array()) {
+        $this->id = isset($params["id"]) ? $params["id"] : $this->id;
         $this->class = isset($params["class"]) ? $params["class"] : $this->class;
         $this->style = isset($params["style"]) ? $params["style"] : $this->style;
         $this->zoom = isset($params["zoom"]) ? $params["zoom"] : $this->zoom;
         $this->controls = isset($params["controls"]) ? $params["controls"] : $this->controls;
-        $this->placeholderImage = isset($params["image"]) ? $params["image"] : plugin_dir_url(__FILE__) . '/tk-map-default-image.png';
+        $this->height = isset($params["height"]) ? $params["height"] : $this->height;
+        $this->placeholderImage = isset($params["placeholderImage"]) ? $params["placeholderImage"] : plugin_dir_url(__FILE__) . '/tk-map-default-image.png';
         $this->markers = $markers;
     }
 
@@ -74,9 +84,9 @@ class TkMap {
         $this->placeholderContent = $placeholderContent;
     }
 
-    public function setControls($value) {
-        $this->controls = array_map(function($control) use ($value) {
-            return $value;
+    public function setControls($bool) {
+        $this->controls = array_map(function ($control) use ($bool) {
+            return $bool;
         }, $this->controls);
     }
 
@@ -84,8 +94,18 @@ class TkMap {
         $this->controls[$key] = $value;
     }
 
-    public function addMarker($lat, $lng, $title = "") {
-        $this->markers[] = ["lat" => $lat, "lng" => $lng, "title" => $title];
+    public function setHeight($height) {
+        $this->height = $height;
+    }
+
+    public function addMarker($marker) {
+
+        if ($marker instanceof TkMapMarker) {
+            $this->markers[] = $marker;
+        } else {
+            $tkMarker = new TkMapMarker($marker);
+            $this->markers[] = $tkMarker;
+        }
     }
 
     public function render() {
@@ -98,14 +118,22 @@ class TkMap {
         if ($this->class) {
             $parameters["class"] = $this->class;
         }
-        if ($this->center && $this->center) {
+        if ($this->center) {
             $parameters["center"] = $this->center;
 
-            if (empty($this->markers)) {
-                $this->addMarker($this->center[0], $this->center[1]);
-            }
+//            if (empty($this->markers)) {
+//                $this->addMarker(array(
+//                    "lat" => $this->center["lat"],
+//                    "lng" => $this->center["lng "]
+//                ));
+//            }
         } elseif (count($this->markers) == 1) {
-            $parameters["center"] = [$this->markers[0]['lat'], $this->markers[0]['lng']];
+            /** @var TkMapMarker $firstMarker */
+            $firstMarker = $this->markers[0];
+            $parameters["center"] = array(
+                "lat" => $firstMarker->lat,
+                "lng" => $firstMarker->lng
+            );
         }
 
         $parametersJson = json_encode($parameters);
@@ -124,7 +152,10 @@ class TkMap {
         }
         $mapArgsJson = json_encode($mapArgs);
 
-        $markersJson = json_encode($this->markers);
+        $markersJson = json_encode(array_map(function ($marker) {
+            /** @var TkMapMarker $marker */
+            return $marker->getArray();
+        }, $this->markers));
 
         $placeholderContent = $this->placeholderContent ? $this->placeholderContent : '
             <p>Klicken Sie hier, um die Karte anzuzeigen.<br> Dabei werden Inhalte von Google
@@ -133,12 +164,12 @@ class TkMap {
         ';
 
 
-
         ob_start();
         ?>
         <div
                 id="<?php echo $id; ?>"
                 class="<?php echo $this->class; ?> tk-map tk-map-not-initialized"
+            <?php echo $this->height ? 'style="height: ' . $this->height . 'px;"' : ""; ?>
         >
             <div
                     class="tk-map-placeholder-overlay"

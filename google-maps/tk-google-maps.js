@@ -2,15 +2,12 @@ tkMaps = typeof (tkMaps) !== "undefined" ? tkMaps : {};
 
 jQuery(function ($) {
 
-    $("a.tk-google-maps-policy-link").click(function(event) {
-        event.stopPropagation();
-    });
 
     const tkMapsNotInitializedClass = "tk-map-not-initialized";
-    $("." + tkMapsNotInitializedClass).click(function() {
-        let borlabsCookie = JSON.parse(tkGoogleMapsOptions.borlabsCookie);
+    const borlabsCookie = JSON.parse(tkGoogleMapsOptions.borlabsCookie);
 
-        if (borlabsCookie) {
+    $("." + tkMapsNotInitializedClass).click(function () {
+        if (borlabsCookie && typeof window.BorlabsCookie !== "undefined") {
             window.BorlabsCookie.addConsent(borlabsCookie.group, borlabsCookie.cookie);
         }
         window.tkInitMaps();
@@ -33,7 +30,7 @@ jQuery(function ($) {
             let mapArgs = tkMaps[id].mapArgs;
 
             if ("center" in parameters) {
-                mapArgs.center = {lat: parseFloat(parameters.center[0]), lng: parseFloat(parameters.center[1])};
+                mapArgs.center = {lat: parseFloat(parameters.center.lat), lng: parseFloat(parameters.center.lng)};
             }
 
             let map = new google.maps.Map(element, mapArgs);
@@ -46,16 +43,63 @@ jQuery(function ($) {
                     map: map
                 };
 
+                /* Values */
                 if ("title" in marker) {
                     markerArgs.title = marker.title;
                 }
+                if ("id" in marker) {
+                    markerArgs.id = marker.id;
+                }
+
+                /* Custom icon */
+                let icon = {};
+                if ("iconWidth" in marker) {
+                    if ("iconHeight" in marker) {
+                        icon.scaledSize = new google.maps.Size(marker['iconWidth'], marker['iconHeight']);
+                    } else {
+                        icon.scaledSize = new google.maps.Size(marker['iconWidth'], marker['iconWidth']);
+                    }
+                }
+                if ("icon" in marker) {
+                   icon.url = marker['icon'];
+                }
+
+                markerArgs.icon = icon;
+
+                /* Url Callback */
+                if ("clickType" in marker) {
+                    if ("clickContent" in marker) {
+                        if (marker['clickType'] === 'url') {
+                            markerArgs.url = marker['clickContent'];
+                        }
+                    }
+                }
+
                 let addedMarker = new google.maps.Marker(markerArgs);
 
-                bounds.extend(addedMarker.getPosition());
+                /* Infowindow Callback */
+                if ("clickType" in marker) {
+                    if ("clickContent" in marker) {
+                        if (marker['clickType'] === 'infowindow') {
+                            let infoWindow = new google.maps.InfoWindow({
+                                'content': marker['clickContent']
+                            });
+                            addedMarker.addListener('click', function () {
+                                infoWindow.open(map, addedMarker);
+                            });
+
+                        }
+                    }
+                }
+
+                if (!("addToBounds" in marker) || marker["addToBounds"]) {
+                    bounds.extend(addedMarker.getPosition());
+                }
+
                 return addedMarker;
             });
 
-            if (!"center" in parameters) {
+            if (!("center" in parameters)) {
                 map.fitBounds(bounds);
             }
 
@@ -66,6 +110,10 @@ jQuery(function ($) {
             tkMaps[id].bounds = bounds;
         });
     };
+
+    $("a.tk-google-maps-policy-link").click(function (event) {
+        event.stopPropagation();
+    });
 });
 
 

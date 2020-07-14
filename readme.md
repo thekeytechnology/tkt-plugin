@@ -514,7 +514,7 @@ Adds the class TkMap, which allows you to create google maps which are only load
 
 Also includes a shortcode to create maps inline.
 
-Inegrates with Borlabs Cookie.
+Integrates with Borlabs Cookie.
 
 **Setup** 
 
@@ -532,6 +532,12 @@ Inegrates with Borlabs Cookie.
     }
    
 The filter "tk-google-maps-borlabs-cookie" is optional. With it, clicking on the maps will also set the Borlabs Cookie consent for the specified cookie.
+You still have to add 
+
+    <script>window.tkInitMaps()</script> 
+    
+to the code that is run by borlabs cookie upon consenting to the maps cookie.
+
 
 Shortcode arguments are:
 
