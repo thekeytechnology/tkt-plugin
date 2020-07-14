@@ -62,9 +62,8 @@ jQuery(function ($) {
                 }
                 if ("icon" in marker) {
                    icon.url = marker['icon'];
+                   markerArgs.icon = icon;
                 }
-
-                markerArgs.icon = icon;
 
                 /* Url Callback */
                 if ("clickType" in marker) {
