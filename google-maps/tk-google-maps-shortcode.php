@@ -49,8 +49,20 @@ function tkGoogleMapsShortcode($args = array()) {
             return explode(",", $markerAsString);
         }, $markerStrings);
 
+        /*
+        This basically makes it so that you can add any parameter defined in TkMapMarker::POSSIBLE_PARAMETERS_FOR_PARAMETER_LIST to a marker via shortcode.
+        The Format will be value1, value2, value3,... with them mapping to lat,lng,icon,...
+        */
         foreach ($markers as $marker) {
-            $map->addMarker();
+            $markerArgs = array();
+            foreach(TkMapMarker::POSSIBLE_PARAMETERS_FOR_PARAMETER_LIST as $index => $parameter) {
+                if ($index < count($marker)) {
+                    $markerArgs[$parameter] = $marker[$index];
+                } else {
+                    break;
+                }
+            }
+            $map->addMarker($markerArgs);
         }
     }
 
