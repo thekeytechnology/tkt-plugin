@@ -113,6 +113,10 @@ jQuery(function ($) {
     $("a.tk-google-maps-policy-link").click(function (event) {
         event.stopPropagation();
     });
+
+    if (tkGoogleMapsOptions.alwaysLoad) {
+        window.tkInitMaps();
+    }
 });
 
 

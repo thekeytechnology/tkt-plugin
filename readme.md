@@ -529,6 +529,9 @@ Integrates with Borlabs Cookie.
                 "cookie" => "googlemaps"
             );
         });
+        add_filter('tk-google-maps-always-load', function () {
+            return true;
+        });
     }
    
 The filter "tk-google-maps-borlabs-cookie" is optional. With it, clicking on the maps will also set the Borlabs Cookie consent for the specified cookie.
@@ -538,6 +541,7 @@ You still have to add
     
 to the code that is run by borlabs cookie upon consenting to the maps cookie.
 
+The filter "tk-google-maps-always-load" will load the google maps script and initialize the maps without on page load, not requiring consent or a click on the map.
 
 Shortcode arguments are:
 

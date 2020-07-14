@@ -19,7 +19,8 @@ function tkGoogleMapsEnqueueFiles() {
     */
     wp_localize_script("tk-google-maps-js", "tkGoogleMapsOptions", array(
         "mapKey" => apply_filters("tk-google-maps-api-key", ""),
-        "borlabsCookie" => json_encode(apply_filters("tk-google-maps-borlabs-cookie", false))
+        "borlabsCookie" => json_encode(apply_filters("tk-google-maps-borlabs-cookie", false)),
+        "alwaysLoad" => apply_filters("tk-google-maps-always-load", false)
     ));
 
 }
