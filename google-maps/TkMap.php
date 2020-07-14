@@ -136,7 +136,7 @@ class TkMap {
             );
         }
 
-        $parametersJson = json_encode($parameters);
+        $parametersJson = json_encode(apply_filters("tk-google-maps-parameters", $parameters, $this));
 
         $mapArgs = array();
         if ($this->style) {
@@ -150,12 +150,12 @@ class TkMap {
                 $mapArgs[$key] = $value;
             }
         }
-        $mapArgsJson = json_encode($mapArgs);
+        $mapArgsJson = json_encode(apply_filters("tk-google-maps-map-args", $mapArgs, $this));
 
-        $markersJson = json_encode(array_map(function ($marker) {
+        $markersJson = json_encode(apply_filters("tk-google-maps-markers", array_map(function ($marker) {
             /** @var TkMapMarker $marker */
             return $marker->getArray();
-        }, $this->markers));
+        }, $this->markers), $this));
 
         $placeholderContent = $this->placeholderContent ? $this->placeholderContent : '
             <p>Klicken Sie hier, um die Karte anzuzeigen.<br> Dabei werden Inhalte von Google

@@ -1,7 +1,16 @@
 <?php
 
 function tkGoogleMapsShortcode($args = array()) {
+    /** @var TkMap $map */
+    $map = tkGenerateGoogleMapsFromArgs($args);
 
+    $map = apply_filters("tk-google-maps-shortcode-map", $map);
+
+    return $map->render();
+}
+add_shortcode("tk-google-maps", "tkGoogleMapsShortcode");
+
+function tkGenerateGoogleMapsFromArgs($args = array()) {
     $map = new TkMap();
 
     if (isset($args['id'])) {
@@ -69,6 +78,5 @@ function tkGoogleMapsShortcode($args = array()) {
         }
     }
 
-    return $map->render();
+    return $map;
 }
-add_shortcode("tk-google-maps", "tkGoogleMapsShortcode");
