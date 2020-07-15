@@ -52,7 +52,7 @@ class TkMap {
         $this->zoom = isset($params["zoom"]) ? $params["zoom"] : $this->zoom;
         $this->controls = isset($params["controls"]) ? $params["controls"] : $this->controls;
         $this->height = isset($params["height"]) ? $params["height"] : $this->height;
-        $this->placeholderImage = isset($params["placeholderImage"]) ? $params["placeholderImage"] : plugin_dir_url(__FILE__) . '/tk-map-default-image.png';
+        $this->placeholderImage = isset($params["placeholderImage"]) ? $params["placeholderImage"] : plugin_dir_url(__FILE__) . 'tk-map-default-image.png';
         $this->markers = $markers;
     }
 
