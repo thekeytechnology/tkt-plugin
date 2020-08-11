@@ -1,0 +1,4 @@
+.gm-style img {
+    /* Elementor fix */
+    max-width: none !important;
+}

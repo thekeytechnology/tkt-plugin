@@ -1,7 +1,6 @@
-tkMaps = typeof (tkMaps) !== "undefined" ? tkMaps : {};
+var tkMaps = typeof (tkMaps) !== "undefined" ? tkMaps : {};
 
 jQuery(function ($) {
-
 
     const tkMapsNotInitializedClass = "tk-map-not-initialized";
     const borlabsCookie = JSON.parse(tkGoogleMapsOptions.borlabsCookie);
@@ -15,7 +14,7 @@ jQuery(function ($) {
     });
 
     window.tkInitMaps = function () {
-        if (typeof google === 'object' && typeof google.maps === 'object' ) {
+        if (typeof google === 'object' && typeof google.maps === 'object') {
             window.tkCreateMaps();
         } else if(tkMapsScriptLoaded !== true) {
             $("body").prepend('<script src="https://maps.googleapis.com/maps/api/js?key=' + tkGoogleMapsOptions.mapKey + '&exp&callback=window.tkCreateMaps"></script>')

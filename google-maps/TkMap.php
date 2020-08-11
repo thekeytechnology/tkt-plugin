@@ -7,16 +7,16 @@
  * $map->setZoom(15);
  * $map->setStyle("satellite");
  * $map->setClass("map-class");
- * $map->generateMap();
+ * $map->render();
  *
  * OR
  * $map = new TkMap( "YourMapId", array( "class" => "map-class", "style" => "satellite", "zoom" => "3", "image" => "PathToImage" ) );
  * $map->addMarker("52.391689", "13.066726", "Potsdam HBF");
- * $map->generateMap();
+ * $map->render();
  */
 
 
-require_once("tk-enqueue-google-maps-scripts.php");
+require_once("tk-enqueue-google-maps-files.php");
 
 class TkMap {
 
@@ -185,7 +185,7 @@ class TkMap {
             </div>
         </div>
         <script>
-            tkMaps = typeof (tkMaps) !== "undefined" ? tkMaps : {};
+            var tkMaps = typeof (tkMaps) !== "undefined" ? tkMaps : {};
 
             tkMaps["<?php echo $id; ?>"] = {
                 parameters: <?php echo $parametersJson; ?>,

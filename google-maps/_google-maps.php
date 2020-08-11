@@ -1,5 +1,4 @@
 <?php
-echo "";
 
 function tkInstallGoogleMaps() {
     require_once ("TkMap.php");

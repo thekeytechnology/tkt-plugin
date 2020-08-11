@@ -119,6 +119,10 @@ class TkMapMarker {
         $this->addToBounds = $bool;
     }
 
+    public function setTitle($title) {
+        $this->title = $title;
+    }
+
     public function getArray() {
         $marker = array();
 
