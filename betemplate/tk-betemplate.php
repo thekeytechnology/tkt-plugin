@@ -27,3 +27,11 @@ function tkInstallBeTemplate()
 
     add_filter("register_post_type_args", "tkBeTemplateCPTArgsOverride", 10, 2);
 }
+
+/** Adding backwards compatibility to mfn builder because betheme devs are mentally challenged */
+if (!function_exists("mfn_builder_print") && class_exists("Mfn_Builder_Front")) {
+    function mfn_builder_print($post_id, $content_field = false) {
+        $mfn_builder = new Mfn_Builder_Front($post_id, $content_field, true);
+        $mfn_builder->show();
+    }
+}

@@ -25,7 +25,7 @@ if (!function_exists('tk_parse_url')) {
 
             foreach ($queryPairs as $pair) {
                 $kvPair = explode('=', $pair);
-                if (count($kvPair) > 0) {
+                if (isset($kvPair[1])) {
                     $queryArray[$kvPair[0]] = $kvPair[1];
                 } else {
                     $queryArray[$kvPair[0]] = "";
