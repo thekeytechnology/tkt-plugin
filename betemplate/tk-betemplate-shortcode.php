@@ -28,7 +28,7 @@ function tkGetBeThemeTemplate($atts){
 
     //capture muffin builder output
     ob_start();
-    mfn_builder_print($args["id"]);
+    tkMfnBuilderPrint($args["id"]);
     $output = ob_get_clean();
 
     //if the global post var was set up, it needs to be reset

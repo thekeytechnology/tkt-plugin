@@ -29,12 +29,12 @@ function tkInstallBeTemplate()
 }
 
 /** Adding backwards compatibility to mfn builder because betheme devs are mentally challenged */
-if (!function_exists("mfn_builder_print")) {
-    function mfn_builder_print($post_id, $content_field = false) {
-        if (class_exists("Mfn_Builder_Front")) {
-            $mfn_builder = new Mfn_Builder_Front($post_id, $content_field, true);
-            $mfn_builder->show();
-        }
-
+function tkMfnBuilderPrint ($post_id, $content_field = false) {
+    if (function_exists("mfn_builder_print")) {
+        mfn_builder_print($post_id, $content_field);
+    } elseif (class_exists("Mfn_Builder_Front")) {
+        $mfn_builder = new Mfn_Builder_Front($post_id, $content_field, true);
+        $mfn_builder->show();
     }
 }
+

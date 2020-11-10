@@ -27,7 +27,7 @@ get_header();
                     <?php
                     while (have_posts()) {
                         the_post();                            // Post Loop
-                        mfn_builder_print(get_the_ID());    // Content Builder & WordPress Editor Content
+                        tkMfnBuilderPrint(get_the_ID());    // Content Builder & WordPress Editor Content
                     }
                     /*if (function_exists("get_yuzo_related_posts")) {
                         get_yuzo_related_posts();
