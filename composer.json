@@ -1,6 +1,7 @@
 {
   "require": {
     "twig/twig": "2.12.5",
-    "twig/extensions": "1.5.4"
+    "twig/extensions": "1.5.4",
+    "phpcheckstyle/phpcheckstyle": "^0.14.8"
   }
 }

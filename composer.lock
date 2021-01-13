@@ -4,8 +4,53 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "dd56bf81abad9d5eca6f2a7cc52fa174",
+    "content-hash": "b5064bb1aaad7443e2a459cff45f77d6",
     "packages": [
+        {
+            "name": "phpcheckstyle/phpcheckstyle",
+            "version": "V0.14.8",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/PHPCheckstyle/phpcheckstyle.git",
+                "reference": "86fbbac419468c52d000fe0e0743c555fac8a42a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/PHPCheckstyle/phpcheckstyle/zipball/86fbbac419468c52d000fe0e0743c555fac8a42a",
+                "reference": "86fbbac419468c52d000fe0e0743c555fac8a42a",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.0.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^4.8"
+            },
+            "bin": [
+                "phpcheckstyle"
+            ],
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "PHPCheckstyle\\": "src/"
+                },
+                "files": [
+                    "src/PHPCheckstyle/_Constants.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "OSL-2.1"
+            ],
+            "description": "PHPCheckstyle is an open-source tool that helps PHP programmers adhere to certain coding conventions",
+            "homepage": "https://github.com/phpcheckstyle/phpcheckstyle/",
+            "keywords": [
+                "checkstyle",
+                "convention",
+                "standard"
+            ],
+            "time": "2018-08-10T07:47:28+00:00"
+        },
         {
             "name": "symfony/polyfill-ctype",
             "version": "v1.17.0",
@@ -176,6 +221,7 @@
                 "i18n",
                 "text"
             ],
+            "abandoned": true,
             "time": "2018-12-05T18:34:18+00:00"
         },
         {
@@ -251,5 +297,6 @@
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": [],
-    "platform-dev": []
+    "platform-dev": [],
+    "plugin-api-version": "1.1.0"
 }

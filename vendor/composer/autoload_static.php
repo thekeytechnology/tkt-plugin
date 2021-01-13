@@ -9,6 +9,7 @@ class ComposerStaticInitb7fce70f5a241c8d46069408231b4fc7
     public static $files = array (
         '320cde22f66dd4f5d3fd621d3e88b98f' => __DIR__ . '/..' . '/symfony/polyfill-ctype/bootstrap.php',
         '0e6d7bf4a5811bfa5cf40c5ccd6fae6a' => __DIR__ . '/..' . '/symfony/polyfill-mbstring/bootstrap.php',
+        'f6751967b96004fc91e62372b119449e' => __DIR__ . '/..' . '/phpcheckstyle/phpcheckstyle/src/PHPCheckstyle/_Constants.php',
     );
 
     public static $prefixLengthsPsr4 = array (
@@ -55,6 +56,17 @@ class ComposerStaticInitb7fce70f5a241c8d46069408231b4fc7
                 0 => __DIR__ . '/..' . '/twig/twig/lib',
             ),
         ),
+        'P' => 
+        array (
+            'PHPCheckstyle\\' => 
+            array (
+                0 => __DIR__ . '/..' . '/phpcheckstyle/phpcheckstyle/src',
+            ),
+        ),
+    );
+
+    public static $classMap = array (
+        'Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php',
     );
 
     public static function getInitializer(ClassLoader $loader)
@@ -63,6 +75,7 @@ class ComposerStaticInitb7fce70f5a241c8d46069408231b4fc7
             $loader->prefixLengthsPsr4 = ComposerStaticInitb7fce70f5a241c8d46069408231b4fc7::$prefixLengthsPsr4;
             $loader->prefixDirsPsr4 = ComposerStaticInitb7fce70f5a241c8d46069408231b4fc7::$prefixDirsPsr4;
             $loader->prefixesPsr0 = ComposerStaticInitb7fce70f5a241c8d46069408231b4fc7::$prefixesPsr0;
+            $loader->classMap = ComposerStaticInitb7fce70f5a241c8d46069408231b4fc7::$classMap;
 
         }, null, ClassLoader::class);
     }
