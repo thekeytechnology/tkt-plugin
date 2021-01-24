@@ -2,7 +2,6 @@
 .vagrant/
 composer.lock
 style-report/
-vendor/
 checkstyle_resultncss.xml
 .project
 .models
