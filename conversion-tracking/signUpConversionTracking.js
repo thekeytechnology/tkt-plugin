@@ -29,7 +29,13 @@ jQuery( document ).ready( function() {
     if(typeof fbq !== "undefined"){
         fbq('trackCustom', 'Conversion', {type: action});
     }
-    if (typeof dataLayer !== "undefined") {
+    if (typeof gtag !== "undefined") {
+        gtag('event', action, {
+            'event_category': category,
+            'event_label': label,
+            'value': value
+        });
+    } else if (typeof dataLayer !== "undefined") {
         dataLayer.push({
             "event": "tk-site-event",
             "eventCategory": category,
