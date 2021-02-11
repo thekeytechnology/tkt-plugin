@@ -20,7 +20,7 @@ if (!defined("TK_RECAPTCHA")) {
 
 require 'plugin-update-checker-4.7/plugin-update-checker.php';
 $updateChecker = Puc_v4_Factory::buildUpdateChecker(
-    'https://bitbucket.org/thekeytechnologies/tkt-plugin',
+    'https://github.com/thekeytechnology/tkt-plugin.git',
     __FILE__,
     'tkt-plugin'
 );
