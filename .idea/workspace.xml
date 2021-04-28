@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="25407d36-b966-41de-a56d-8f6a8b57655a" name="Default Changelist" comment="" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="CodeStyleSettingsInfer">
+    <option name="done" value="true" />
+  </component>
+  <component name="ComposerSettings" doNotAsk="true" synchronizationState="SYNCHRONIZE">
+    <pharConfigPath>$PROJECT_DIR$/composer.json</pharConfigPath>
+    <execution />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="PhpWorkspaceProjectConfiguration">
+    <include_path>
+      <path value="$PROJECT_DIR$/vendor/composer" />
+      <path value="$PROJECT_DIR$/vendor/symfony/polyfill-mbstring" />
+      <path value="$PROJECT_DIR$/vendor/symfony/polyfill-ctype" />
+      <path value="$PROJECT_DIR$/vendor/twig/extensions" />
+      <path value="$PROJECT_DIR$/vendor/twig/twig" />
+      <path value="$PROJECT_DIR$/vendor/phpcheckstyle/phpcheckstyle" />
+    </include_path>
+  </component>
+  <component name="ProjectCodeStyleSettingsMigration">
+    <option name="version" value="1" />
+  </component>
+  <component name="ProjectId" id="1T9ju39NQ0DsYpfSTo2EqhFy0vi" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.detected.package.tslint" value="true" />
+    <property name="node.js.path.for.package.eslint" value="project" />
+    <property name="node.js.path.for.package.tslint" value="project" />
+    <property name="node.js.selected.package.eslint" value="(autodetect)" />
+    <property name="node.js.selected.package.tslint" value="(autodetect)" />
+    <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
+    <property name="nodejs_npm_path_reset_for_default_project" value="true" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/elementor/twig-widget" />
+      <recent name="$PROJECT_DIR$/twig/filters" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$" />
+      <recent name="$PROJECT_DIR$/elementor/twig-widget" />
+    </key>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="25407d36-b966-41de-a56d-8f6a8b57655a" name="Default Changelist" comment="" />
+      <created>1538147198363</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1538147198363</updated>
+      <workItem from="1538147200124" duration="668000" />
+      <workItem from="1538411254143" duration="395000" />
+      <workItem from="1539697675972" duration="3382000" />
+      <workItem from="1539774005033" duration="32000" />
+      <workItem from="1540821365197" duration="1886000" />
+      <workItem from="1540835100378" duration="1012000" />
+      <workItem from="1541515101367" duration="755000" />
+      <workItem from="1547466120988" duration="566000" />
+      <workItem from="1547636628659" duration="1314000" />
+      <workItem from="1547824961949" duration="1400000" />
+      <workItem from="1549034707636" duration="2114000" />
+      <workItem from="1550485131564" duration="1180000" />
+      <workItem from="1550766710020" duration="566000" />
+      <workItem from="1555348223567" duration="375000" />
+      <workItem from="1555360046938" duration="259000" />
+      <workItem from="1556012836540" duration="397000" />
+      <workItem from="1556277666657" duration="838000" />
+      <workItem from="1557231700119" duration="254000" />
+      <workItem from="1560286738030" duration="457000" />
+      <workItem from="1560442674788" duration="286000" />
+      <workItem from="1561469894780" duration="2463000" />
+      <workItem from="1561632598776" duration="25000" />
+      <workItem from="1563280159873" duration="2816000" />
+      <workItem from="1565567302154" duration="1958000" />
+      <workItem from="1566213479535" duration="3122000" />
+      <workItem from="1566301195110" duration="1375000" />
+      <workItem from="1567338161280" duration="1402000" />
+      <workItem from="1567442365126" duration="487000" />
+      <workItem from="1568199513530" duration="1424000" />
+      <workItem from="1571388855143" duration="258000" />
+      <workItem from="1571697484943" duration="362000" />
+      <workItem from="1571739933714" duration="247000" />
+      <workItem from="1572879433101" duration="971000" />
+      <workItem from="1572886988428" duration="270000" />
+      <workItem from="1581006877642" duration="522000" />
+      <workItem from="1582157517030" duration="1036000" />
+      <workItem from="1584065545566" duration="720000" />
+      <workItem from="1584066276777" duration="978000" />
+      <workItem from="1584308844468" duration="583000" />
+      <workItem from="1587554060076" duration="302000" />
+      <workItem from="1591180532176" duration="143000" />
+      <workItem from="1591181864789" duration="151000" />
+      <workItem from="1592817076766" duration="935000" />
+      <workItem from="1594511265393" duration="1126000" />
+      <workItem from="1594571623259" duration="332000" />
+      <workItem from="1594600088553" duration="1442000" />
+      <workItem from="1594668645430" duration="8886000" />
+      <workItem from="1594908151268" duration="640000" />
+      <workItem from="1594993951279" duration="4404000" />
+      <workItem from="1597147381535" duration="2432000" />
+      <workItem from="1600465607791" duration="647000" />
+      <workItem from="1605016316036" duration="3530000" />
+      <workItem from="1611458944324" duration="2177000" />
+      <workItem from="1613041985727" duration="1215000" />
+      <workItem from="1615217117287" duration="265000" />
+    </task>
+    <task id="LOCAL-00001" summary="Updated conversion tracking to support gtag">
+      <created>1613042389166</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1613042389166</updated>
+    </task>
+    <task id="LOCAL-00002" summary="Chenged UpdateChecker repo url">
+      <created>1613042805003</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1613042805003</updated>
+    </task>
+    <task id="LOCAL-00003" summary="test update">
+      <created>1613042910080</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1613042910080</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
+    <option name="CHECK_NEW_TODO" value="false" />
+    <MESSAGE value="Updated conversion tracking to support gtag" />
+    <MESSAGE value="Chenged UpdateChecker repo url" />
+    <MESSAGE value="test update" />
+    <option name="LAST_COMMIT_MESSAGE" value="test update" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="304" y="187" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1605019275849">
+      <screen x="0" y="0" width="1680" height="1050" />
+    </state>
+    <state x="304" y="187" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1680.1050@0.0.1680.1050" timestamp="1605019275849" />
+    <state x="398" y="100" key="CommitChangelistDialog2" timestamp="1613042909861">
+      <screen x="0" y="0" width="1680" height="1050" />
+    </state>
+    <state x="398" y="100" key="CommitChangelistDialog2/0.0.1680.1050@0.0.1680.1050" timestamp="1613042909861" />
+    <state x="100" y="100" width="1480" height="850" key="DiffContextDialog" timestamp="1611460263122">
+      <screen x="0" y="0" width="1680" height="1050" />
+    </state>
+    <state x="100" y="100" width="1480" height="850" key="DiffContextDialog/0.0.1680.1050@0.0.1680.1050" timestamp="1611460263122" />
+    <state x="440" y="265" key="Vcs.Push.Dialog.v2" timestamp="1613042911827">
+      <screen x="0" y="0" width="1680" height="1050" />
+    </state>
+    <state x="440" y="265" key="Vcs.Push.Dialog.v2/0.0.1680.1050@0.0.1680.1050" timestamp="1613042911827" />
+    <state x="632" y="446" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1611590786538">
+      <screen x="0" y="0" width="1680" height="1050" />
+    </state>
+    <state x="632" y="446" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1680.1050@0.0.1680.1050" timestamp="1611590786538" />
+    <state x="203" y="276" width="615" height="548" key="find.popup" timestamp="1611590781357">
+      <screen x="0" y="0" width="1680" height="1050" />
+    </state>
+    <state x="203" y="276" width="615" height="548" key="find.popup/0.0.1680.1050@0.0.1680.1050" timestamp="1611590781357" />
+  </component>
+</project>
