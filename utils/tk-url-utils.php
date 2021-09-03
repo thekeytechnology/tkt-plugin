@@ -19,7 +19,7 @@ if (!function_exists('tk_parse_url')) {
 
         $parsedUrl = parse_url($urlString);
 
-        if ($parsedUrl['query']) {
+        if (isset($parsedUrl['query']) && !empty($parsedUrl['query'])) {
             $queryPairs = explode('&', $parsedUrl['query']);
             $queryArray = array();
 
