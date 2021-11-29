@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="25407d36-b966-41de-a56d-8f6a8b57655a" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/tkt.php" beforeDir="false" afterPath="$PROJECT_DIR$/tkt.php" afterDir="false" />
-    </list>
+    <list default="true" id="25407d36-b966-41de-a56d-8f6a8b57655a" name="Default Changelist" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -40,6 +38,8 @@
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="node.js.detected.package.eslint" value="true" />
@@ -125,6 +125,7 @@
       <workItem from="1611458944324" duration="2177000" />
       <workItem from="1613041985727" duration="1215000" />
       <workItem from="1615217117287" duration="265000" />
+      <workItem from="1638164893557" duration="343000" />
     </task>
     <task id="LOCAL-00001" summary="Updated conversion tracking to support gtag">
       <created>1613042389166</created>
@@ -175,7 +176,14 @@
       <option name="project" value="LOCAL" />
       <updated>1630681455957</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="breadcrumb bugfix">
+      <created>1638164983410</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1638164983410</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -189,6 +197,7 @@
     <MESSAGE value="test update" />
     <MESSAGE value="updated update checker" />
     <MESSAGE value="version bump" />
-    <option name="LAST_COMMIT_MESSAGE" value="version bump" />
+    <MESSAGE value="breadcrumb bugfix" />
+    <option name="LAST_COMMIT_MESSAGE" value="breadcrumb bugfix" />
   </component>
 </project>
