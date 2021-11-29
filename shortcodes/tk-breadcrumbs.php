@@ -2,8 +2,7 @@
 
 //TODO check whether the non-page ones also need fixing
 
-function tkDefaultBreadcrumbs($rootName, $queriedObject, $args = array())
-{
+function tkDefaultBreadcrumbs($rootName, $queriedObject, $args = array()) {
 
     $breadcrumbs = array(
         array("name" => $rootName, "url" => "/")
@@ -130,6 +129,11 @@ function tkDefaultBreadcrumbs($rootName, $queriedObject, $args = array())
             "url" => get_permalink(get_queried_object_id())
         );
         /* Default for everything else */
+    } elseif ($queriedObject instanceof WP_Post_Type) {
+        $breadcrumbs[] = array(
+            "name" => $queriedObject->label,
+            "url" => get_post_type_archive_link($queriedObject->name)
+        );
     } else {
         $breadcrumbs[] = array(
             "name" => tkWpTitle($queriedObject),
@@ -147,7 +151,7 @@ function tkDefaultBreadcrumbs($rootName, $queriedObject, $args = array())
 function tkGetShopBreadcrumb($queriedObject) {
     $breadcrumb = false;
     if (function_exists("wc_get_page_id")) {
-        $shopId = wc_get_page_id( 'shop' );
+        $shopId = wc_get_page_id('shop');
     } else {
         $shopId = false;
     }
@@ -170,7 +174,7 @@ function tkGetShopBreadcrumb($queriedObject) {
 function tkGetBlogBreadcrumb($queriedObject) {
     $breadcrumb = false;
 
-    $blogPage = get_option( 'page_for_posts' );
+    $blogPage = get_option('page_for_posts');
     if ($blogPage) {
         $breadcrumb = array(
             "name" => apply_filters('tk_breadcrumbs_blog_name', get_the_title($blogPage)),
@@ -190,7 +194,7 @@ function tkGetPrimaryCategoryBreadcrumb($queriedObject, $taxonomy) {
     if (class_exists("WPSEO_Primary_Term")) {
         $termObject = new WPSEO_Primary_Term($taxonomy, $queriedObject->ID);
         $catId = $termObject->get_primary_term();
-        $firstCategory = get_term_by('id',$catId, $taxonomy);
+        $firstCategory = get_term_by('id', $catId, $taxonomy);
     } else {
         $terms = get_the_terms($queriedObject->ID, $taxonomy);
         $firstCategory = s(0, $terms);
