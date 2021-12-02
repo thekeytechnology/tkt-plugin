@@ -101,7 +101,7 @@ function tkDefaultBreadcrumbs($rootName, $queriedObject, $args = array()) {
             "url" => apply_filters('tk_breadcrumbs_404_url', "")
         );
         /* Search */
-    } else if (is_search()) {
+    } else if (is_search() && $queriedObject == get_queried_object()) {
         $searchterm = $_GET['s'];
         $breadcrumbs[] = array(
             "name" => apply_filters('tk_breadcrumbs_search_prefix', "Suchergebnisse für: ") . $searchterm,
@@ -141,7 +141,7 @@ function tkDefaultBreadcrumbs($rootName, $queriedObject, $args = array()) {
         );
     }
 
-    $breadcrumbs = apply_filters('tk_breadcrumbs_array', $breadcrumbs);
+    $breadcrumbs = apply_filters('tk_breadcrumbs_array', $breadcrumbs, $queriedObject, $args);
     $args = apply_filters('tk_breadcrumbs_args', $args);
 
     return tkBreadcrumbs($breadcrumbs, $args);

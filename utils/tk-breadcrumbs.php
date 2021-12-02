@@ -57,8 +57,9 @@ function tkBreadcrumbItems($items, $args = array(), $index = 0) {
     $isLastItem = $index == sizeof($items) - 1;
 
     $linkClass = s("link_class", $args, "");
+    $linkLastItem = s("link_last_item", $args, false);
 
-    $link = $isLastItem || empty($url) ? "<span class='$linkClass'>$name</span><link href='$url'/>" : "<a href='$url' class='$linkClass'>$name</a>";
+    $link = ($isLastItem && !$linkLastItem) || empty($url) ? "<span class='$linkClass'>$name</span><link href='$url'/>" : "<a href='$url' class='$linkClass'>$name</a>";
 
     $separatorIcon = s("separator", $args, "&gt;");
 
