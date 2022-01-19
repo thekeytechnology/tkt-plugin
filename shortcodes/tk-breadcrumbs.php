@@ -126,7 +126,7 @@ function tkDefaultBreadcrumbs($rootName, $queriedObject, $args = array()) {
 
         $breadcrumbs[] = array(
             "name" => $queriedObject->post_title,
-            "url" => get_permalink(get_queried_object_id())
+            "url" => get_permalink($queriedObject->ID)
         );
         /* Default for everything else */
     } elseif ($queriedObject instanceof WP_Post_Type) {
