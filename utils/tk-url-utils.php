@@ -33,6 +33,8 @@ if (!function_exists('tk_parse_url')) {
             }
 
             $parsedUrl['query'] = $queryArray;
+        } else {
+            $parsedUrl['query'] = [];
         }
 
 
