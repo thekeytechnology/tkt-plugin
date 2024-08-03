@@ -1,11 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="25407d36-b966-41de-a56d-8f6a8b57655a" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cache-google-fonts/tk-cache-google-fonts.php" beforeDir="false" afterPath="$PROJECT_DIR$/cache-google-fonts/tk-cache-google-fonts.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/tk-url-utils.php" beforeDir="false" afterPath="$PROJECT_DIR$/utils/tk-url-utils.php" afterDir="false" />
-    </list>
+    <list default="true" id="25407d36-b966-41de-a56d-8f6a8b57655a" name="Default Changelist" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -29,6 +25,9 @@
       <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
     </file-type-list>
   </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
   <component name="PhpWorkspaceProjectConfiguration">
     <include_path>
       <path value="$PROJECT_DIR$/vendor/composer" />
@@ -37,6 +36,7 @@
       <path value="$PROJECT_DIR$/vendor/twig/extensions" />
       <path value="$PROJECT_DIR$/vendor/twig/twig" />
       <path value="$PROJECT_DIR$/vendor/phpcheckstyle/phpcheckstyle" />
+      <path value="$PROJECT_DIR$/vendor/symfony/polyfill-php72" />
     </include_path>
   </component>
   <component name="ProjectCodeStyleSettingsMigration">
@@ -144,6 +144,7 @@
       <workItem from="1648551567697" duration="2553000" />
       <workItem from="1648645326596" duration="936000" />
       <workItem from="1666194256035" duration="2647000" />
+      <workItem from="1722681929894" duration="320000" />
     </task>
     <task id="LOCAL-00001" summary="Updated conversion tracking to support gtag">
       <created>1613042389166</created>

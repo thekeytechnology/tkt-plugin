@@ -1,6 +1,6 @@
 {
   "name": "thekeytechnology/tk-sso",
-  "description": "A custom single sign-on plugin for WordPress.",
+  "description": "TKT Plugin",
   "type": "wordpress-plugin",
   "require": {
     "twig/twig": "^2.16",
