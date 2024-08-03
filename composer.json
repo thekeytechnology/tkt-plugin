@@ -1,5 +1,5 @@
 {
-  "name": "thekeytechnology/tk-sso",
+  "name": "thekeytechnology/tkt-plugin",
   "description": "TKT Plugin",
   "type": "wordpress-plugin",
   "require": {
