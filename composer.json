@@ -1,7 +1,18 @@
 {
+  "name": "thekeytechnology/tk-sso",
+  "description": "A custom single sign-on plugin for WordPress.",
+  "type": "wordpress-plugin",
   "require": {
     "twig/twig": "^2.16",
     "twig/extensions": "1.5.4",
     "phpcheckstyle/phpcheckstyle": "^0.14.8"
-  }
+  },
+  "authors": [
+    {
+      "name": "thekey technology",
+      "email": "mohamed.audi@thekey.technology"
+    }
+  ],
+  "minimum-stability": "stable",
+  "version": "123.0.1"
 }
